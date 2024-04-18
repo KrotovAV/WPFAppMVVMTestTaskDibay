@@ -5,12 +5,16 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject>WpfAppPhoneCompany.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\Commands\" />
     <Folder Include="Models\" />
-    <Folder Include="NewFolder\" />
-    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
   </ItemGroup>
 
 </Project>

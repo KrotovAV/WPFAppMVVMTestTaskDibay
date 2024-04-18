@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppPhoneCompany"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        DataContext="{Binding Path=MainWindowModel, Source={StaticResource ResourceKey=Locator}}"
+        Title="{Binding Path=Title}" 
+        Height="450" Width="800">
     <Grid>
 
     </Grid>
