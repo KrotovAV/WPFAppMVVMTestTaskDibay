@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "WpfAppPhoneCompany\\WpfAppPhoneCompany.sln",
+    "projects": [
+      "WpfAppPhoneCompany.csproj"
+    ]
+  }
+}
