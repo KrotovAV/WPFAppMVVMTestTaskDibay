@@ -28,17 +28,17 @@ namespace WpfAppPhoneCompany.Data
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация БД...");
 
-            //_Logger.LogInformation("Удаление существующей БД...");
-            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-            //_Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
+            _Logger.LogInformation("Удаление существующей БД...");
+            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
 
             //_db.Database.EnsureCreated();
 
-            //_Logger.LogInformation("Миграция БД...");
-            //await _db.Database.MigrateAsync().ConfigureAwait(false);
-            //_Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
+            _Logger.LogInformation("Миграция БД...");
+            await _db.Database.MigrateAsync().ConfigureAwait(false);
+            _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
 
-            //if (await _db.Streets.AnyAsync()) return;
+            if (await _db.Streets.AnyAsync()) return;
             await InitializeStreets();
             await InitializeAddresses();
             await InitializePhones();
@@ -61,7 +61,7 @@ namespace WpfAppPhoneCompany.Data
                 _Streets[i] = new Street { Name = $"Улица {i + 1}" };
 
             await _db.Streets.AddRangeAsync(_Streets);
-            //await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             _Logger.LogInformation("Инициализация (1) улиц выполнена за {0} мс", timer.ElapsedMilliseconds);
         }
@@ -84,7 +84,7 @@ namespace WpfAppPhoneCompany.Data
                .ToArray();
 
             await _db.Addresses.AddRangeAsync(_Addresses);
-            //await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             _Logger.LogInformation("Инициализация (2) адресов выполнена за {0} мс", timer.ElapsedMilliseconds);
         }
@@ -108,7 +108,7 @@ namespace WpfAppPhoneCompany.Data
                 };
 
             await _db.Phones.AddRangeAsync(_Phones);
-            //await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             _Logger.LogInformation("Инициализация (3) телефонов выполнена за {0} мс", timer.ElapsedMilliseconds);
         }
@@ -139,7 +139,7 @@ namespace WpfAppPhoneCompany.Data
                .ToArray();
 
             await _db.Abonents.AddRangeAsync(_Abonents);
-            //await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             _Logger.LogInformation("Инициализация (4) абонентов выполнена за {0} мс", timer.ElapsedMilliseconds);
         }
