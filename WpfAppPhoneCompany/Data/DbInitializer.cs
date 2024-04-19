@@ -42,7 +42,7 @@ namespace WpfAppPhoneCompany.Data
             await InitializeStreets();
             await InitializeAddresses();
             await InitializePhones();
-            await InitializeAbonents();
+            await InitializeAbonents().ConfigureAwait(false); 
             
    
 
