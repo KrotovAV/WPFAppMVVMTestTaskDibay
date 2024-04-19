@@ -10,8 +10,11 @@ namespace DataBaseLayer.Entityes
     {
         public int Id { get; set; }
         public int Number { get; set; }
+        public TypePhone TypePhone { get; set; }
 
-        //public int AbonentId { get; set; } // //внешний ключ
-        public virtual Abonent Abonent { get; set; }//навигацинное свойство
+        public int? AbonentId { get; set; } //внешний ключ
+        public virtual Abonent? Abonent { get; set; }//навигацинное свойство
     }
+    
+
 }

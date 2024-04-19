@@ -12,5 +12,6 @@ namespace DataBaseLayer.Entityes
         public string Name { get; set; }
 
         public virtual ICollection<Abonent> Abonents { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

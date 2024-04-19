@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfAppPhoneCompany.Data;
 using WpfAppPhoneCompany.Services;
 using WpfAppPhoneCompany.ViewModels;
 
@@ -37,7 +38,7 @@ namespace WpfAppPhoneCompany
         public static IServiceProvider Services => Host.Services;
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
-           //.AddDatabase(host.Configuration.GetSection("Database"))
+           .AddDatabase(host.Configuration.GetSection("Database"))
            .AddServices()
            .AddViewModels()
         ;

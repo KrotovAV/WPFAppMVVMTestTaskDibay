@@ -1,0 +1,15 @@
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\appsettings.json
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataBaseLayer.deps.json
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataBaseLayer.runtimeconfig.json
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataBaseLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataBaseLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.csproj.AssemblyReference.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.AssemblyInfoInputs.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.AssemblyInfo.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.csproj.CoreCompileInputs.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\refint\DataBaseLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.genruntimeconfig.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\ref\DataBaseLayer.dll

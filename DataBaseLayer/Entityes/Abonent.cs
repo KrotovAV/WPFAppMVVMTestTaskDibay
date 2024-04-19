@@ -12,17 +12,12 @@ namespace DataBaseLayer.Entityes
         public string Name { get; set; }
         public string SecondName { get; set; }
         public string SurName { get; set; }
-        //public int AddressId { get; set; } // внешний ключ
-        //public int? PhoneHomeId { get; set; } // внешний ключ
-        //public int? PhoneWorkId { get; set; } // внешний ключ
-        //public int? PhoneMobileId { get; set; } // внешний ключ
 
-        public virtual Address Address { get; set; }//навигацинное свойство
-        public virtual Phone PhoneHome { get; set; }//навигацинное свойство
-        public virtual Phone PhoneWork { get; set; }//навигацинное свойство
-        public virtual Phone PhoneMobile { get; set; }//навигацинное свойство
-
-
+        public int? AddressId { get; set; } // внешний ключ
+        public virtual Address? Address { get; set; }//навигацинное свойство
+        public virtual int? StreetId { get; set; } // внешний ключ
+        public virtual Street? Street { get; set; }//навигацинное свойство
+        public virtual ICollection<Phone>? Phones { get; set; }
 
     }
 }
