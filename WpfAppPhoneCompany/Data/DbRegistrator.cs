@@ -22,7 +22,7 @@ namespace WpfAppPhoneCompany.Data
                    default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
 
                    case "MSSQL":
-                       opt.UseSqlServer(Configuration.GetConnectionString("Connection"));
+                       opt.UseSqlServer(Configuration.GetConnectionString(type));
                        break;
                    case "InMemory":
                        opt.UseInMemoryDatabase("PhoneCompanyDB.db");
