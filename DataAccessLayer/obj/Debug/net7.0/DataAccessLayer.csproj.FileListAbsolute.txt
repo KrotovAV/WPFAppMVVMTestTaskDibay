@@ -1,0 +1,5 @@
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.csproj.AssemblyReference.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.AssemblyInfoInputs.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.AssemblyInfo.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.csproj.CoreCompileInputs.cache

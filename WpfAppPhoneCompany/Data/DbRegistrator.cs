@@ -1,4 +1,5 @@
 ﻿using DataBaseLayer.Context;
+using DataBaseLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,7 @@ namespace WpfAppPhoneCompany.Data
                }
            })
            .AddTransient<DbInitializer>()
-           //.AddRepositoriesInDB()
+           .AddRepositoriesInDB()
         ;
     }
 }

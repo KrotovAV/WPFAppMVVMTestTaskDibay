@@ -1234,6 +1234,16 @@
             "rid": "win"
           }
         }
+      },
+      "DataInterfacesLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/DataInterfacesLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataInterfacesLayer.dll": {}
+        }
       }
     }
   },
@@ -3289,10 +3299,16 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "DataInterfacesLayer/1.0.0": {
+      "type": "project",
+      "path": "../DataInterfacesLayer/DataInterfacesLayer.csproj",
+      "msbuildProject": "../DataInterfacesLayer/DataInterfacesLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "DataInterfacesLayer >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Proxies >= 7.0.11",
@@ -3329,7 +3345,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataInterfacesLayer\\DataInterfacesLayer.csproj": {
+              "projectPath": "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataInterfacesLayer\\DataInterfacesLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

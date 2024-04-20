@@ -1536,6 +1536,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "DataInterfacesLayer": "1.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.11",
           "Microsoft.EntityFrameworkCore.Relational": "7.0.11",
@@ -1548,6 +1549,16 @@
         },
         "runtime": {
           "bin/placeholder/DataBaseLayer.dll": {}
+        }
+      },
+      "DataInterfacesLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/DataInterfacesLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataInterfacesLayer.dll": {}
         }
       }
     }
@@ -3959,6 +3970,11 @@
       "type": "project",
       "path": "../DataBaseLayer/DataBaseLayer.csproj",
       "msbuildProject": "../DataBaseLayer/DataBaseLayer.csproj"
+    },
+    "DataInterfacesLayer/1.0.0": {
+      "type": "project",
+      "path": "../DataInterfacesLayer/DataInterfacesLayer.csproj",
+      "msbuildProject": "../DataInterfacesLayer/DataInterfacesLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {

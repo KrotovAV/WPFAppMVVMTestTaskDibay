@@ -1,4 +1,4 @@
-﻿using DataBaseLayer.Entityes;
+﻿using DataBaseLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;

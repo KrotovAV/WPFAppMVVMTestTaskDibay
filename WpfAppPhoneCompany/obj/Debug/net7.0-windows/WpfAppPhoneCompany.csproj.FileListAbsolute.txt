@@ -87,3 +87,5 @@ D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataBaseLayer.dll
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataBaseLayer.pdb
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\App.xaml.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataInterfacesLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataInterfacesLayer.pdb

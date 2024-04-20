@@ -1,0 +1,11 @@
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\bin\Debug\net7.0\DataInterfacesLayer.deps.json
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\bin\Debug\net7.0\DataInterfacesLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\bin\Debug\net7.0\DataInterfacesLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.AssemblyInfoInputs.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.AssemblyInfo.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.csproj.CoreCompileInputs.cache
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\refint\DataInterfacesLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\DataInterfacesLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataInterfacesLayer\obj\Debug\net7.0\ref\DataInterfacesLayer.dll

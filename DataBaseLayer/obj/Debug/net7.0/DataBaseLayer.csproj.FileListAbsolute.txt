@@ -13,3 +13,6 @@ D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.pdb
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.genruntimeconfig.cache
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\ref\DataBaseLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataInterfacesLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\bin\Debug\net7.0\DataInterfacesLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\DataBaseLayer\obj\Debug\net7.0\DataBaseLayer.csproj.CopyComplete

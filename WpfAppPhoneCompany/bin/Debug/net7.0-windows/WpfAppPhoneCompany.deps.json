@@ -824,6 +824,7 @@
       },
       "DataBaseLayer/1.0.0": {
         "dependencies": {
+          "DataInterfacesLayer": "1.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.11",
           "Microsoft.EntityFrameworkCore.Relational": "7.0.11",
@@ -833,6 +834,11 @@
         },
         "runtime": {
           "DataBaseLayer.dll": {}
+        }
+      },
+      "DataInterfacesLayer/1.0.0": {
+        "runtime": {
+          "DataInterfacesLayer.dll": {}
         }
       }
     }
@@ -1418,6 +1424,11 @@
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
     "DataBaseLayer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DataInterfacesLayer/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

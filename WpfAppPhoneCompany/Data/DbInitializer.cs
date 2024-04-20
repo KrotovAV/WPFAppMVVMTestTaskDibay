@@ -1,5 +1,5 @@
 ﻿using DataBaseLayer.Context;
-using DataBaseLayer.Entityes;
+using DataBaseLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
