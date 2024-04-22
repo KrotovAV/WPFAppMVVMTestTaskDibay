@@ -9,11 +9,11 @@
         DataContext="{Binding Path=MainWindowModel, Source={StaticResource ResourceKey=Locator}}"
         Title="{Binding Path=Title}" 
         Height="450" Width="800">
-    <!--<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding ShowStatisticViewCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ShowAbonentsViewCommand}"/>
         </i:EventTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
     <DockPanel>
         <Menu IsMainMenu="True">
             <MenuItem Header="Абоненты" Command="{Binding Path=ShowAbonentsViewCommand}"/>

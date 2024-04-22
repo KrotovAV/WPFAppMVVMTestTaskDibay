@@ -20,31 +20,35 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Street> _Streets;
         private readonly IRepository<Phone> _Phones;
 
-        //private int _AbonentsCount;
-        //public int AbonentsCount { get => _AbonentsCount; private set => Set(ref _AbonentsCount, value); }
+        private int _AbonentsCount;
+        public int AbonentsCount { get => _AbonentsCount; private set => Set(ref _AbonentsCount, value); }
 
 
-        //#region Command ComputeStatisticCommand - Вычислить статистические данные
+        #region Command ComputeStatisticCommand - Вычислить статистические данные
+        private ICommand _ComputeStatisticCommand;
+
+        public ICommand ComputeStatisticCommand => _ComputeStatisticCommand
+            ??= new LambdaCommandAsync(OnComputeStatisticCommandExecuted, CanComputeStatisticCommandExecute);
+        private bool CanComputeStatisticCommandExecute() => true;
 
 
-        //private ICommand _ComputeStatisticCommand;
-
-        //public ICommand ComputeStatisticCommand => _ComputeStatisticCommand
-        //    ??= new LambdaCommandAsync(OnComputeStatisticCommandExecuted, CanComputeStatisticCommandExecute);
-        //private bool CanComputeStatisticCommandExecute() => true;
-
-        
-        //private async Task OnComputeStatisticCommandExecuted()
-        //{
-        //    AbonentsCount = await _Abonents.Items.CountAsync();
-        //}
-
+        private async Task OnComputeStatisticCommandExecuted()
+        {
+            AbonentsCount = await _Abonents.Items.CountAsync();
+            //var abonents = _Abonents.Items;
+            //abonents.GroupBy(abonent => abonent.Street)
+            //    .Select(abon => new { Abonent => abon.Key, Count = abon.Count() })
+            //    .OrderByDescending(street => street.Count)
+            //    .Take(5)
+            //    .ToArrayAsync();
+        }
 
 
-        
-       
 
-        //#endregion
+
+
+
+        #endregion
         public StatisticViewModel(
             IRepository<Abonent> Abonents,
             IRepository<Address> Addresses,
