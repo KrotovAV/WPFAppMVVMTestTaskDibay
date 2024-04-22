@@ -9,6 +9,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using MathCore.WPF;
+using MathCore.WPF.Commands;
+using MathCore.WPF.Converters;
+using MathCore.WPF.UIEvents;
 using System;
 using System.Diagnostics;
 using System.Windows;

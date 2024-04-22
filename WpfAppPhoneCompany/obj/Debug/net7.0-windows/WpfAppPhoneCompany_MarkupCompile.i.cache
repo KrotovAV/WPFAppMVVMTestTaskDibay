@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\App.xaml
-1-834700163
+5954813064
 
-131126537846
-249-236244894
-Views\Windows\MainWindow.xaml;
+19-442150370
+253-314348188
+Views\AddressesView.xaml;Views\PhonesView.xaml;Views\StatisticView.xaml;Views\StreetsView.xaml;Views\Windows\MainWindow.xaml;
 
-True
+False
 

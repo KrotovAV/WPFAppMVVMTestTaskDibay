@@ -75,6 +75,39 @@
           }
         }
       },
+      "MathCore/0.0.89.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MathCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/MathCore.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MathCore.WPF/0.0.44.8": {
+        "type": "package",
+        "dependencies": {
+          "MathCore": "0.0.89.1",
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.77"
+        },
+        "compile": {
+          "lib/net7.0-windows7.0/MathCore.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-windows7.0/MathCore.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -1081,6 +1114,22 @@
           }
         }
       },
+      "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "Mono.TextTemplating/2.2.1": {
         "type": "package",
         "dependencies": {
@@ -1560,6 +1609,21 @@
         "runtime": {
           "bin/placeholder/DataInterfacesLayer.dll": {}
         }
+      },
+      "PresentationLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "DataBaseLayer": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "7.0.0",
+          "Microsoft.Extensions.Hosting": "7.0.0"
+        },
+        "compile": {
+          "bin/placeholder/PresentationLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PresentationLayer.dll": {}
+        }
       }
     }
   },
@@ -1642,6 +1706,48 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "MathCore/0.0.89.1": {
+      "sha512": "1tkA0hG9QUi2x++2FtjFCpXmm+4Af9hgRmGpYqIk7jtdmJMSf0zab3JiFR+dWpo5ZvzOrC16ogl4w9JhVkNhdw==",
+      "type": "package",
+      "path": "mathcore/0.0.89.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net8.0/MathCore.dll",
+        "lib/net8.0/MathCore.xml",
+        "lib/netstandard2.0/MathCore.dll",
+        "lib/netstandard2.0/MathCore.xml",
+        "mathcore.0.0.89.1.nupkg.sha512",
+        "mathcore.nuspec"
+      ]
+    },
+    "MathCore.WPF/0.0.44.8": {
+      "sha512": "qt53YrJIw4UB6uwz1YQkOXWvDz793MsYE2pKxzP9Dh1haiKV1eXEXNCItlwk/qfGQjpLfizIf2GUIQXlV4WKKQ==",
+      "type": "package",
+      "path": "mathcore.wpf/0.0.44.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/MathCore.WPF.dll",
+        "lib/net461/MathCore.WPF.xml",
+        "lib/net47/MathCore.WPF.dll",
+        "lib/net47/MathCore.WPF.xml",
+        "lib/net48/MathCore.WPF.dll",
+        "lib/net48/MathCore.WPF.xml",
+        "lib/net5.0-windows7.0/MathCore.WPF.dll",
+        "lib/net5.0-windows7.0/MathCore.WPF.xml",
+        "lib/net6.0-windows7.0/MathCore.WPF.dll",
+        "lib/net6.0-windows7.0/MathCore.WPF.xml",
+        "lib/net7.0-windows7.0/MathCore.WPF.dll",
+        "lib/net7.0-windows7.0/MathCore.WPF.xml",
+        "lib/net8.0-windows7.0/MathCore.WPF.dll",
+        "lib/net8.0-windows7.0/MathCore.WPF.xml",
+        "lib/netcoreapp3.1/MathCore.WPF.dll",
+        "lib/netcoreapp3.1/MathCore.WPF.xml",
+        "mathcore.wpf.0.0.44.8.nupkg.sha512",
+        "mathcore.wpf.nuspec"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -3027,6 +3133,28 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
+      "sha512": "MCu674ZETgU18EbxfwIlRpUPJ02YbZenLsMCXTkpeA7KUBpXfFaOUDlEO+7UWu5AFnUoydg+aQENJkuaZPheMQ==",
+      "type": "package",
+      "path": "microsoft.xaml.behaviors.wpf/1.1.77",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Design/Microsoft.Xaml.Behaviors.Design.dll",
+        "lib/net462/Design/Microsoft.Xaml.Behaviors.DesignTools.dll",
+        "lib/net462/Microsoft.Xaml.Behaviors.dll",
+        "lib/net462/Microsoft.Xaml.Behaviors.pdb",
+        "lib/net462/Microsoft.Xaml.Behaviors.xml",
+        "lib/net6.0-windows7.0/Design/Microsoft.Xaml.Behaviors.DesignTools.dll",
+        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.dll",
+        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.pdb",
+        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.xml",
+        "microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
+        "microsoft.xaml.behaviors.wpf.nuspec",
+        "tools/Install.ps1"
+      ]
+    },
     "Mono.TextTemplating/2.2.1": {
       "sha512": "KZYeKBET/2Z0gY1WlTAK7+RHTl7GSbtvTLDXEZZojUdAPqpQNDL6tHv7VUpqfX5VEOh+uRGKaZXkuD253nEOBQ==",
       "type": "package",
@@ -3975,16 +4103,25 @@
       "type": "project",
       "path": "../DataInterfacesLayer/DataInterfacesLayer.csproj",
       "msbuildProject": "../DataInterfacesLayer/DataInterfacesLayer.csproj"
+    },
+    "PresentationLayer/1.0.0": {
+      "type": "project",
+      "path": "../PresentationLayer/PresentationLayer.csproj",
+      "msbuildProject": "../PresentationLayer/PresentationLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
       "DataBaseLayer >= 1.0.0",
+      "DataInterfacesLayer >= 1.0.0",
+      "MathCore.WPF >= 0.0.44.8",
       "Microsoft.EntityFrameworkCore >= 7.0.11",
       "Microsoft.EntityFrameworkCore.InMemory >= 7.0.11",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.11",
-      "Microsoft.Extensions.Hosting >= 7.0.1"
+      "Microsoft.Extensions.Hosting >= 7.0.1",
+      "Microsoft.Xaml.Behaviors.Wpf >= 1.1.77",
+      "PresentationLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4016,6 +4153,12 @@
           "projectReferences": {
             "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataBaseLayer\\DataBaseLayer.csproj": {
               "projectPath": "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataBaseLayer\\DataBaseLayer.csproj"
+            },
+            "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataInterfacesLayer\\DataInterfacesLayer.csproj": {
+              "projectPath": "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\DataInterfacesLayer\\DataInterfacesLayer.csproj"
+            },
+            "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\PresentationLayer\\PresentationLayer.csproj": {
+              "projectPath": "D:\\Работа\\GitProject\\WPFAppMVVMTestTaskDibay\\PresentationLayer\\PresentationLayer.csproj"
             }
           }
         }
@@ -4030,6 +4173,10 @@
       "net7.0-windows7.0": {
         "targetAlias": "net7.0-windows",
         "dependencies": {
+          "MathCore.WPF": {
+            "target": "Package",
+            "version": "[0.0.44.8, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[7.0.11, )"
@@ -4051,6 +4198,10 @@
           "Microsoft.Extensions.Hosting": {
             "target": "Package",
             "version": "[7.0.1, )"
+          },
+          "Microsoft.Xaml.Behaviors.Wpf": {
+            "target": "Package",
+            "version": "[1.1.77, )"
           }
         },
         "imports": [

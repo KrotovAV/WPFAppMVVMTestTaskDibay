@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace WpfAppPhoneCompany.Data
 {
     class DbInitializer

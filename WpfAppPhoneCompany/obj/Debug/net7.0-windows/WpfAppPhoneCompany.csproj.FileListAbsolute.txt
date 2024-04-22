@@ -89,3 +89,16 @@ D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\App.xaml.cs
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataInterfacesLayer.dll
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\DataInterfacesLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\PresentationLayer.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\PresentationLayer.pdb
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\AddressesView.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\PhonesView.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\StatisticView.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\StreetsView.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\MathCore.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\MathCore.WPF.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\bin\Debug\net7.0-windows\Microsoft.Xaml.Behaviors.dll
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\AddressesView.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\PhonesView.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\StatisticView.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\StreetsView.baml

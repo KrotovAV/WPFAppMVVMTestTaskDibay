@@ -7,6 +7,32 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\AddressesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PhonesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StatisticView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StreetsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AddressesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PhonesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StatisticView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StreetsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
