@@ -65,7 +65,7 @@ namespace WpfAppPhoneCompany.ViewModels
 
         #endregion
 
-        #region Command ShowBooksViewCommand - Отобразить представление адресов
+        #region Command ShowAddressesViewCommand - Отобразить представление адресов
 
         /// <summary>Отобразить представление адресов</summary>
         private ICommand _ShowAddressesViewCommand;
@@ -107,6 +107,28 @@ namespace WpfAppPhoneCompany.ViewModels
 
         #endregion
 
+
+        #region Command ShowAbonentsViewCommand - Отобразить представление номеров телефонов
+
+        /// <summary>Отобразить представление абонентов</summary>
+        private ICommand _ShowAbonentsViewCommand;
+
+        /// <summary>Отобразить представление абонентов</summary>
+        public ICommand ShowAbonentsViewCommand => _ShowAbonentsViewCommand
+            ??= new LambdaCommand(OnShowAbonentsViewCommandExecuted, CanShowAbonentsViewCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Отобразить представление абонентов</summary>
+        private bool CanShowAbonentsViewCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Отобразить представление абонентов</summary>
+        private void OnShowAbonentsViewCommandExecuted()
+        {
+            CurrentModel = new AbonentsViewModel(_Abonents/*, _UserDialog*/);
+        }
+
+        #endregion
+
+
         #region Command ShowStatisticViewCommand - Отобразить представление статистики
 
         /// <summary>Отобразить представление статистики</summary>
@@ -122,7 +144,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление статистики</summary>
         private void OnShowStatisticViewCommandExecuted()
         {
-            CurrentModel = new StatisticViewModel(_Abonents,_Addresses,_Phones, _Streets);
+            CurrentModel = new StatisticViewModel(_Abonents,_Addresses, _Streets, _Phones);
         }
 
         #endregion

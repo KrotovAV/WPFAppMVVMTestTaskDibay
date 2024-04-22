@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfAppPhoneCompany.Views
@@ -17,7 +18,7 @@ namespace WpfAppPhoneCompany.Views
     /// <summary>
     /// Interaction logic for StatisticView.xaml
     /// </summary>
-    public partial class StatisticView : Window
+    public partial class StatisticView : UserControl
     {
         public StatisticView()
         {

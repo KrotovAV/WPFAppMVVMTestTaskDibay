@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\AbonentsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddressesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -21,6 +24,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Styles\Main.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\ModelMainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AbonentsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AddressesView.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfAppPhoneCompany.Views
@@ -17,7 +18,7 @@ namespace WpfAppPhoneCompany.Views
     /// <summary>
     /// Interaction logic for StreetsView.xaml
     /// </summary>
-    public partial class StreetsView : Window
+    public partial class StreetsView : UserControl
     {
         public StreetsView()
         {
