@@ -2,14 +2,17 @@
 using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
+using MathCore.WPF.Converters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WpfAppPhoneCompany.Models;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -20,9 +23,11 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Street> _Streets;
         private readonly IRepository<Phone> _Phones;
 
-        private int _AbonentsCount;
-        public int AbonentsCount { get => _AbonentsCount; private set => Set(ref _AbonentsCount, value); }
+        //private int _AbonentsCount;
+        //public int AbonentsCount { get => _AbonentsCount; private set => Set(ref _AbonentsCount, value); }
 
+        public ObservableCollection<BestStreetsInfo> StatStreetAbonents { get; } = new ObservableCollection<BestStreetsInfo>();
+        
 
         #region Command ComputeStatisticCommand - Вычислить статистические данные
         private ICommand _ComputeStatisticCommand;
@@ -34,16 +39,34 @@ namespace WpfAppPhoneCompany.ViewModels
 
         private async Task OnComputeStatisticCommandExecuted()
         {
-            AbonentsCount = await _Abonents.Items.CountAsync();
-            //var abonents = _Abonents.Items;
-            //abonents.GroupBy(abonent => abonent.Street)
-            //    .Select(abon => new { Abonent => abon.Key, Count = abon.Count() })
-            //    .OrderByDescending(street => street.Count)
-            //    .Take(5)
-            //    .ToArrayAsync();
+            await ComputeStatisticAsync();
         }
 
+        private async Task ComputeStatisticAsync()
+        {
+            var bestStreet_query = _Abonents.Items
+               .GroupBy(u => u.Street)
+               .Select(group => new BestStreetsInfo{ Street = group.Key, AbonentsCount = group.Count() })
+               .OrderByDescending(u => u.AbonentsCount)
+               .Take(5)
+            ;
 
+            //var bestStreet_query = _Abonents.Items
+            //    .GroupBy(e => e.Street)
+            //    .Select(group => new {StreetName = group.Key.Name, AbonentsCount = group.Count() })
+            //    .OrderBy(dc => dc.StreetName);
+
+            //var bestStreet = await bestStreet_query.ToDictionaryAsync(group => group.Street, group => group.Count);
+            //var bestStreet = await bestStreet_query.ToArrayAsync();
+
+            //var AbonentCount = await _Abonents.Items.CountAsync();
+
+            StatStreetAbonents.Clear();
+            foreach( var bestStreet in await bestStreet_query.ToArrayAsync())
+            {
+                StatStreetAbonents.Add(bestStreet);
+            }
+        }
 
 
 
