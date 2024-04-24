@@ -13,6 +13,7 @@ namespace WpfAppPhoneCompany.ViewModels
     class AddressesViewModel : ViewModel
     {
         private readonly IRepository<Address> _AddressesRepository;
+        public IEnumerable<Address> Addresses => _AddressesRepository.Items.ToArray();
         public AddressesViewModel(IRepository<Address> AddressesRepository) 
         {
             _AddressesRepository = AddressesRepository;

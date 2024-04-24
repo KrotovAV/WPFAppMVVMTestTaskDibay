@@ -149,11 +149,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
         #endregion
 
-
-
-
-
-
         public MainWindowViewModel(
             IRepository<Abonent> Abonents,
             IRepository<Address> Addresses,
@@ -167,22 +162,6 @@ namespace WpfAppPhoneCompany.ViewModels
             _Streets = Streets;
             _ConnectAbonentService = ConnectAbonentService;
 
-
-            //Test();
-           
         }
-
-        //private async void Test()
-        //{
-        //    var abonents_count = _ConnectAbonentService.Abonents.Count();
-        //    var abonent = await _AbonentRepository.GetAsync(2);
-
-        //    var address = await _AddressRepository.GetAsync(3);
-        //    var phone = await _PhoneRepository.GetAsync(4);
-        //    var newAbonent = await _ConnectAbonentService.ConnectAbonentAsync("Semin", "Semion", "Semionovich", address, phone);
-        //    var abonents_count2 = _ConnectAbonentService.Abonents.Count();
-
-        //}
-
     }
 }

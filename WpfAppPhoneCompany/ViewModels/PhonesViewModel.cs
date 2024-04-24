@@ -12,6 +12,7 @@ namespace WpfAppPhoneCompany.ViewModels
     class PhonesViewModel : ViewModel
     {
         private readonly IRepository<Phone> _PhonesRepository;
+        public IEnumerable<Phone> Phones => _PhonesRepository.Items.ToArray();
         public PhonesViewModel(IRepository<Phone> PhonesRepository)
         {
             _PhonesRepository = PhonesRepository;

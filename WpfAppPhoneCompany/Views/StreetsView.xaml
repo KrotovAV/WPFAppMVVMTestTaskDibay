@@ -3,20 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfAppPhoneCompany.Views"
+             xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
+             d:DataContext="{d:DesignInstance {x:Type vm:StreetsViewModel}}" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-        <TextBlock VerticalAlignment="Center" 
-        HorizontalAlignment="Center" 
-        Text="Улицы"
-        FontSize="30" 
-        FontWeight="Bold">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Улицы" >
 
-            <TextBlock.Effect>
-                <DropShadowEffect ShadowDepth="1"/>
-            </TextBlock.Effect>
-        </TextBlock>
+            <DockPanel>
+                <TextBox DockPanel.Dock="Top" Text="{Binding Path=StreetFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <ListBox MinWidth="140" ItemsSource="{Binding Path=StreetsView}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}" ToolTip="{Binding Path=Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
 
     </Grid>
 </UserControl>
