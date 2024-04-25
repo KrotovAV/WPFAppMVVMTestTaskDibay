@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfAppPhoneCompany.Data;
-using PresentationLayer.Services;
+using WpfAppPhoneCompany.Services;
 using WpfAppPhoneCompany.ViewModels;
 
 namespace WpfAppPhoneCompany
@@ -18,15 +18,15 @@ namespace WpfAppPhoneCompany
     /// </summary>
     public partial class App : Application
     {
-        //public static Window ActiveWindow => Application.Current.Windows
-        //       .OfType<Window>()
-        //       .FirstOrDefault(w => w.IsActive);
+        public static Window ActiveWindow => Application.Current.Windows
+               .OfType<Window>()
+               .FirstOrDefault(w => w.IsActive);
 
-        //public static Window FocusedWindow => Application.Current.Windows
-        //   .OfType<Window>()
-        //   .FirstOrDefault(w => w.IsFocused);
+        public static Window FocusedWindow => Application.Current.Windows
+           .OfType<Window>()
+           .FirstOrDefault(w => w.IsFocused);
 
-        //public static Window CurrentWindow => FocusedWindow ?? ActiveWindow;
+        public static Window CurrentWindow => FocusedWindow ?? ActiveWindow;
 
         public static bool IsDesignTime { get; private set; } = true;
 

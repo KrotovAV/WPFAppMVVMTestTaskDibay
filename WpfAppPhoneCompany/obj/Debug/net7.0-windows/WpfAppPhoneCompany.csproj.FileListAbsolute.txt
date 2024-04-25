@@ -106,3 +106,6 @@ D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\AbonentsView.g.cs
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\AbonentsView.baml
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Templates\ModelMainView.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\StreetEditorWindow.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\StreetEditorWindow.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Infrastructure\Commands\AppCommands.baml

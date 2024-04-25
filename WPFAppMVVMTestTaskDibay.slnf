@@ -2,6 +2,9 @@
   "solution": {
     "path": "WpfAppPhoneCompany\\WpfAppPhoneCompany.sln",
     "projects": [
+      "..\\DataBaseLayer\\DataBaseLayer.csproj",
+      "..\\DataInterfacesLayer\\DataInterfacesLayer.csproj",
+      "..\\PresentationLayer\\PresentationLayer.csproj",
       "WpfAppPhoneCompany.csproj"
     ]
   }

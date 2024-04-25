@@ -1,5 +1,6 @@
 ﻿
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\App.xaml;;
+FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Infrastructure\Commands\AppCommands.xaml;;
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Templates\ModelMainView.xaml;;
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\AbonentsView.xaml;;
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\AddressesView.xaml;;
@@ -7,4 +8,5 @@ FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\Pho
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\StatisticView.xaml;;
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\StreetsView.xaml;;
 FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\Windows\MainWindow.xaml;;
+FD:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\Views\Windows\StreetEditorWindow.xaml;;
 

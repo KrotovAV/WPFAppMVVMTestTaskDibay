@@ -1,16 +1,15 @@
 ﻿using DataBaseLayer.Entities;
 using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
+using MathCore.WPF;
 using MathCore.WPF.Commands;
-using PresentationLayer.Services;
-using PresentationLayer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using WpfAppPhoneCompany.Services.Interfaces;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -21,7 +20,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Street> _Streets;
         private readonly IRepository<Phone> _Phones;
         private readonly IConnectAbonentService _ConnectAbonentService;
-
+        private readonly IUserDialog _UserDialog;
 
         #region Title : string - Заголовок
 
@@ -60,7 +59,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление улиц</summary>
         private void OnShowStreetsViewCommandExecuted()
         {
-            CurrentModel = new StreetsViewModel(_Streets /*, _UserDialog*/);
+            CurrentModel = new StreetsViewModel(_Streets, _UserDialog);
         }
 
         #endregion
@@ -80,7 +79,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление адресов</summary>
         private void OnShowAddressesViewCommandExecuted()
         {
-            CurrentModel = new AddressesViewModel(_Addresses /*, _UserDialog*/);
+            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog);
         }
 
         #endregion
@@ -102,7 +101,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление номеров телефонов</summary>
         private void OnShowPhonesViewCommandExecuted()
         {
-            CurrentModel = new PhonesViewModel(_Phones/*, _UserDialog*/);
+            CurrentModel = new PhonesViewModel(_Phones, _UserDialog);
         }
 
         #endregion
@@ -123,7 +122,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление абонентов</summary>
         private void OnShowAbonentsViewCommandExecuted()
         {
-            CurrentModel = new AbonentsViewModel(_Abonents/*, _UserDialog*/);
+            CurrentModel = new AbonentsViewModel(_Abonents, _UserDialog);
         }
 
         #endregion
@@ -154,14 +153,15 @@ namespace WpfAppPhoneCompany.ViewModels
             IRepository<Address> Addresses,
             IRepository<Phone> Phones,
             IRepository<Street> Streets,
-            IConnectAbonentService ConnectAbonentService)
+            IConnectAbonentService ConnectAbonentService,
+            IUserDialog UserDialog)
         {
             _Abonents = Abonents;
             _Addresses = Addresses;
             _Phones = Phones;
             _Streets = Streets;
             _ConnectAbonentService = ConnectAbonentService;
-
+            _UserDialog = UserDialog;
         }
     }
 }

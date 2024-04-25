@@ -13,13 +13,17 @@ using System.Windows.Data;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
+using MathCore.WPF;
+using WpfAppPhoneCompany.Services;
+using WpfAppPhoneCompany.Services.Interfaces;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
     class StreetsViewModel : ViewModel
     {
         private readonly IRepository<Street> _StreetsRepository;
-
+        private readonly IUserDialog _UserDialog;
+        
         #region Streets : ObservableCollection<Street> - Коллекция улиц
 
         /// <summary>Коллекция книг</summary>
@@ -81,7 +85,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private Street _SelectedStreet;
 
         /// <summary>Выбранная улица</summary>
-        public Street SelectedStreeet { get => _SelectedStreet; set => Set(ref _SelectedStreet, value); }
+        public Street SelectedStreet { get => _SelectedStreet; set => Set(ref _SelectedStreet, value); }
 
         #endregion
 
@@ -105,20 +109,72 @@ namespace WpfAppPhoneCompany.ViewModels
             Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
         }
 
+
         #endregion
-        public StreetsViewModel(IRepository<Street> StreetsRepository)
+
+        #region Command AddNewBookCommand - Добавление новой книги
+
+        /// <summary>Добавление новой улицы</summary>
+        private ICommand _AddNewStreetCommand;
+
+        /// <summary>Добавление новой улицы</summary>
+        public ICommand AddNewStreetCommand => _AddNewStreetCommand
+            ??= new LambdaCommand(OnAddNewStreetCommandExecuted, CanAddNewStreetCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Добавление новой улицы</summary>
+        private bool CanAddNewStreetCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Добавление новой улицы</summary>
+        private void OnAddNewStreetCommandExecuted()
+        {
+            var new_street = new Street();
+
+            if (!_UserDialog.Edit(new_street))
+                return;
+
+            _Streets.Add(_StreetsRepository.Add(new_street));
+
+            SelectedStreet = new_street;
+        }
+
+        #endregion
+
+
+        #region Command RemoveStreetCommand : Удаление указанной книги
+
+        /// <summary>Удаление указанной улицы</summary>
+        private ICommand _RemoveStreetCommand;
+
+        /// <summary>Удаление указанной улицы</summary>
+        public ICommand RemoveStreetCommand => _RemoveStreetCommand
+            ??= new LambdaCommand<Street>(OnRemoveStreetCommandExecuted, CanRemoveStreetCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Удаление указанной улицы</summary>
+        private bool CanRemoveStreetCommandExecute(Street p) => p != null || SelectedStreet != null;
+
+        /// <summary>Проверка возможности выполнения - Удаление указанной улицы</summary>
+        private void OnRemoveStreetCommandExecuted(Street p)
+        {
+            var street_to_remove = p ?? SelectedStreet;
+
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
+                return;
+
+            _StreetsRepository.Remove(street_to_remove.Id);
+
+            Streets.Remove(street_to_remove);
+            if (ReferenceEquals(SelectedStreet, street_to_remove))
+                SelectedStreet = null;
+        }
+
+        #endregion
+
+
+
+        public StreetsViewModel(IRepository<Street> StreetsRepository, IUserDialog UserDialog)
         {
             _StreetsRepository = StreetsRepository;
-
-            //_StreetsViewSource = new CollectionViewSource
-            //{
-            //    Source = _StreetsRepository.Items.ToArray(),
-            //    SortDescriptions = 
-            //    {
-            //        new SortDescription(nameof(Street.Name), ListSortDirection.Ascending)
-            //    }
-            //};
-            //_StreetsViewSource.Filter += OnStreetsFilter;
+            _UserDialog = UserDialog;
         }
         private void OnStreetsFilter(object Sender, FilterEventArgs E)
         {
