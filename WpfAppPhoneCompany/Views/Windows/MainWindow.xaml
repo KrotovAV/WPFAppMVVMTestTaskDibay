@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfAppPhoneCompany"
+        xmlns:cmd="clr-namespace:WpfAppPhoneCompany.Infrastructure.Commands"
         mc:Ignorable="d"
         DataContext="{Binding Path=MainWindowModel, Source={StaticResource ResourceKey=Locator}}"
         Title="{Binding Path=Title}" 
@@ -15,24 +16,31 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход">
+                    <MenuItem.Command>
+                        <cmd:CloseApplicationCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="О программе"/>
+            </MenuItem>
+        </Menu>
         <Menu IsMainMenu="True">
-            <MenuItem Header="Абоненты" Command="{Binding Path=ShowAbonentsViewCommand}"/>
-            <MenuItem Header="Номера" Command="{Binding Path=ShowPhonesViewCommand}"/>
-            <MenuItem Header="Улицы" Command="{Binding Path=ShowStreetsViewCommand}"/>
-            <MenuItem Header="Адреса" Command="{Binding Path=ShowAddressesViewCommand}"/>
-            <MenuItem Header="Стаитстика" Command="{Binding Path=ShowStatisticViewCommand}"/>
+            <MenuItem Header="Абоненты" Command="{Binding ShowAbonentsViewCommand}"/>
+            <MenuItem Header="Номера" Command="{Binding ShowPhonesViewCommand}"/>
+            <MenuItem Header="Улицы" Command="{Binding ShowStreetsViewCommand}"/>
+            <MenuItem Header="Адреса" Command="{Binding ShowAddressesViewCommand}"/>
+            <MenuItem Header="Стаитстика" Command="{Binding ShowStatisticViewCommand}"/>
         </Menu>
         <StatusBar>
             <StatusBarItem>В разработке!!!</StatusBarItem>
         </StatusBar>
         <Grid>
-            <!--<Grid.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="../../Templates/ModelMainView.xaml"/>
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </Grid.Resources>-->
+            
+
             <ContentControl Content="{Binding Path=CurrentModel}"/>
         </Grid>
     </DockPanel>

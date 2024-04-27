@@ -3,5 +3,6 @@
                     xmlns:local="clr-namespace:WpfAppPhoneCompany.Infrastructure.Commands">
 
     <local:DialogResultCommand x:Key="DialogResultCommand" />
+    <local:DialogResultCommand x:Key="CloseApplicationCommand" />
 
 </ResourceDictionary>

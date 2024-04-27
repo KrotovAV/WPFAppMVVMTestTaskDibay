@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfAppPhoneCompany.Services.Interfaces;
 
@@ -129,23 +130,24 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region Command ShowStatisticViewCommand - Отобразить представление статистики
-
-        /// <summary>Отобразить представление статистики</summary>
         private ICommand _ShowStatisticViewCommand;
-
-        /// <summary>Отобразить представление статистики</summary>
         public ICommand ShowStatisticViewCommand => _ShowStatisticViewCommand
             ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecute);
-
-        /// <summary>Проверка возможности выполнения - Отобразить представление статистики</summary>
         private bool CanShowStatisticViewCommandExecute() => true;
-
-        /// <summary>Логика выполнения - Отобразить представление статистики</summary>
         private void OnShowStatisticViewCommandExecuted()
         {
             CurrentModel = new StatisticViewModel(_Abonents,_Addresses, _Streets, _Phones);
         }
+        #endregion
 
+
+        #region CloseApplicationCommand
+        public ICommand CloseApplicationCommand { get; }
+        private bool CanCloseApplicationCommandExecute(object p) => true;
+        private void OnCloseApplicationCommandExecuted(object p)
+        {
+            Application.Current.Shutdown();
+        }
         #endregion
 
         public MainWindowViewModel(
@@ -162,6 +164,9 @@ namespace WpfAppPhoneCompany.ViewModels
             _Streets = Streets;
             _ConnectAbonentService = ConnectAbonentService;
             _UserDialog = UserDialog;
+
+            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+
         }
     }
 }

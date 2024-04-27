@@ -19,24 +19,43 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Улицы" >
+        <GroupBox Grid.Column="0" Header="Улицы" >
 
             <DockPanel>
                 <TextBox DockPanel.Dock="Top" Text="{Binding Path=StreetFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1">
-                    <Button Content="Добавить" Margin="3" Command="{Binding Path=AddNewStreetCommand}"/>
+                    <Button Content="Добавить" Margin="3" 
+                            Command="{Binding Path=AddNewStreetCommand}"/>
                     <Button Content="Удалить" Margin="3" 
                             Command="{Binding Path=RemoveStreetCommand}"
                             CommandParameter="{Binding Path=SelectedStreet}"/>
                 </UniformGrid>
-                <ListBox MinWidth="140" ItemsSource="{Binding Path=StreetsView}"
-                         SelectedItem="{Binding Path=SelectedStreet}">
+                <ListBox MinWidth="140" ItemsSource="{Binding StreetsView}"
+                         SelectedItem="{Binding SelectedStreet}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=Name}" ToolTip="{Binding Path=Name}" />
+                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            </DockPanel>
+        </GroupBox>
+        
+        <GroupBox Grid.Column="1" Header="Абоненты"
+                  
+                  >
+            <DockPanel>
+                <DataGrid>
+                    <DataGridTemplateColumn Header="Фамилия" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Имя" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Отчество" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Улица" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Дом" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Кв." Width="Auto"/>
+                    <DataGridTemplateColumn Header="Номер дом." Width="Auto"/>
+                    <DataGridTemplateColumn Header="Номер раб." Width="Auto"/>
+                    <DataGridTemplateColumn Header="Номер моб." Width="Auto"/>
+                </DataGrid>
             </DockPanel>
         </GroupBox>
 

@@ -23,7 +23,10 @@ namespace WpfAppPhoneCompany.ViewModels
     {
         private readonly IRepository<Street> _StreetsRepository;
         private readonly IUserDialog _UserDialog;
-        
+
+     
+
+
         #region Streets : ObservableCollection<Street> - Коллекция улиц
 
         /// <summary>Коллекция книг</summary>
@@ -74,12 +77,12 @@ namespace WpfAppPhoneCompany.ViewModels
 
         private CollectionViewSource _StreetsViewSource;
 
-        public ICollectionView StreetsView => _StreetsViewSource.View;
+        public ICollectionView StreetsView => _StreetsViewSource?.View;
 
         //public IEnumerable<Street> Streets => _StreetsRepository.Items.ToArray();
 
 
-        #region SelectedBook : Street - Выбранная улица
+        #region SelectedBook : SelectedSStreet - Выбранная улица
 
         /// <summary>Выбранная улица</summary>
         private Street _SelectedStreet;
