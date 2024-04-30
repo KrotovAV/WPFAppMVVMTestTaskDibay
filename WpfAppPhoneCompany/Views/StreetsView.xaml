@@ -22,41 +22,48 @@
         <GroupBox Grid.Column="0" Header="Улицы" >
 
             <DockPanel>
-                <TextBox DockPanel.Dock="Top" Text="{Binding Path=StreetFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox DockPanel.Dock="Top" Text="{Binding StreetFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1">
                     <Button Content="Добавить" Margin="3" 
-                            Command="{Binding Path=AddNewStreetCommand}"/>
+                            Command="{Binding AddNewStreetCommand}"/>
                     <Button Content="Удалить" Margin="3" 
-                            Command="{Binding Path=RemoveStreetCommand}"
-                            CommandParameter="{Binding Path=SelectedStreet}"/>
+                            Command="{Binding RemoveStreetCommand}"
+                            CommandParameter="{Binding SelectedStreet}"/>
                 </UniformGrid>
                 <ListBox MinWidth="140" ItemsSource="{Binding StreetsView}"
+                         
                          SelectedItem="{Binding SelectedStreet}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}"/>
+                            
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </DockPanel>
         </GroupBox>
-        
-        <GroupBox Grid.Column="1" Header="Абоненты"
-                  
-                  >
+
+        <GroupBox Grid.Column="1" Header="{Binding SelectedStreet.Name, 
+                                                    FallbackValue= 'Абоненты',
+                                                    TargetNullValue='Улица не выбрана'}">
             <DockPanel>
-                <DataGrid>
-                    <DataGridTemplateColumn Header="Фамилия" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Имя" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Отчество" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Улица" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Дом" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Кв." Width="Auto"/>
-                    <DataGridTemplateColumn Header="Номер дом." Width="Auto"/>
-                    <DataGridTemplateColumn Header="Номер раб." Width="Auto"/>
-                    <DataGridTemplateColumn Header="Номер моб." Width="Auto"/>
+                <DataGrid ItemsSource="{Binding SelectedStreet.Abonents}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="true"
+                          GridLinesVisibility="Vertical"
+                          VerticalGridLinesBrush="LightGray"
+                          AlternatingRowBackground="LightGray"
+                          HorizontalGridLinesBrush="{x:Null}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding SurName}" Width="Auto"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding SecondName}" Width="Auto"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
+
+
+
         </GroupBox>
 
     </Grid>

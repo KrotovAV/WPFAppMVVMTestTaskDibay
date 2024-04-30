@@ -60,7 +60,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление улиц</summary>
         private void OnShowStreetsViewCommandExecuted()
         {
-            CurrentModel = new StreetsViewModel(_Streets, _UserDialog);
+            CurrentModel = new StreetsViewModel(_Streets, _UserDialog, _Abonents);
         }
 
         #endregion

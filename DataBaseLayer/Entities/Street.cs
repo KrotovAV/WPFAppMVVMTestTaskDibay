@@ -12,8 +12,8 @@ namespace DataBaseLayer.Entities
         //public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Abonent> Abonents { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Abonent> Abonents { get; set; } = new HashSet<Abonent>();
+        public virtual ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
 
         public override string ToString() => $"Улица {Name}";
     }

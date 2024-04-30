@@ -33,7 +33,7 @@
             <MenuItem Header="Номера" Command="{Binding ShowPhonesViewCommand}"/>
             <MenuItem Header="Улицы" Command="{Binding ShowStreetsViewCommand}"/>
             <MenuItem Header="Адреса" Command="{Binding ShowAddressesViewCommand}"/>
-            <MenuItem Header="Стаитстика" Command="{Binding ShowStatisticViewCommand}"/>
+            <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>
         </Menu>
         <StatusBar>
             <StatusBarItem>В разработке!!!</StatusBarItem>

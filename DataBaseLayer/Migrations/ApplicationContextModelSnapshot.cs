@@ -25,7 +25,7 @@ namespace DataBaseLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Abonent", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Abonent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace DataBaseLayer.Migrations
                     b.ToTable("Abonents");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Address", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace DataBaseLayer.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Phone", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Phone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace DataBaseLayer.Migrations
                     b.ToTable("Phones");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Street", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Street", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,13 +125,13 @@ namespace DataBaseLayer.Migrations
                     b.ToTable("Streets");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Abonent", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Abonent", b =>
                 {
-                    b.HasOne("DataBaseLayer.Entityes.Address", "Address")
+                    b.HasOne("DataBaseLayer.Entities.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("DataBaseLayer.Entityes.Street", "Street")
+                    b.HasOne("DataBaseLayer.Entities.Street", "Street")
                         .WithMany("Abonents")
                         .HasForeignKey("StreetId");
 
@@ -140,18 +140,18 @@ namespace DataBaseLayer.Migrations
                     b.Navigation("Street");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Address", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Address", b =>
                 {
-                    b.HasOne("DataBaseLayer.Entityes.Street", "Street")
+                    b.HasOne("DataBaseLayer.Entities.Street", "Street")
                         .WithMany("Addresses")
                         .HasForeignKey("StreetId");
 
                     b.Navigation("Street");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Phone", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Phone", b =>
                 {
-                    b.HasOne("DataBaseLayer.Entityes.Abonent", "Abonent")
+                    b.HasOne("DataBaseLayer.Entities.Abonent", "Abonent")
                         .WithMany("Phones")
                         .HasForeignKey("AbonentId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -159,12 +159,12 @@ namespace DataBaseLayer.Migrations
                     b.Navigation("Abonent");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Abonent", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Abonent", b =>
                 {
                     b.Navigation("Phones");
                 });
 
-            modelBuilder.Entity("DataBaseLayer.Entityes.Street", b =>
+            modelBuilder.Entity("DataBaseLayer.Entities.Street", b =>
                 {
                     b.Navigation("Abonents");
 

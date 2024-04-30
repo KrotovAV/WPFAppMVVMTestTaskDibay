@@ -24,7 +24,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Street> _StreetsRepository;
         private readonly IUserDialog _UserDialog;
 
-     
+        private readonly IRepository<Abonent> _AbonentsRepository;
 
 
         #region Streets : ObservableCollection<Street> - Коллекция улиц
@@ -59,6 +59,9 @@ namespace WpfAppPhoneCompany.ViewModels
 
         #endregion
 
+
+
+
         #region Поиск
         /// <summary> Искомое слово </summary>
         private string _StreetFilter;
@@ -88,7 +91,10 @@ namespace WpfAppPhoneCompany.ViewModels
         private Street _SelectedStreet;
 
         /// <summary>Выбранная улица</summary>
-        public Street SelectedStreet { get => _SelectedStreet; set => Set(ref _SelectedStreet, value); }
+        public Street SelectedStreet { 
+            get => _SelectedStreet; 
+            set => Set(ref _SelectedStreet, value); 
+        }
 
         #endregion
 
@@ -174,10 +180,11 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
 
-        public StreetsViewModel(IRepository<Street> StreetsRepository, IUserDialog UserDialog)
+        public StreetsViewModel(IRepository<Street> StreetsRepository, IUserDialog UserDialog, IRepository<Abonent> abonentsRepository)
         {
             _StreetsRepository = StreetsRepository;
             _UserDialog = UserDialog;
+            _AbonentsRepository = abonentsRepository;
         }
         private void OnStreetsFilter(object Sender, FilterEventArgs E)
         {

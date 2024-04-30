@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseLayer.Repositories
 {
-    internal class DbRepository<T> : IRepository<T> where T : Entity, new()
+    public class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly ApplicationContext _db;
         private readonly DbSet<T> _Set;

@@ -1,5 +1,6 @@
 ﻿using DataBaseLayer.Context;
 using DataBaseLayer.Entities;
+using MathCore.WPF.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,6 +27,8 @@ namespace WpfAppPhoneCompany.Data
         }
         public async Task InitializeAsync()
         {
+            if (await _db.Streets.AnyAsync()) return;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация БД...");
 
@@ -35,17 +38,17 @@ namespace WpfAppPhoneCompany.Data
 
             //_db.Database.EnsureCreated();
 
-            _Logger.LogInformation("Миграция БД...");
-            await _db.Database.MigrateAsync().ConfigureAwait(false);
-            _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
+            //_Logger.LogInformation("Миграция БД...");
+            //await _db.Database.MigrateAsync().ConfigureAwait(false);
+            //_Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
 
-            if (await _db.Streets.AnyAsync()) return;
+            
             await InitializeStreets();
             await InitializeAddresses();
             await InitializePhones();
-            await InitializeAbonents().ConfigureAwait(false); 
-            
-   
+            await InitializeAbonents().ConfigureAwait(false);
+
+
 
             _Logger.LogInformation("Инициализация БД выполнена за {0} с", timer.Elapsed.TotalSeconds);
         }
@@ -135,10 +138,16 @@ namespace WpfAppPhoneCompany.Data
                    SecondName = $"Отчество {i}",
                    SurName = $"Фамилия {i}",
                    Address = rnd.NextItem(_Addresses),
-                   Phones = listPhones
+                   Phones = listPhones,
                })
                .ToArray();
-
+           
+            //foreach (var abo in _Abonents)
+            //{
+            //    var str = _Streets.FirstOrDefault(x => x.Id == abo.StreetId);
+            //    if (str != null) abo.Street = str;
+            //}
+            
             await _db.Abonents.AddRangeAsync(_Abonents);
             await _db.SaveChangesAsync();
 

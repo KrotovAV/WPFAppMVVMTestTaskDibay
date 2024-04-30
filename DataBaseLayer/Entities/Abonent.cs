@@ -15,10 +15,10 @@ namespace DataBaseLayer.Entities
         public string SurName { get; set; }
 
         public int? AddressId { get; set; } // внешний ключ
-        public virtual Address? Address { get; set; }//навигацинное свойство
-        public virtual int? StreetId { get; set; } // внешний ключ
-        public virtual Street? Street { get; set; }//навигацинное свойство
-        public virtual ICollection<Phone>? Phones { get; set; }
+        public virtual Address? Address { get; set; }//навигационное свойство
+        public int? StreetId { get; set; } // внешний ключ
+        public virtual Street? Street { get; set; }//навигационное свойство
+        public virtual ICollection<Phone>? Phones { get; set; } = new HashSet<Phone>();
 
         public override string ToString() => $"Абонент {SurName} {Name} {SecondName}";
 
