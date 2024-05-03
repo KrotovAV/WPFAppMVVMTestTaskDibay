@@ -3,22 +3,103 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfAppPhoneCompany.Views"
              xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type vm:PhonesViewModel}}" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
     <Grid>
-        <TextBlock VerticalAlignment="Center" 
-        HorizontalAlignment="Center" 
-        Text="Номера"
-        FontSize="30" 
-        FontWeight="Bold">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
 
-            <TextBlock.Effect>
-                <DropShadowEffect ShadowDepth="1"/>
-            </TextBlock.Effect>
-        </TextBlock>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Номера" >
 
+            <DockPanel>
+                <TextBox DockPanel.Dock="Top" Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
+                    <Button Content="Добавить" Margin="3" MinWidth="64"                    
+                            Command="{Binding AddNewPhoneCommand}"/>
+                    <Button Content="Удалить" Margin="3" MinWidth="64"
+                            Command="{Binding RemovePhoneCommand}"
+                            CommandParameter="{Binding SelectedPhone}"/>
+                </UniformGrid>
+
+                <DataGrid ItemsSource="{Binding PhonesView}" 
+                      SelectedItem="{Binding SelectedPhone}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Номер" Binding="{Binding Number}" Width="100"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding PhoneType}" Width="*"/>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" >
+            <GroupBox.Header>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding  StringFormat="{} Номер: {0} Тип: {1}">
+                            <Binding Path="SelectedPhone.Number"/>
+                            <Binding Path="SelectedPhone.TypePhone"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </GroupBox.Header>
+            <DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Абонент:" Margin="3" Grid.Column="0" Grid.Row="0"/>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="100">
+                        <TextBlock Text="Фамилия:"/>
+                        <TextBlock Text="Имя:"/>
+                        <TextBlock Text="Отчество:"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Grid.Row="0" Margin="3" >
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.SurName}"/>
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.Name}"/>
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.SecondName}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Адрес:" Margin="3" Grid.Column="0" Grid.Row="1"/>
+
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="3" MinWidth="100">
+                        <TextBlock Text="Улица:"/>
+                        <TextBlock Text="Дом:"/>
+                        <TextBlock Text="Квартира:"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Grid.Row="1" Margin="3" >
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.Address.Street}"/>
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.Address.House}"/>
+                        <TextBlock Text="{Binding SelectedPhone.Abonent.Address.ApartNum}"/>
+                    </StackPanel>
+
+
+                </Grid>
+            </DockPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

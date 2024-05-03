@@ -71,6 +71,8 @@ namespace WpfAppPhoneCompany.ViewModels
             }
         }
         #endregion
+
+
         private CollectionViewSource _AbonentsViewSource;
 
         public ICollectionView AbonentsView => _AbonentsViewSource?.View;
@@ -86,7 +88,6 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             get => _SelectedAbonent;
             set => Set(ref _SelectedAbonent, value);
-
         }
 
         #endregion
@@ -107,7 +108,6 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команда загрузки данных из репозитория</summary>
         private async Task OnLoadDataCommandExecuted()
         {
-            //Streets = (await _StreetsRepository.Items.ToArrayAsync()).ToObservableCollection();
             Abonents = new ObservableCollection<Abonent>(await _AbonentsRepository.Items.ToArrayAsync());
         }
         #endregion
