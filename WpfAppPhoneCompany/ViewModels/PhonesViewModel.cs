@@ -13,12 +13,12 @@ namespace WpfAppPhoneCompany.ViewModels
     class PhonesViewModel : ViewModel
     {
         private readonly IRepository<Phone> _PhonesRepository;
-        private readonly IUserDialog _UserDialog;
+        private readonly IUserDialog<Phone> _UserPhoneDialog;
         public IEnumerable<Phone> Phones => _PhonesRepository.Items.ToArray();
-        public PhonesViewModel(IRepository<Phone> PhonesRepository, IUserDialog UserDialog)
+        public PhonesViewModel(IRepository<Phone> PhonesRepository, IUserDialog<Phone> UserPhoneDialog)
         {
             _PhonesRepository = PhonesRepository;
-            _UserDialog = UserDialog;
+            _UserPhoneDialog = UserPhoneDialog;
         }
     }
 }

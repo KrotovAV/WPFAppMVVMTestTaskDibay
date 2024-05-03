@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\App.xaml
-10-53912411
+11149060306
 
-32-1376632114
+371492321381
 253-314348188
-Infrastructure\Commands\AppCommands.xaml;Styles\Main.xaml;Templates\ModelMainView.xaml;Views\AbonentsView.xaml;Views\AddressesView.xaml;Views\PhonesView.xaml;Views\StatisticView.xaml;Views\StreetsView.xaml;Views\Windows\MainWindow.xaml;Views\Windows\StreetEditorWindow.xaml;
+Infrastructure\Commands\AppCommands.xaml;Styles\Main.xaml;Templates\ModelMainView.xaml;Views\AbonentsView.xaml;Views\AddressesView.xaml;Views\PhonesView.xaml;Views\StatisticView.xaml;Views\StreetsView.xaml;Views\Windows\AbonentEditorWindow.xaml;Views\Windows\MainWindow.xaml;Views\Windows\StreetEditorWindow.xaml;
 
-True
+False
 

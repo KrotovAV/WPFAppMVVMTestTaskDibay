@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseLayer.Repositories
 {
-    class AddressRepository : DbRepository<Address>
+    public class AddressRepository : DbRepository<Address>
     {
         public override IQueryable<Address> Items => base.Items.Include(item => item.Street);
 

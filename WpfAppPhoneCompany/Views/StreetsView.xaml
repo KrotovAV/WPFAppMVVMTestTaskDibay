@@ -18,6 +18,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
+            
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Улицы" >
 
@@ -47,24 +49,37 @@
                                                     FallbackValue= 'Абоненты',
                                                     TargetNullValue='Улица не выбрана'}">
             <DockPanel>
-                <DataGrid ItemsSource="{Binding SelectedStreet.Abonents}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="true"
-                          GridLinesVisibility="Vertical"
-                          VerticalGridLinesBrush="LightGray"
-                          AlternatingRowBackground="LightGray"
-                          HorizontalGridLinesBrush="{x:Null}">
+                <DataGrid ItemsSource="{Binding SelectedStreet.Abonents}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Фамилия" Binding="{Binding SurName}" Width="Auto"/>
                         <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto"/>
-                        <DataGridTextColumn Header="Отчество" Binding="{Binding SecondName}" Width="Auto"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding SecondName}" Width="*"/>
+                        <DataGridTextColumn Header="Адрес" Binding="{Binding Address.Street.Name}" Width="*"/>
+                        <DataGridTextColumn Header="Дом" Binding="{Binding Address.House}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
 
+        </GroupBox>
+        
+        
 
+        <GroupBox Grid.Column="2" Header="Номера">
+            <DockPanel>
+                <DataGrid ItemsSource="{Binding SelectedStreet.Addresses}">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Номер" Binding="{Binding Address}" Width="*"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding Address}" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
 
         </GroupBox>
+
+
+
+
 
     </Grid>
 </UserControl>

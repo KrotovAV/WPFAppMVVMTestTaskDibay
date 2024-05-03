@@ -22,17 +22,17 @@ namespace WpfAppPhoneCompany.ViewModels
     class StreetsViewModel : ViewModel
     {
         private readonly IRepository<Street> _StreetsRepository;
-        private readonly IUserDialog _UserDialog;
+        private readonly IUserDialog<Street> _UserStreetDialog;
 
         private readonly IRepository<Abonent> _AbonentsRepository;
-
+        private readonly IRepository<Address> _AddressesRepository;
 
         #region Streets : ObservableCollection<Street> - Коллекция улиц
 
-        /// <summary>Коллекция книг</summary>
+        /// <summary>Коллекция улиц</summary>
         private ObservableCollection<Street> _Streets;
 
-        /// <summary>Коллекция книг</summary>
+        /// <summary>Коллекция улиц</summary>
         public ObservableCollection<Street> Streets
         {
             get => _Streets;
@@ -60,7 +60,8 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
 
-
+        
+      
 
         #region Поиск
         /// <summary> Искомое слово </summary>
@@ -85,7 +86,7 @@ namespace WpfAppPhoneCompany.ViewModels
         //public IEnumerable<Street> Streets => _StreetsRepository.Items.ToArray();
 
 
-        #region SelectedBook : SelectedSStreet - Выбранная улица
+        #region SelectedBook : SelectedStreet - Выбранная улица
 
         /// <summary>Выбранная улица</summary>
         private Street _SelectedStreet;
@@ -97,7 +98,6 @@ namespace WpfAppPhoneCompany.ViewModels
         }
 
         #endregion
-
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
 
@@ -138,7 +138,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var new_street = new Street();
 
-            if (!_UserDialog.Edit(new_street))
+            if (!_UserStreetDialog.Edit(new_street))
                 return;
 
             _Streets.Add(_StreetsRepository.Add(new_street));
@@ -166,7 +166,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var street_to_remove = p ?? SelectedStreet;
 
-            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
+            if (!_UserStreetDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
                 return;
 
             _StreetsRepository.Remove(street_to_remove.Id);
@@ -180,11 +180,16 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
 
-        public StreetsViewModel(IRepository<Street> StreetsRepository, IUserDialog UserDialog, IRepository<Abonent> abonentsRepository)
+        public StreetsViewModel(
+            IRepository<Street> StreetsRepository, 
+            IUserDialog<Street> UserStreetDialog, 
+            IRepository<Abonent> abonentsRepository,
+            IRepository<Address> addressesRepository)
         {
             _StreetsRepository = StreetsRepository;
-            _UserDialog = UserDialog;
+            _UserStreetDialog = UserStreetDialog;
             _AbonentsRepository = abonentsRepository;
+            _AddressesRepository = addressesRepository;
         }
         private void OnStreetsFilter(object Sender, FilterEventArgs E)
         {

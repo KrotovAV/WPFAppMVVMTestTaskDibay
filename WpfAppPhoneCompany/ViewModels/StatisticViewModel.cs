@@ -62,7 +62,7 @@ namespace WpfAppPhoneCompany.ViewModels
             //var AbonentCount = await _Abonents.Items.CountAsync();
 
             StatStreetAbonents.Clear();
-            foreach( var bestStreet in await bestStreet_query.ToArrayAsync())
+            foreach(var bestStreet in await bestStreet_query.ToArrayAsync())
             {
                 StatStreetAbonents.Add(bestStreet);
             }

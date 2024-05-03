@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseLayer.Repositories
 {
-    internal class StreetRepository : DbRepository<Street>
+    public class StreetRepository : DbRepository<Street>
     {
         public override IQueryable<Street> Items => base.Items.Include("Abonents");
 

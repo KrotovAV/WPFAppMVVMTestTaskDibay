@@ -18,95 +18,49 @@ namespace ConsoleApp
             const string connection = "Server=DESKTOP-IFVARIJ\\SQLEXPRESS;Database=PhoneCompanyDB;User Id=Admin;Password=MsSQLavk;TrustServerCertificate=True";
             using var db = new ApplicationContext(new DbContextOptionsBuilder<ApplicationContext>().UseSqlServer(connection).Options);
 
-            var abos = db.Abonents.ToList();
-            if (abos != null)
+            //var abos = db.Abonents.Take(5).ToList();
+            //if (abos != null)
+            //{
+            //    Console.WriteLine($"есть абоненты: {abos.Count()} шт");
+               
+            //    foreach (var abo in abos)
+            //    {
+            //        Console.WriteLine(abo.AddressId);
+            //        var addr = db.Addresses.FirstOrDefault(x => x.Id == abo.AddressId);
+            //        //Console.WriteLine(addr.Street);
+            //        Console.WriteLine(addr);
+            //    }
+            //}
+            //else Console.WriteLine($"нет абонентов");
+
+            AbonentRepository abosRepo = new AbonentRepository(db);
+            var abosR = abosRepo.Items.Take(5).ToList();
+            foreach (var abo in abosR)
             {
-                Console.WriteLine($"есть абоненты");
-                foreach (var abo in abos)
+                Console.WriteLine(abo.Name);
+                Console.WriteLine(abo.Address);
+                if(abo.Phones != null)
                 {
-                    Console.WriteLine(abo.StreetId);
-                    Console.WriteLine($"***");
-                    var str = db.Streets.FirstOrDefault(x => x.Id == abo.StreetId);
-                    if (str != null)
+                    foreach (var phone in abo.Phones)
                     {
-                        str.Abonents.Add(abo);
-                        db.SaveChanges();
+                        Console.WriteLine(phone);
                     }
                 }
             }
-            else Console.WriteLine($"нет абонентов");
 
 
-            //-------------------------
+            AddressRepository adrsRepo = new AddressRepository(db);
+            var adrsR = adrsRepo.Items.ToList();
+            //foreach (var abo in abosR)
+            //{
+            //    Console.WriteLine(abo.Street);
+            //}
+
+            StreetRepository strsRepo = new StreetRepository(db);
+            var strsR = strsRepo.Items.ToList();
 
 
-            var strs2 = db.Streets.ToList();
-            if (strs2 != null)
-            {
-                foreach (var s in strs2)
-                {
-                    Console.WriteLine("*****************");
-                    Console.WriteLine(s.Name);
-                    Console.WriteLine("Список абонентов");
 
-                    if (s.Abonents != null)
-                    {
-                        foreach (var abs in s.Abonents)
-                        {
-                            Console.WriteLine("абонент:" + abs.Name);
-
-                        }
-                        Console.WriteLine("---------");
-                    }
-                    else Console.WriteLine($"У улицы {s.Name}: нет абонентов");
-                }
-            }
-
-            Console.WriteLine("------------------------");
-            Console.WriteLine("/////////////////////////");
-            Console.WriteLine("------------------------");
-
-            var result = db.Streets.FirstOrDefault();
-            if (result != null)
-            {
-                Console.WriteLine(result.Name);
-
-                if (result.Abonents != null)
-                {
-                    foreach (var abs in result.Abonents)
-                    {
-                        Console.WriteLine("аб:" + abs.Name);
-
-                    }
-                    Console.WriteLine("---------");
-                }
-            }
-            else Console.WriteLine(" db.Streets.FirstOrDefault() - пустой");
-
-            Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-");
-            Console.WriteLine("------------------------");
-            Console.WriteLine("------------------------");
-
-
-            using var db2 = new ApplicationContext(new DbContextOptionsBuilder<ApplicationContext>().UseSqlServer(connection).Options);
-            Console.WriteLine("************************");
-            Console.WriteLine("------------------------");
-
-            var result22 = db2.Streets.FirstOrDefault(x => x.Name == "Улица 4");
-            if (result22 != null)
-            {
-                Console.WriteLine(result22.Name);
-
-                if (result22.Abonents != null)
-                {
-                    foreach (var abs in result22.Abonents)
-                    {
-                        Console.WriteLine("аб:" + abs.Name);
-
-                    }
-                    Console.WriteLine("---------");
-                }
-            }
 
 
             Console.WriteLine("End");

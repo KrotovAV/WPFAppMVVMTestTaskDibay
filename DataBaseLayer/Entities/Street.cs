@@ -15,6 +15,6 @@ namespace DataBaseLayer.Entities
         public virtual ICollection<Abonent> Abonents { get; set; } = new HashSet<Abonent>();
         public virtual ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
 
-        public override string ToString() => $"Улица {Name}";
+        public override string ToString() => $"{Name}";
     }
 }

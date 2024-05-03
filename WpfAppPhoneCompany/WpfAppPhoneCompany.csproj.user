@@ -22,6 +22,9 @@
     <Compile Update="Views\StreetsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Windows\AbonentEditorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Windows\StreetEditorWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StreetsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\AbonentEditorWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\MainWindow.xaml">

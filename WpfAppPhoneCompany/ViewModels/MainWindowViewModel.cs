@@ -21,7 +21,10 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Street> _Streets;
         private readonly IRepository<Phone> _Phones;
         private readonly IConnectAbonentService _ConnectAbonentService;
-        private readonly IUserDialog _UserDialog;
+        private readonly IUserDialog<Street> _UserStreetDialog;
+        private readonly IUserDialog<Abonent> _UserAbonentDialog;
+        private readonly IUserDialog<Phone> _UserPhoneDialog;
+        private readonly IUserDialog<Address> _UserAddressDialog;
 
         #region Title : string - Заголовок
 
@@ -60,7 +63,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление улиц</summary>
         private void OnShowStreetsViewCommandExecuted()
         {
-            CurrentModel = new StreetsViewModel(_Streets, _UserDialog, _Abonents);
+            CurrentModel = new StreetsViewModel(_Streets, _UserStreetDialog, _Abonents, _Addresses);
         }
 
         #endregion
@@ -80,7 +83,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление адресов</summary>
         private void OnShowAddressesViewCommandExecuted()
         {
-            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog);
+            CurrentModel = new AddressesViewModel(_Addresses , _UserAddressDialog);
         }
 
         #endregion
@@ -102,7 +105,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление номеров телефонов</summary>
         private void OnShowPhonesViewCommandExecuted()
         {
-            CurrentModel = new PhonesViewModel(_Phones, _UserDialog);
+            CurrentModel = new PhonesViewModel(_Phones, _UserPhoneDialog);
         }
 
         #endregion
@@ -123,7 +126,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление абонентов</summary>
         private void OnShowAbonentsViewCommandExecuted()
         {
-            CurrentModel = new AbonentsViewModel(_Abonents, _UserDialog);
+            CurrentModel = new AbonentsViewModel(_Abonents, _UserAbonentDialog);
         }
 
         #endregion
@@ -156,17 +159,25 @@ namespace WpfAppPhoneCompany.ViewModels
             IRepository<Phone> Phones,
             IRepository<Street> Streets,
             IConnectAbonentService ConnectAbonentService,
-            IUserDialog UserDialog)
+            IUserDialog<Street> UserStreetDialog,
+            IUserDialog<Abonent> userAbonentDialog,
+            IUserDialog<Phone> userPhoneDialog,
+            IUserDialog<Address> userAddressDialog)
         {
             _Abonents = Abonents;
             _Addresses = Addresses;
             _Phones = Phones;
             _Streets = Streets;
             _ConnectAbonentService = ConnectAbonentService;
-            _UserDialog = UserDialog;
+
+            _UserStreetDialog = UserStreetDialog;
+            _UserAbonentDialog = userAbonentDialog;
+            _UserPhoneDialog = userPhoneDialog;
+            _UserAddressDialog = userAddressDialog;
+
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
-
+           
         }
     }
 }

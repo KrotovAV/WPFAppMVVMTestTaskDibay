@@ -13,12 +13,12 @@ namespace WpfAppPhoneCompany.ViewModels
     class AddressesViewModel : ViewModel
     {
         private readonly IRepository<Address> _AddressesRepository;
-        private readonly IUserDialog _UserDialog;
+        private readonly IUserDialog<Address> _UserAddressDialog;
         public IEnumerable<Address> Addresses => _AddressesRepository.Items.ToArray();
-        public AddressesViewModel(IRepository<Address> AddressesRepository, IUserDialog UserDialog)
+        public AddressesViewModel(IRepository<Address> AddressesRepository, IUserDialog<Address> UserAddressDialog)
         {
             _AddressesRepository = AddressesRepository;
-            _UserDialog = UserDialog;
+            _UserAddressDialog = UserAddressDialog;
         }
     }
 }
