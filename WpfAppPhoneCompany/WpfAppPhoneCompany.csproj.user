@@ -25,6 +25,12 @@
     <Compile Update="Views\Windows\AbonentEditorWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Windows\AddressEditorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Windows\PhoneEditorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Windows\StreetEditorWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -57,7 +63,13 @@
     <Page Update="Views\Windows\AbonentEditorWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Windows\AddressEditorWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\PhoneEditorWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\StreetEditorWindow.xaml">

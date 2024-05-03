@@ -70,7 +70,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="200"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Адрес:" Margin="3" Grid.Column="0" Grid.Row="0"/>

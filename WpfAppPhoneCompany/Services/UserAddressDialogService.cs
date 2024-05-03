@@ -15,17 +15,18 @@ namespace WpfAppPhoneCompany.Services
     {
         public bool Edit(Address address)
         {
-            //var street_editor_model = new StreetEditorViewModel(address);
+            var address_editor_model = new AddressEditorViewModel(address);
 
-            //var street_editor_window = new StreetEditorWindow
-            //{
-            //    DataContext = street_editor_model
-            //};
+            var address_editor_window = new AddressEditorWindow
+            {
+                DataContext = address_editor_model
+            };
 
-            //if (street_editor_window.ShowDialog() != true) return false;
+            if (address_editor_window.ShowDialog() != true) return false;
 
-            //address.Name = street_editor_model.Name;
-
+            address.StreetId = address_editor_model.StreetId;
+            address.House = address_editor_model.House;
+            address.ApartNum = address_editor_model.ApartNum;
             return true;
         }
 

@@ -3,21 +3,103 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfAppPhoneCompany.Views"
              xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type vm:AddressesViewModel}}" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock VerticalAlignment="Center" 
-        HorizontalAlignment="Center" 
-        Text="Адреса"
-        FontSize="30" 
-        FontWeight="Bold">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-            <TextBlock.Effect>
-                <DropShadowEffect ShadowDepth="1"/>
-            </TextBlock.Effect>
-        </TextBlock>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Адреса" >
+
+            <DockPanel>
+                <TextBox DockPanel.Dock="Top" Text="{Binding AddressFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
+                    <Button Content="Добавить" Margin="3" MinWidth="64"                    
+                Command="{Binding AddNewAddressCommand}"/>
+                    <Button Content="Удалить" Margin="3" MinWidth="64"
+                Command="{Binding AddNewAddressCommand}"
+                CommandParameter="{Binding SelectedAddress}"/>
+                </UniformGrid>
+
+                <DataGrid ItemsSource="{Binding AddressesView}" 
+                      SelectedItem="{Binding SelectedAddress}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Улица" Binding="{Binding Street}" Width="Auto"/>
+                        <DataGridTextColumn Header="Дом" Binding="{Binding House}" Width="Auto"/>
+                        <DataGridTextColumn Header="Квартира" Binding="{Binding ApartNum}" Width="*"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" >
+            <GroupBox.Header>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding  StringFormat="{}Абонент: {0} {1} {2}">
+                            <Binding Path="SelectedAbonent.SurName"/>
+                            <Binding Path="SelectedAbonent.Name"/>
+                            <Binding Path="SelectedAbonent.SecondName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </GroupBox.Header>
+            <DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Адрес:" Margin="3" Grid.Column="0" Grid.Row="0"/>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="100">
+                        <TextBlock Text="Улица:"/>
+                        <TextBlock Text="Дом:"/>
+                        <TextBlock Text="Квартира:"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Grid.Row="0" Margin="3" >
+                        <TextBlock Text="{Binding SelectedAbonent.Address.Street}"/>
+                        <TextBlock Text="{Binding SelectedAbonent.Address.House}"/>
+                        <TextBlock Text="{Binding SelectedAbonent.Address.ApartNum}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Телефоны:" Margin="3" Grid.Column="0" Grid.Row="1"/>
+
+                    <DataGrid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"  
+                          ItemsSource="{Binding SelectedAbonent.Phones}"
+                          GridLinesVisibility="None"
+                          Margin="3"
+                          BorderThickness="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Номер" Binding="{Binding Number}" Width="80"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding TypePhone}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </DockPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

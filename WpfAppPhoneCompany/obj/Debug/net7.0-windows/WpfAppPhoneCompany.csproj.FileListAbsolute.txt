@@ -111,3 +111,7 @@ D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Infrastructure\Commands\AppCommands.baml
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\AbonentEditorWindow.g.cs
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\AbonentEditorWindow.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\PhoneEditorWindow.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\PhoneEditorWindow.baml
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\AddressEditorWindow.g.cs
+D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\obj\Debug\net7.0-windows\Views\Windows\AddressEditorWindow.baml

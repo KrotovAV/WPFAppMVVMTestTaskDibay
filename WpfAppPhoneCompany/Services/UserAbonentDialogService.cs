@@ -25,8 +25,12 @@ namespace WpfAppPhoneCompany.Services
 
             if (abonent_editor_window.ShowDialog() != true) return false;
 
+            abonent.SurName = abonent_editor_model.SurName;
             abonent.Name = abonent_editor_model.Name;
-
+            abonent.SecondName = abonent_editor_model.SecondName;
+            abonent.AddressId = abonent_editor_model.AddressId;
+            //abonent.Name = abonent_editor_model.Name;
+            //abonent.Name = abonent_editor_model.Name;
             return true;
         }
 
@@ -51,45 +55,4 @@ namespace WpfAppPhoneCompany.Services
                 MessageBoxImage.Error)
                 == MessageBoxResult.Yes;
     }
-
-    //internal class UserAbonentDialogService : IUserDialog
-    //{
-    //    public bool Edit(Street street)
-    //    {
-    //        var street_editor_model = new StreetEditorViewModel(street);
-
-    //        var street_editor_window = new StreetEditorWindow
-    //        {
-    //            DataContext = street_editor_model
-    //        };
-
-    //        if (street_editor_window.ShowDialog() != true) return false;
-
-    //        street.Name = street_editor_model.Name;
-
-    //        return true;
-    //    }
-
-    //    public bool ConfirmInformation(string Information, string Caption) => MessageBox
-    //       .Show(
-    //            Information, Caption,
-    //            MessageBoxButton.YesNo,
-    //            MessageBoxImage.Information)
-    //            == MessageBoxResult.Yes;
-
-    //    public bool ConfirmWarning(string Warning, string Caption) => MessageBox
-    //       .Show(
-    //            Warning, Caption,
-    //            MessageBoxButton.YesNo,
-    //            MessageBoxImage.Warning)
-    //            == MessageBoxResult.Yes;
-
-    //    public bool ConfirmError(string Error, string Caption) => MessageBox
-    //       .Show(
-    //            Error, Caption,
-    //            MessageBoxButton.YesNo,
-    //            MessageBoxImage.Error)
-    //            == MessageBoxResult.Yes;
-
-    //}
 }

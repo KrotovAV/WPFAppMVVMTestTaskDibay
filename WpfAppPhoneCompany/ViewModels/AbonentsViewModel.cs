@@ -54,7 +54,6 @@ namespace WpfAppPhoneCompany.ViewModels
                 }
             }
         }
-
         #endregion
 
         #region Поиск
@@ -89,7 +88,6 @@ namespace WpfAppPhoneCompany.ViewModels
             get => _SelectedAbonent;
             set => Set(ref _SelectedAbonent, value);
         }
-
         #endregion
 
 
@@ -165,7 +163,6 @@ namespace WpfAppPhoneCompany.ViewModels
             if (ReferenceEquals(SelectedAbonent, abonent_to_remove))
                 SelectedAbonent = null;
         }
-
         #endregion
 
 

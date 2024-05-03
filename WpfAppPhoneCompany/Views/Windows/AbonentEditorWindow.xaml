@@ -4,9 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppPhoneCompany.Views.Windows"
+        xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"   
         mc:Ignorable="d"
-        Title="AbonentEditorWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="AbonentEditorWindow" 
+        Height="250" Width="350"
+        d:DataContext="{d:DesignInstance vm:AbonentEditorViewModel, IsDesignTimeCreatable=True}">
+    <DockPanel Margin="3">
+        <TextBlock DockPanel.Dock="Top" 
+               HorizontalAlignment="Center" 
+               Margin="0,15,0,10"
+               Text="{Binding AbonentId, StringFormat=Абонент ID: {0}}" 
+               />
+        <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right">
+            <Button Content="Ok" Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
+                Command="{StaticResource ResourceKey=DialogResultCommand}"
+                CommandParameter="True"/>
+
+            <Button Content="Cansel" Margin="3" Padding="20,3" IsCancel="True"
+                Command="{StaticResource ResourceKey=DialogResultCommand}"
+                CommandParameter="False"/>
+        </UniformGrid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Адрес:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SurName}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SecondName}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text=""/>
+        </Grid>
+    </DockPanel>
 </Window>

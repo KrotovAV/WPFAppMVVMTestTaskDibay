@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfAppPhoneCompany.Services.Interfaces;
+using WpfAppPhoneCompany.ViewModels;
+using WpfAppPhoneCompany.Views.Windows;
 
 namespace WpfAppPhoneCompany.Services
 {
@@ -13,16 +15,17 @@ namespace WpfAppPhoneCompany.Services
     {
         public bool Edit(Phone phone)
         {
-            //var street_editor_model = new StreetEditorViewModel(address);
+            var street_editor_model = new PhoneEditorViewModel(phone);
 
-            //var street_editor_window = new StreetEditorWindow
-            //{
-            //    DataContext = street_editor_model
-            //};
+            var street_editor_window = new PhoneEditorWindow
+            {
+                DataContext = street_editor_model
+            };
 
-            //if (street_editor_window.ShowDialog() != true) return false;
+            if (street_editor_window.ShowDialog() != true) return false;
 
-            //address.Name = street_editor_model.Name;
+            phone.Number = street_editor_model.Number;
+            phone.TypePhone = street_editor_model.TypePhone;
 
             return true;
         }
