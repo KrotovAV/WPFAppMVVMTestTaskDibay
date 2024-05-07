@@ -12,7 +12,7 @@ TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 D:\Работа\GitProject\WPFAppMVVMTestTaskDibay\WpfAppPhoneCompany\App.xaml
 13-186779456
 
-39417810214
+36887510025
 253-314348188
 Infrastructure\Commands\AppCommands.xaml;Styles\Main.xaml;Templates\ModelMainView.xaml;Views\AbonentsView.xaml;Views\AddressesView.xaml;Views\PhonesView.xaml;Views\StatisticView.xaml;Views\StreetsView.xaml;Views\Windows\AbonentEditorWindow.xaml;Views\Windows\AddressEditorWindow.xaml;Views\Windows\MainWindow.xaml;Views\Windows\PhoneEditorWindow.xaml;Views\Windows\StreetEditorWindow.xaml;
 

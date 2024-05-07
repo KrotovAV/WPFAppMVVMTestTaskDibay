@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         DataContext="{Binding Path=MainWindowModel, Source={StaticResource ResourceKey=Locator}}"
         Title="{Binding Path=Title}" 
-        Height="450" Width="800">
+        Height="600" Width="900">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ShowAbonentsViewCommand}"/>

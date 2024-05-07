@@ -21,7 +21,8 @@ namespace WpfAppPhoneCompany.ViewModels
     class AddressesViewModel : ViewModel
     {
         private readonly IRepository<Address> _AddressesRepository;
-        private readonly IUserDialog<Address> _UserAddressDialog;
+        private readonly IUserDialog _UserDialog;
+
         //public IEnumerable<Address> Addresses => _AddressesRepository.Items.ToArray();
 
         #region Abonents : ObservableCollection<Address> - Коллекция адресов
@@ -124,7 +125,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var new_address = new Address();
 
-            if (!_UserAddressDialog.Edit(new_address))
+            if (!_UserDialog.Edit(new_address))
                 return;
 
             _Addresses.Add(_AddressesRepository.Add(new_address));
@@ -149,27 +150,53 @@ namespace WpfAppPhoneCompany.ViewModels
         private void OnRemoveAddressCommandExecuted(Address p)
         {
             var address_to_remove = p ?? SelectedAddress;
-
-            if (!_UserAddressDialog.ConfirmWarning($"Вы действительно хотите удалить адрес {address_to_remove.Street.Name}?", "Удаление адреса"))
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить адрес {address_to_remove.Street.Name}?", "Удаление адреса"))
                 return;
 
             _AddressesRepository.Remove(address_to_remove.Id);
 
-            Addresses.Remove(address_to_remove);
+            _Addresses.Remove(address_to_remove);
             if (ReferenceEquals(SelectedAddress, address_to_remove))
                 SelectedAddress = null;
+        }
+        #endregion
+
+        #region Command EditAddressCommand : Редактирование указанного адреса
+
+        /// <summary>Редактирование указанного адреса</summary>
+        private ICommand _EditAddressCommand;
+
+        /// <summary>Редактирование указанного адреса</summary>
+        public ICommand EditAddressCommand => _EditAddressCommand
+            ??= new LambdaCommand<Address>(OnEditAddressCommandExecuted, CanEditAddressCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Редактирование указанного адреса</summary>
+        private bool CanEditAddressCommandExecute(Address p) => p != null || SelectedAddress != null;
+
+        /// <summary>Логика выполнения - Редактирование указанного адреса</summary>
+        private void OnEditAddressCommandExecuted(Address p)
+        {
+            var address_to_edit = p ?? SelectedAddress;
+
+            if (!_UserDialog.Edit(address_to_edit))
+                return;
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {address_to_edit.Street} Дом:{address_to_edit.House} Кв.:{address_to_edit.ApartNum}?", "Сохранение изменений"))
+                return;
+
+            _AddressesRepository.Update(address_to_edit);
+            AddressesView.Refresh();
+            SelectedAddress = address_to_edit;
         }
         #endregion
 
 
 
 
-
-
-        public AddressesViewModel(IRepository<Address> AddressesRepository, IUserDialog<Address> UserAddressDialog)
+        public AddressesViewModel(IRepository<Address> AddressesRepository,
+            IUserDialog UserDialog)
         {
             _AddressesRepository = AddressesRepository;
-            _UserAddressDialog = UserAddressDialog;
+            _UserDialog = UserDialog;
         }
 
         private void OnAddressesFilter(object Sender, FilterEventArgs E)

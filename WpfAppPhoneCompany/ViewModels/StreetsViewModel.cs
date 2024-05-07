@@ -16,13 +16,15 @@ using Microsoft.EntityFrameworkCore;
 using MathCore.WPF;
 using WpfAppPhoneCompany.Services;
 using WpfAppPhoneCompany.Services.Interfaces;
+using DataBaseLayer.Repositories;
+using WpfAppPhoneCompany.Views;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
     class StreetsViewModel : ViewModel
     {
         private readonly IRepository<Street> _StreetsRepository;
-        private readonly IUserDialog<Street> _UserStreetDialog;
+        private readonly IUserDialog _UserDialog;
 
         private readonly IRepository<Abonent> _AbonentsRepository;
         private readonly IRepository<Address> _AddressesRepository;
@@ -114,7 +116,6 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команда загрузки данных из репозитория</summary>
         private async Task OnLoadDataCommandExecuted()
         {
-            //Streets = (await _StreetsRepository.Items.ToArrayAsync()).ToObservableCollection();
             Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
         }
 
@@ -138,7 +139,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var new_street = new Street();
 
-            if (!_UserStreetDialog.Edit(new_street))
+            if (!_UserDialog.Edit(new_street))
                 return;
 
             _Streets.Add(_StreetsRepository.Add(new_street));
@@ -149,7 +150,7 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
 
-        #region Command RemoveStreetCommand : Удаление указанной книги
+        #region Command RemoveStreetCommand : Удаление указанной улицы
 
         /// <summary>Удаление указанной улицы</summary>
         private ICommand _RemoveStreetCommand;
@@ -161,33 +162,57 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Проверка возможности выполнения - Удаление указанной улицы</summary>
         private bool CanRemoveStreetCommandExecute(Street p) => p != null || SelectedStreet != null;
 
-        /// <summary>Проверка возможности выполнения - Удаление указанной улицы</summary>
+        /// <summary>Логика выполнения - Удаление указанной улицы</summary>
         private void OnRemoveStreetCommandExecuted(Street p)
         {
             var street_to_remove = p ?? SelectedStreet;
-
-            if (!_UserStreetDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
                 return;
 
             _StreetsRepository.Remove(street_to_remove.Id);
 
-            Streets.Remove(street_to_remove);
+            _Streets.Remove(street_to_remove);
             if (ReferenceEquals(SelectedStreet, street_to_remove))
                 SelectedStreet = null;
         }
-
         #endregion
 
+        #region Command EditStreetCommand : Редактирование указанной улицы
 
+        /// <summary>Редактирование указанной улицы</summary>
+        private ICommand _EditStreetCommand;
+
+        /// <summary>Редактирование указанной улицы</summary>
+        public ICommand EditStreetCommand => _EditStreetCommand
+            ??= new LambdaCommand<Street>(OnEditStreetCommandExecuted, CanEditStreetCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Редактирование указанной улицы</summary>
+        private bool CanEditStreetCommandExecute(Street p) => p != null || SelectedStreet != null;
+
+        /// <summary>Логика выполнения - Редактирование указанной улицы</summary>
+        private void OnEditStreetCommandExecuted(Street p)
+        {
+            var street_to_edit = p ?? SelectedStreet;
+
+            if (!_UserDialog.Edit(street_to_edit))
+                return;
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {street_to_edit.Name}?", "Сохранение изменений"))
+                return;
+
+            _StreetsRepository.Update(street_to_edit);
+            StreetsView.Refresh();
+            SelectedStreet = street_to_edit;
+        }
+        #endregion
 
         public StreetsViewModel(
             IRepository<Street> StreetsRepository, 
-            IUserDialog<Street> UserStreetDialog, 
+            IUserDialog UserDialog,
             IRepository<Abonent> abonentsRepository,
             IRepository<Address> addressesRepository)
         {
             _StreetsRepository = StreetsRepository;
-            _UserStreetDialog = UserStreetDialog;
+            _UserDialog = UserDialog;
             _AbonentsRepository = abonentsRepository;
             _AddressesRepository = addressesRepository;
         }

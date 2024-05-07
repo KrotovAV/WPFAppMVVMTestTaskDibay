@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfAppPhoneCompany.Views.Windows"
         xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"  
         mc:Ignorable="d"
@@ -40,8 +41,11 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="Абонент:" Margin="0,0,5,0" VerticalAlignment="Center"/>
 
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Number}"/>
+            
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding TypePhone}"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text=""/>
+
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding AbonentId}"/>
+
         </Grid>
     </DockPanel>
 </Window>

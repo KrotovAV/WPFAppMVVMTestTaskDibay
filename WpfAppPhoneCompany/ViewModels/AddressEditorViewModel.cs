@@ -24,6 +24,7 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
 
+
         public AddressEditorViewModel()
             : this(new Address { Id = 1, StreetId = 1, House = 1, ApartNum = 1 })
         {

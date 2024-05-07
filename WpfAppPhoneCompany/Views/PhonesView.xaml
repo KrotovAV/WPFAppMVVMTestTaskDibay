@@ -19,20 +19,28 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="375"/>
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Номера" >
 
             <DockPanel>
-                <TextBox DockPanel.Dock="Top" Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Поиск "/>
+                    <TextBox DockPanel.Dock="Top" Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" MinWidth="320"></TextBox>
+                </StackPanel>
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
                     <Button Content="Добавить" Margin="3" MinWidth="64"                    
                             Command="{Binding AddNewPhoneCommand}"/>
+                    <Button Content="Редактировать" Margin="3" 
+                            Command="{Binding EditPhoneCommand}"
+                            CommandParameter="{Binding SelectedPhone}"/>
                     <Button Content="Удалить" Margin="3" MinWidth="64"
                             Command="{Binding RemovePhoneCommand}"
                             CommandParameter="{Binding SelectedPhone}"/>
+                    <Button Content="Выгрузить CSV" Margin="3" 
+                            Command=""/>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding PhonesView}" 

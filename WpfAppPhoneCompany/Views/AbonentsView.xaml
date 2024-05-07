@@ -19,20 +19,29 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="375"/>
             <ColumnDefinition/>
             
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Абоненты" >
 
             <DockPanel>
-                <TextBox DockPanel.Dock="Top" Text="{Binding AbonentFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Поиск "/>
+                    <TextBox DockPanel.Dock="Top" Text="{Binding  AbonentFilter, UpdateSourceTrigger=PropertyChanged}" MinWidth="320"></TextBox>
+                </StackPanel>
+                
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
                     <Button Content="Добавить" Margin="3" MinWidth="64"                    
-                    Command="{Binding AddNewAbonentCommand}"/>
+                            Command="{Binding AddNewAbonentCommand}"/>
+                    <Button Content="Редактировать" Margin="3" 
+                            Command="{Binding EditAbonentCommand}"
+                            CommandParameter="{Binding SelectedAbonent}"/>
                     <Button Content="Удалить" Margin="3" MinWidth="64"
-                    Command="{Binding RemoveAbonentCommand}"
-                    CommandParameter="{Binding SelectedAbonent}"/>
+                            Command="{Binding RemoveAbonentCommand}"
+                            CommandParameter="{Binding SelectedAbonent}"/>
+                    <Button Content="Выгрузить CSV" Margin="3" 
+                            Command=""/>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding AbonentsView}" 

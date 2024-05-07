@@ -14,10 +14,7 @@ namespace WpfAppPhoneCompany.Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services) => services
             .AddTransient <IConnectAbonentService, ConnectAbonentService>()
-            .AddTransient<IUserDialog<Street>, UserStreetDialogService>()
-            .AddTransient<IUserDialog<Abonent>, UserAbonentDialogService>()
-            .AddTransient<IUserDialog<Address>, UserAddressDialogService>()
-            .AddTransient<IUserDialog<Phone>, UserPhoneDialogService>()
+            .AddTransient<IUserDialog, UserDialogService>()
             ;
     }
 }

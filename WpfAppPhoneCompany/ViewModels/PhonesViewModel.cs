@@ -21,8 +21,8 @@ namespace WpfAppPhoneCompany.ViewModels
     class PhonesViewModel : ViewModel
     {
         private readonly IRepository<Phone> _PhonesRepository;
-        private readonly IUserDialog<Phone> _UserPhoneDialog;
-        //public IEnumerable<Phone> Phones => _PhonesRepository.Items.ToArray();
+        private readonly IUserDialog _UserDialog;
+
         #region Phones : ObservableCollection<Phone> - Коллекция телефонов
 
         /// <summary>Коллекция телефонов</summary>
@@ -68,13 +68,6 @@ namespace WpfAppPhoneCompany.ViewModels
             }
         }
         #endregion
-
-        //public ICollectionView EventsView
-        //{
-        //    get => (ICollectionView)GetValue(EventsViewProperty);
-        //    set => SetValue(EventsViewProperty, value);
-        //}
-
 
         private CollectionViewSource _PhonesViewSource;
 
@@ -131,8 +124,8 @@ namespace WpfAppPhoneCompany.ViewModels
         private void OnAddNewPhoneCommandExecuted()
         {
             var new_phone = new Phone();
-
-            if (!_UserPhoneDialog.Edit(new_phone))
+            
+            if (!_UserDialog.Edit(new_phone))
                 return;
 
             _Phones.Add(_PhonesRepository.Add(new_phone));
@@ -158,28 +151,54 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var phone_to_remove = p ?? SelectedPhone;
 
-            if (!_UserPhoneDialog.ConfirmWarning($"Вы действительно хотите удалить телефон {phone_to_remove.Number}?", "Удаление телефона"))
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить телефон {phone_to_remove.Number}?", "Удаление телефона"))//if (!_UserPhoneDialog.ConfirmWarning($"Вы действительно хотите удалить телефон {phone_to_remove.Number}?", "Удаление телефона"))
                 return;
 
             _PhonesRepository.Remove(phone_to_remove.Id);
 
-            Phones.Remove(phone_to_remove);
+            _Phones.Remove(phone_to_remove);
             if (ReferenceEquals(SelectedPhone, phone_to_remove))
                 SelectedPhone = null;
         }
+        #endregion
 
+        #region Command EditPhoneCommand : Редактирование указанного номера
+
+        /// <summary>Редактирование указанного номера</summary>
+        private ICommand _EditPhoneCommand;
+
+        /// <summary>Редактирование указанного номера</summary>
+        public ICommand EditPhoneCommand => _EditPhoneCommand
+            ??= new LambdaCommand<Phone>(OnEditPhoneCommandExecuted, CanEditPhoneCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Редактирование указанного номера</summary>
+        private bool CanEditPhoneCommandExecute(Phone p) => p != null || SelectedPhone != null;
+
+        /// <summary>Логика выполнения - Редактирование указанного номера</summary>
+        private void OnEditPhoneCommandExecuted(Phone p)
+        {
+            var phone_to_edit = p ?? SelectedPhone;
+
+            if (!_UserDialog.Edit(phone_to_edit))
+                return;
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {phone_to_edit.Number} тип: {phone_to_edit.TypePhone}?", "Сохранение изменений"))
+                return;
+
+            _PhonesRepository.Update(phone_to_edit);
+            PhonesView.Refresh();
+            SelectedPhone = phone_to_edit;
+        }
         #endregion
 
 
 
 
 
-
-
-        public PhonesViewModel(IRepository<Phone> PhonesRepository, IUserDialog<Phone> UserPhoneDialog)
+        public PhonesViewModel(IRepository<Phone> PhonesRepository, 
+            IUserDialog UserDialog)
         {
             _PhonesRepository = PhonesRepository;
-            _UserPhoneDialog = UserPhoneDialog;
+            _UserDialog = UserDialog;
         }
 
         private void OnPhonesFilter(object Sender, FilterEventArgs E)
@@ -190,4 +209,5 @@ namespace WpfAppPhoneCompany.ViewModels
                 E.Accepted = false;
         }
     }
+
 }

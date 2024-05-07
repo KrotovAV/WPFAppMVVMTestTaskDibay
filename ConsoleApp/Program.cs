@@ -33,28 +33,38 @@ namespace ConsoleApp
             //}
             //else Console.WriteLine($"нет абонентов");
 
-            AbonentRepository abosRepo = new AbonentRepository(db);
-            var abosR = abosRepo.Items.Take(5).ToList();
-            foreach (var abo in abosR)
-            {
-                Console.WriteLine(abo.Name);
-                Console.WriteLine(abo.Address);
-                if(abo.Phones != null)
-                {
-                    foreach (var phone in abo.Phones)
-                    {
-                        Console.WriteLine(phone);
-                    }
-                }
-            }
+            //AbonentRepository abosRepo = new AbonentRepository(db);
+            //var abosR = abosRepo.Items.Take(5).ToList();
+            //foreach (var abo in abosR)
+            //{
+            //    Console.WriteLine(abo.Name);
+            //    Console.WriteLine(abo.Address);
+            //    if(abo.Phones != null)
+            //    {
+            //        foreach (var phone in abo.Phones)
+            //        {
+            //            Console.WriteLine(phone);
+            //        }
+            //    }
+            //}
 
 
             AddressRepository adrsRepo = new AddressRepository(db);
             var adrsR = adrsRepo.Items.ToList();
-            //foreach (var abo in abosR)
-            //{
-            //    Console.WriteLine(abo.Street);
-            //}
+            foreach (var adr in adrsR)
+            {
+                Console.WriteLine(adr.Street + " " + adr.House + " " + adr.ApartNum);
+                Console.WriteLine(adr.Street.Abonents.Count());
+                if (adr.Street.Abonents != null)
+                {
+                    foreach (var abo in adr.Street.Abonents)
+                    {
+                        Console.WriteLine(abo.SurName);
+                        Console.WriteLine(abo.Name);
+                        Console.WriteLine("-----");
+                    }
+                }
+            }
 
             StreetRepository strsRepo = new StreetRepository(db);
             var strsR = strsRepo.Items.ToList();

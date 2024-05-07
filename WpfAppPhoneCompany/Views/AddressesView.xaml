@@ -19,20 +19,29 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="375"/>
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Адреса" >
 
             <DockPanel>
-                <TextBox DockPanel.Dock="Top" Text="{Binding AddressFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
+                    <TextBlock Text="Поиск "/>
+                    <TextBox DockPanel.Dock="Top" Text="{Binding AddressFilter, UpdateSourceTrigger=PropertyChanged}" MinWidth="320"></TextBox>
+                </StackPanel>
+              
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
                     <Button Content="Добавить" Margin="3" MinWidth="64"                    
-                Command="{Binding AddNewAddressCommand}"/>
+                            Command="{Binding AddNewAddressCommand}"/>
+                    <Button Content="Редактировать" Margin="3" 
+                            Command="{Binding EditAddressCommand}"
+                            CommandParameter="{Binding SelectedAddress}"/>
                     <Button Content="Удалить" Margin="3" MinWidth="64"
-                Command="{Binding AddNewAddressCommand}"
-                CommandParameter="{Binding SelectedAddress}"/>
+                            Command="{Binding AddNewAddressCommand}"
+                            CommandParameter="{Binding SelectedAddress}"/>
+                    <Button Content="Выгрузить CSV" Margin="3" 
+                            Command=""/>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding AddressesView}" 
@@ -54,9 +63,9 @@
                 <TextBlock>
                     <TextBlock.Text>
                         <MultiBinding  StringFormat="{}Абонент: {0} {1} {2}">
-                            <Binding Path="SelectedAbonent.SurName"/>
-                            <Binding Path="SelectedAbonent.Name"/>
-                            <Binding Path="SelectedAbonent.SecondName"/>
+                            <Binding Path="SelectedAddress.Street"/>
+                            <Binding Path="SelectedAddress.House"/>
+                            <Binding Path="SelectedAddress.ApartNum"/>
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -81,9 +90,9 @@
                         <TextBlock Text="Квартира:"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Grid.Row="0" Margin="3" >
-                        <TextBlock Text="{Binding SelectedAbonent.Address.Street}"/>
-                        <TextBlock Text="{Binding SelectedAbonent.Address.House}"/>
-                        <TextBlock Text="{Binding SelectedAbonent.Address.ApartNum}"/>
+                        <TextBlock Text="{Binding SelectedAddress}"/>
+                        <TextBlock Text=""/>
+                        <TextBlock Text=""/>
                     </StackPanel>
 
                     <TextBlock Text="Телефоны:" Margin="3" Grid.Column="0" Grid.Row="1"/>

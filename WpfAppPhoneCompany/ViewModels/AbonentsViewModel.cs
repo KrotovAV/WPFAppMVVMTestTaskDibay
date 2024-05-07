@@ -21,7 +21,7 @@ namespace WpfAppPhoneCompany.ViewModels
     class AbonentsViewModel : ViewModel
     {
         private readonly IRepository<Abonent> _AbonentsRepository;
-        private readonly IUserDialog<Abonent> _UserAbonentDialog;
+        private readonly IUserDialog _UserDialog;
 
 
 
@@ -127,7 +127,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var new_abonent = new Abonent();
 
-            if (!_UserAbonentDialog.Edit(new_abonent))
+            if (!_UserDialog.Edit(new_abonent))
                 return;
 
             _Abonents.Add(_AbonentsRepository.Add(new_abonent));
@@ -153,15 +153,44 @@ namespace WpfAppPhoneCompany.ViewModels
         private void OnRemoveAbonentCommandExecuted(Abonent p)
         {
             var abonent_to_remove = p ?? SelectedAbonent;
-
-            if (!_UserAbonentDialog.ConfirmWarning($"Вы действительно хотите удалить абонента {abonent_to_remove.Name}?", "Удаление абонента"))
+                        
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить абонента {abonent_to_remove.Name}?", "Удаление абонента"))
                 return;
 
             _AbonentsRepository.Remove(abonent_to_remove.Id);
 
-            Abonents.Remove(abonent_to_remove);
+            _Abonents.Remove(abonent_to_remove);
             if (ReferenceEquals(SelectedAbonent, abonent_to_remove))
                 SelectedAbonent = null;
+        }
+        #endregion
+
+        #region Command EditAbonentCommand : Редактирование указанного абонента
+
+        /// <summary>Редактирование указанного абонента</summary>
+        private ICommand _EditAbonentCommand;
+
+        /// <summary>Редактирование указанного абонента</summary>
+        public ICommand EditAbonentCommand => _EditAbonentCommand
+            ??= new LambdaCommand<Abonent>(OnEditAbonentCommandExecuted, CanEditAbonentCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Редактирование указанного абонента</summary>
+        private bool CanEditAbonentCommandExecute(Abonent p) => p != null || SelectedAbonent != null;
+
+        /// <summary>Логика выполнения - Редактирование указанного абонента</summary>
+        private void OnEditAbonentCommandExecuted(Abonent p)
+        {
+            var abonent_to_edit = p ?? SelectedAbonent;
+
+            if (!_UserDialog.Edit(abonent_to_edit))
+                return;
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в\n {abonent_to_edit.SurName}\n {abonent_to_edit.Name}\n {abonent_to_edit.SecondName} ?", "Сохранение изменений"))
+                return;
+
+            _AbonentsRepository.Update(abonent_to_edit);
+            AbonentsView.Refresh();
+            SelectedAbonent = abonent_to_edit;
+
         }
         #endregion
 
@@ -169,12 +198,11 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
 
-
-
-        public AbonentsViewModel(IRepository<Abonent> AbonentsRepository, IUserDialog<Abonent> UserAbonentDialog)
+        public AbonentsViewModel(IRepository<Abonent> AbonentsRepository, 
+            IUserDialog UserDialog)
         {
             _AbonentsRepository = AbonentsRepository;
-            _UserAbonentDialog = UserAbonentDialog;
+            _UserDialog = UserDialog;
         }
 
         private void OnAbonentsFilter(object Sender, FilterEventArgs E)
