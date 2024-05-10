@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfAppPhoneCompany.Models;
 using WpfAppPhoneCompany.Services.Interfaces;
 using WpfAppPhoneCompany.ViewModels;
 using WpfAppPhoneCompany.Views.Windows;
@@ -21,7 +22,7 @@ namespace WpfAppPhoneCompany.Services
             {
                 case Phone phone:
                     return EditPhone(phone);
-                case Street street:
+                case StreetAbonents street:
                     return EditStreet(street);
                 case Abonent abonent:
                     return EditAbonent(abonent);
@@ -70,7 +71,7 @@ namespace WpfAppPhoneCompany.Services
             return true;
         }
 
-        public static bool EditStreet(Street street)
+        public static bool EditStreet(StreetAbonents street)
         {
             var street_editor_model = new StreetEditorViewModel(street);
 
@@ -81,7 +82,7 @@ namespace WpfAppPhoneCompany.Services
 
             if (street_editor_window.ShowDialog() != true) return false;
 
-            street.Name = street_editor_model.Name;
+            street.Street = street_editor_model.Street;
 
             return true;
         }

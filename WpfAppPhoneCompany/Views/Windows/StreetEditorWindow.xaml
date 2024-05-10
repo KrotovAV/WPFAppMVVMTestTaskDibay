@@ -11,6 +11,7 @@
         Height="250" Width="350"
         d:DataContext="{d:DesignInstance vm:StreetEditorViewModel, IsDesignTimeCreatable=True}">
         
+    
     <DockPanel Margin="3">
         <TextBlock DockPanel.Dock="Top" 
                    HorizontalAlignment="Center" 

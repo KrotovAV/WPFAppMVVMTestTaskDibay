@@ -19,7 +19,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="375"/>
+            <ColumnDefinition Width="285"/>
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
@@ -27,8 +27,10 @@
 
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
-                    <TextBlock Text="Поиск "/>
-                    <TextBox DockPanel.Dock="Top" Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}" MinWidth="320"></TextBox>
+                    <TextBlock Text="Поиск" Width="45"/>
+                    <TextBox Text="{Binding PhoneFilter, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalAlignment="Stretch"
+                             Width="215"/>
                 </StackPanel>
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
                     <Button Content="Добавить" Margin="3" MinWidth="64"                    
@@ -39,8 +41,6 @@
                     <Button Content="Удалить" Margin="3" MinWidth="64"
                             Command="{Binding RemovePhoneCommand}"
                             CommandParameter="{Binding SelectedPhone}"/>
-                    <Button Content="Выгрузить CSV" Margin="3" 
-                            Command=""/>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding PhonesView}" 
@@ -68,6 +68,10 @@
                 </TextBlock>
             </GroupBox.Header>
             <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Right"  Rows="1">
+                    <Button Content="Выгрузить CSV" Margin="3" 
+                            Command=""/>
+                </UniformGrid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="70"/>

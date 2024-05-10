@@ -18,6 +18,10 @@ using WpfAppPhoneCompany.Services;
 using WpfAppPhoneCompany.Services.Interfaces;
 using DataBaseLayer.Repositories;
 using WpfAppPhoneCompany.Views;
+using WpfAppPhoneCompany.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static MathCore.Values.CSV;
+using MathCore.CSV;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -29,13 +33,15 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Abonent> _AbonentsRepository;
         private readonly IRepository<Address> _AddressesRepository;
 
-        #region Streets : ObservableCollection<Street> - Коллекция улиц
+      
+
+        #region Streets : ObservableCollection<StreetAbonents> - Коллекция улиц
 
         /// <summary>Коллекция улиц</summary>
-        private ObservableCollection<Street> _Streets;
+        private ObservableCollection<StreetAbonents> _Streets;
 
         /// <summary>Коллекция улиц</summary>
-        public ObservableCollection<Street> Streets
+        public ObservableCollection<StreetAbonents> Streets
         {
             get => _Streets;
             set
@@ -47,7 +53,7 @@ namespace WpfAppPhoneCompany.ViewModels
                         Source = value,
                         SortDescriptions =
                         {
-                            new SortDescription(nameof(Street.Name), ListSortDirection.Ascending)
+                            new SortDescription(nameof(StreetAbonents.Street.Name), ListSortDirection.Ascending)
                         }
                     };
 
@@ -58,17 +64,12 @@ namespace WpfAppPhoneCompany.ViewModels
                 }
             }
         }
-
         #endregion
 
-
-        
-      
-
         #region Поиск
-        /// <summary> Искомое слово </summary>
+        /// <summary> Искомое слово улица</summary>
         private string _StreetFilter;
-        /// <summary> Искомое слово </summary>
+        /// <summary> Искомое слово улица</summary>
         public string StreetFilter
         {
             get => _StreetFilter;
@@ -80,26 +81,76 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
         
-
         private CollectionViewSource _StreetsViewSource;
-
         public ICollectionView StreetsView => _StreetsViewSource?.View;
 
-        //public IEnumerable<Street> Streets => _StreetsRepository.Items.ToArray();
 
 
-        #region SelectedBook : SelectedStreet - Выбранная улица
-
-        /// <summary>Выбранная улица</summary>
-        private Street _SelectedStreet;
-
-        /// <summary>Выбранная улица</summary>
-        public Street SelectedStreet { 
-            get => _SelectedStreet; 
-            set => Set(ref _SelectedStreet, value); 
+        #region Поиск
+        /// <summary> Искомое слово абонент</summary>
+        private string _AbonentFilter;
+        /// <summary> Искомое слово абонент</summary>
+        public string AbonentFilter
+        {
+            get => _AbonentFilter;
+            set
+            {
+                if (Set(ref _AbonentFilter, value))
+                    _AbonentsViewSource.View.Refresh(); 
+            }
         }
-
         #endregion
+
+        public ICollectionView AbonentsView => _AbonentsViewSource?.View;
+
+        private CollectionViewSource _AbonentsViewSource;
+        
+        #region SelectedStreet: SelectedStreet - Выбранная улица
+        /// <summary>Выбранная улица</summary>
+        private StreetAbonents _SelectedStreet;
+
+        /// <summary>Выбранная улица</summary>
+        public StreetAbonents SelectedStreet
+        {
+            get => _SelectedStreet;
+            //set => Set(ref _SelectedStreet, value);
+            set
+            {
+                if (Set(ref _SelectedStreet, value))
+                {
+                    _AbonentsViewSource = new CollectionViewSource
+                    {
+                        Source = value.AbonentsOfStreet,
+                        SortDescriptions =
+                        {
+                            new SortDescription(nameof(Abonent.Name), ListSortDirection.Ascending)
+                        }
+                    };
+
+                    _AbonentsViewSource.Filter += OnAbonentsFilter;
+                    _AbonentsViewSource.View.Refresh();
+
+                    OnPropertyChanged(nameof(AbonentsView));
+                }
+            }
+        }
+        #endregion
+
+
+        #region SelectedAbonent: SelectedAbonent - Выбранный абонент
+
+        /// <summary>Выбранный абонент</summary>
+        private Abonent _SelectedAbonent;
+
+        /// <summary>Выбранный абонент</summary>
+        public Abonent SelectedAbonent
+        {
+            get => _SelectedAbonent;
+            set => Set(ref _SelectedAbonent, value);
+        }
+        #endregion
+
+
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
 
@@ -116,11 +167,25 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команда загрузки данных из репозитория</summary>
         private async Task OnLoadDataCommandExecuted()
         {
-            Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
+            var OnlyStreets = await _StreetsRepository.Items.ToArrayAsync();
+            var OnlyAbonents = await _AbonentsRepository.Items.ToArrayAsync();
+
+            var Streets_Abonents_GroupJoin_query =
+                OnlyStreets                      // первый набор
+                .GroupJoin(
+                    OnlyAbonents,               // второй набор
+                    street => street.Id,            // свойство-селектор объекта из первого набора по которому будет идти группировка
+                    abonent => abonent.StreetId,    // свойство-селектор объекта из второго набора
+                    (street, abonents) => new StreetAbonents { Street = street, AbonentsOfStreet = abonents.ToList() }) // желаемый результат
+                ;
+            Streets = new ObservableCollection<StreetAbonents>(Streets_Abonents_GroupJoin_query.ToArray());
         }
-
-
         #endregion
+
+
+
+
+
 
         #region Command AddNewBookCommand - Добавление новой книги
 
@@ -137,13 +202,21 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Добавление новой улицы</summary>
         private void OnAddNewStreetCommandExecuted()
         {
-            var new_street = new Street();
+            var new_street = new StreetAbonents();
 
             if (!_UserDialog.Edit(new_street))
                 return;
 
-            _Streets.Add(_StreetsRepository.Add(new_street));
-
+            //_Streets.Add(_StreetsRepository.Add(new_street));
+            _StreetsRepository.Add(new_street.Street);
+            if (new_street.AbonentsOfStreet != null)
+            {
+                foreach (var abonent in new_street.AbonentsOfStreet)
+                {
+                    _AbonentsRepository.Update(abonent);
+                }
+            }
+            _Streets.Add(new_street);
             SelectedStreet = new_street;
         }
 
@@ -157,20 +230,28 @@ namespace WpfAppPhoneCompany.ViewModels
 
         /// <summary>Удаление указанной улицы</summary>
         public ICommand RemoveStreetCommand => _RemoveStreetCommand
-            ??= new LambdaCommand<Street>(OnRemoveStreetCommandExecuted, CanRemoveStreetCommandExecute);
+            ??= new LambdaCommand<StreetAbonents>(OnRemoveStreetCommandExecuted, CanRemoveStreetCommandExecute);
 
         /// <summary>Проверка возможности выполнения - Удаление указанной улицы</summary>
-        private bool CanRemoveStreetCommandExecute(Street p) => p != null || SelectedStreet != null;
+        private bool CanRemoveStreetCommandExecute(StreetAbonents p) => p != null || SelectedStreet != null;
 
         /// <summary>Логика выполнения - Удаление указанной улицы</summary>
-        private void OnRemoveStreetCommandExecuted(Street p)
+        private void OnRemoveStreetCommandExecuted(StreetAbonents p)
         {
             var street_to_remove = p ?? SelectedStreet;
-            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Name}?", "Удаление улицы"))
+            if (!_UserDialog.ConfirmWarning($"Вы действительно хотите удалить улицу {street_to_remove.Street.Name}?", "Удаление улицы"))
                 return;
 
-            _StreetsRepository.Remove(street_to_remove.Id);
+            _StreetsRepository.Remove(street_to_remove.Street.Id);
 
+            if (street_to_remove.AbonentsOfStreet != null)
+            {
+                foreach (var abonent in street_to_remove.AbonentsOfStreet)
+                {
+                    abonent.Street = null;
+                    _AbonentsRepository.Update(abonent);
+                }
+            }
             _Streets.Remove(street_to_remove);
             if (ReferenceEquals(SelectedStreet, street_to_remove))
                 SelectedStreet = null;
@@ -184,22 +265,30 @@ namespace WpfAppPhoneCompany.ViewModels
 
         /// <summary>Редактирование указанной улицы</summary>
         public ICommand EditStreetCommand => _EditStreetCommand
-            ??= new LambdaCommand<Street>(OnEditStreetCommandExecuted, CanEditStreetCommandExecute);
+            ??= new LambdaCommand<StreetAbonents>(OnEditStreetCommandExecuted, CanEditStreetCommandExecute);
 
         /// <summary>Проверка возможности выполнения - Редактирование указанной улицы</summary>
-        private bool CanEditStreetCommandExecute(Street p) => p != null || SelectedStreet != null;
+        private bool CanEditStreetCommandExecute(StreetAbonents p) => p != null || SelectedStreet != null;
 
         /// <summary>Логика выполнения - Редактирование указанной улицы</summary>
-        private void OnEditStreetCommandExecuted(Street p)
+        private void OnEditStreetCommandExecuted(StreetAbonents p)
         {
             var street_to_edit = p ?? SelectedStreet;
 
             if (!_UserDialog.Edit(street_to_edit))
                 return;
-            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {street_to_edit.Name}?", "Сохранение изменений"))
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {street_to_edit.Street.Name}?", "Сохранение изменений"))
                 return;
 
-            _StreetsRepository.Update(street_to_edit);
+            _StreetsRepository.Update(street_to_edit.Street);
+            if (street_to_edit.AbonentsOfStreet != null)
+            {
+                foreach (var abonent in street_to_edit.AbonentsOfStreet)
+                {
+                    _AbonentsRepository.Update(abonent);
+                }
+            }
+
             StreetsView.Refresh();
             SelectedStreet = street_to_edit;
         }
@@ -215,12 +304,20 @@ namespace WpfAppPhoneCompany.ViewModels
             _UserDialog = UserDialog;
             _AbonentsRepository = abonentsRepository;
             _AddressesRepository = addressesRepository;
+
         }
         private void OnStreetsFilter(object Sender, FilterEventArgs E)
         {
-            if (!(E.Item is Street street) || string.IsNullOrEmpty(StreetFilter)) return;
+            if (!(E.Item is StreetAbonents street) || string.IsNullOrEmpty(StreetFilter)) return;
 
-            if (!street.Name.Contains(StreetFilter))
+            if (!street.Street.Name.Contains(StreetFilter))
+                E.Accepted = false;
+        }
+        private void OnAbonentsFilter(object Sender, FilterEventArgs E)
+        {
+            if (!(E.Item is Abonent abonent) || string.IsNullOrEmpty(AbonentFilter)) return;
+
+            if (!abonent.Name.Contains(AbonentFilter) || !abonent.SurName.Contains(AbonentFilter) || !abonent.SecondName.Contains(AbonentFilter))
                 E.Accepted = false;
         }
     }

@@ -186,6 +186,10 @@ namespace WpfAppPhoneCompany.ViewModels
             _AddressesRepository.Update(address_to_edit);
             AddressesView.Refresh();
             SelectedAddress = address_to_edit;
+
+            _AddressesViewSource.View.Refresh();
+            //OnPropertyChanged(nameof(AddressesView));
+            
         }
         #endregion
 

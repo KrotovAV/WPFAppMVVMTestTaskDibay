@@ -19,16 +19,19 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="375"/>
+            <ColumnDefinition Width="285"/>
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
+        
         <GroupBox Grid.Column="0" Header="Адреса" >
 
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
-                    <TextBlock Text="Поиск "/>
-                    <TextBox DockPanel.Dock="Top" Text="{Binding AddressFilter, UpdateSourceTrigger=PropertyChanged}" MinWidth="320"></TextBox>
+                    <TextBlock Text="Поиск" Width="45"/>
+                    <TextBox Text="{Binding AddressFilter, UpdateSourceTrigger=PropertyChanged}" 
+                             HorizontalAlignment="Stretch"
+                             Width="215"/>
                 </StackPanel>
               
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Left"  Rows="1">
@@ -40,8 +43,6 @@
                     <Button Content="Удалить" Margin="3" MinWidth="64"
                             Command="{Binding AddNewAddressCommand}"
                             CommandParameter="{Binding SelectedAddress}"/>
-                    <Button Content="Выгрузить CSV" Margin="3" 
-                            Command=""/>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding AddressesView}" 
@@ -59,6 +60,7 @@
         </GroupBox>
 
         <GroupBox Grid.Column="1" >
+            
             <GroupBox.Header>
                 <TextBlock>
                     <TextBlock.Text>
@@ -71,6 +73,10 @@
                 </TextBlock>
             </GroupBox.Header>
             <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Right"  Rows="1">
+                    <Button Content="Выгрузить CSV" Margin="3" 
+                            Command=""/>
+                </UniformGrid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="70"/>
@@ -82,23 +88,23 @@
                         <RowDefinition Height="200"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Адрес:" Margin="3" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Адрес по адресу:" Margin="3" Grid.Column="0" Grid.Row="0"/>
 
                     <StackPanel Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="100">
-                        <TextBlock Text="Улица:"/>
-                        <TextBlock Text="Дом:"/>
-                        <TextBlock Text="Квартира:"/>
+                        <TextBlock Text="Фамилия:"/>
+                        <TextBlock Text="Имя:"/>
+                        <TextBlock Text="Отчество:"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Grid.Row="0" Margin="3" >
-                        <TextBlock Text="{Binding SelectedAddress}"/>
-                        <TextBlock Text=""/>
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{Binding Abonent.SurName}"/>
+                        <TextBlock Text="{Binding Abonent.Name}"/>
+                        <TextBlock Text="{Binding Abonent.Second}"/>
                     </StackPanel>
 
                     <TextBlock Text="Телефоны:" Margin="3" Grid.Column="0" Grid.Row="1"/>
 
                     <DataGrid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"  
-                          ItemsSource="{Binding SelectedAbonent.Phones}"
+                          ItemsSource="{Binding Abonent.Phones}"
                           GridLinesVisibility="None"
                           Margin="3"
                           BorderThickness="0">
