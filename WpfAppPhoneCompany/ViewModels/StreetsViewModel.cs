@@ -187,7 +187,7 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
 
-        #region Command AddNewBookCommand - Добавление новой книги
+        #region Command AddNewStreetCommand - Добавление новой книги
 
         /// <summary>Добавление новой улицы</summary>
         private ICommand _AddNewStreetCommand;
@@ -202,20 +202,21 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Добавление новой улицы</summary>
         private void OnAddNewStreetCommandExecuted()
         {
-            var new_street = new StreetAbonents();
+            
+            var new_street = new StreetAbonents { Street = new Street(), AbonentsOfStreet = new List<Abonent>() };
 
             if (!_UserDialog.Edit(new_street))
                 return;
 
             //_Streets.Add(_StreetsRepository.Add(new_street));
             _StreetsRepository.Add(new_street.Street);
-            if (new_street.AbonentsOfStreet != null)
-            {
-                foreach (var abonent in new_street.AbonentsOfStreet)
-                {
-                    _AbonentsRepository.Update(abonent);
-                }
-            }
+            //if (new_street.AbonentsOfStreet != null)
+            //{
+            //    foreach (var abonent in new_street.AbonentsOfStreet)
+            //    {
+            //        _AbonentsRepository.Update(abonent);
+            //    }
+            //}
             _Streets.Add(new_street);
             SelectedStreet = new_street;
         }

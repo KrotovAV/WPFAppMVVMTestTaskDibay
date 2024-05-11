@@ -44,7 +44,8 @@
 
 
                 <DataGrid ItemsSource="{Binding StreetsView}"
-                          SelectedIndex="0"
+                          SelectedIndex="-1"
+                         
                           IsSynchronizedWithCurrentItem="True"
                           SelectedItem="{Binding SelectedStreet}">
                     <DataGrid.Columns>
@@ -62,7 +63,7 @@
                 </UniformGrid>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="400"/>
                         <ColumnDefinition Width="*"/>
 
                     </Grid.ColumnDefinitions>
@@ -87,8 +88,8 @@
                             </StackPanel>
                             <DataGrid 
                                 ItemsSource="{Binding AbonentsView}"
-                                
-                                      SelectedIndex="0"
+                                      
+                                      SelectedIndex="-1"
                                       IsSynchronizedWithCurrentItem="True"
                                       SelectedItem="{Binding SelectedAbonent}">
                                 <DataGrid.Columns>
@@ -105,15 +106,16 @@
 
                     <GroupBox Grid.Column="1" >
                         <GroupBox.Header>
-                            <TextBlock>
+                            <TextBlock Height="40" Width="180" MinWidth="150" TextWrapping="Wrap">
                                 <TextBlock.Text>
-                                    <MultiBinding  StringFormat="Абонент  {0} {1} {2}  Номера">
+                                    <MultiBinding  StringFormat="Абонент  {0} {1} {2} Номера">
                                         <Binding Path="SelectedAbonent.SurName"/>
                                         <Binding Path="SelectedAbonent.Name"/>
                                         <Binding Path="SelectedAbonent.SecondName"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
+                            
                         </GroupBox.Header>
                         <DockPanel>
 
