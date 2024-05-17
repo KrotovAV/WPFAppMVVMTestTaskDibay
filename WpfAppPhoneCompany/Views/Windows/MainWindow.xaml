@@ -30,7 +30,7 @@
         </Menu>
         <Menu IsMainMenu="True">
             <MenuItem Header="Абоненты" Command="{Binding ShowAbonentsViewCommand}"/>
-            <MenuItem Header="Номера" Command="{Binding ShowPhonesViewCommand}"/>
+            <MenuItem Header="Телефоны" Command="{Binding ShowPhonesViewCommand}"/>
             <MenuItem Header="Улицы" Command="{Binding ShowStreetsViewCommand}"/>
             <MenuItem Header="Адреса" Command="{Binding ShowAddressesViewCommand}"/>
             <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>

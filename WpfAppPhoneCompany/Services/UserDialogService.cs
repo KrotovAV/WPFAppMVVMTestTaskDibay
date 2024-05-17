@@ -1,4 +1,6 @@
 ﻿using DataBaseLayer.Entities;
+using DataBaseLayer.Repositories;
+using DataInterfacesLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +15,22 @@ using WpfAppPhoneCompany.Views.Windows;
 
 namespace WpfAppPhoneCompany.Services
 {
-    class UserDialogService : IUserDialog
+    public class UserDialogService : IUserDialog
     {
+        private readonly IRepository<Street> _StreetsRepo;
+        private readonly IRepository<Address> _AddressesRepo;
+        private readonly IRepository<Phone> _PhonesRepo;
+
+        public UserDialogService(IRepository<Street> StreetsRepo, 
+            IRepository<Address> AddressesRepo, 
+            IRepository<Phone> PhonesRepo)
+        {
+            _StreetsRepo = StreetsRepo;
+            _AddressesRepo = AddressesRepo;
+            _PhonesRepo = PhonesRepo;
+        }
+
+
         public bool Edit(object item)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
@@ -25,9 +41,9 @@ namespace WpfAppPhoneCompany.Services
                 case StreetAbonents street:
                     return EditStreet(street);
                 case Abonent abonent:
-                    return EditAbonent(abonent);
+                    return EditAbonent(abonent, _AddressesRepo, _PhonesRepo);
                 case Address address:
-                    return EditAddress(address);
+                    return EditAddress(address, _StreetsRepo);
                 default: throw new NotSupportedException($"Редактирование типа {item.GetType().Name} не поддерживается");
             }
         }
@@ -65,8 +81,8 @@ namespace WpfAppPhoneCompany.Services
             if (phone_editor_window.ShowDialog() != true) return false;
 
             phone.Number = phone_editor_model.Number;
-            phone.TypePhone = phone_editor_model.TypePhone;
-            phone.AbonentId = phone_editor_model.AbonentId;
+            phone.TypePhone = phone_editor_model.TypeOfPhone;
+            //phone.AbonentId = phone_editor_model.AbonentId;
 
             return true;
         }
@@ -86,9 +102,9 @@ namespace WpfAppPhoneCompany.Services
 
             return true;
         }
-        public static bool EditAbonent(Abonent abonent)
+        public static bool EditAbonent(Abonent abonent, IRepository<Address> _AddressesRepo, IRepository<Phone> _PhonesRepo)
         {
-            var abonent_editor_model = new AbonentEditorViewModel(abonent);
+            var abonent_editor_model = new AbonentEditorViewModel(abonent, _AddressesRepo, _PhonesRepo);
 
             var abonent_editor_window = new AbonentEditorWindow
             {
@@ -96,19 +112,19 @@ namespace WpfAppPhoneCompany.Services
             };
 
             if (abonent_editor_window.ShowDialog() != true) return false;
-
+            abonent.Id = abonent_editor_model.AbonentId;
             abonent.SurName = abonent_editor_model.SurName;
             abonent.Name = abonent_editor_model.Name;
             abonent.SecondName = abonent_editor_model.SecondName;
             abonent.AddressId = abonent_editor_model.AddressId;
-            //abonent.Name = abonent_editor_model.Name;
-            //abonent.Name = abonent_editor_model.Name;
+            abonent.Phones = abonent_editor_model.PhonesOfAbonent;
+            
             return true;
         }
 
-        public static bool EditAddress(Address address)
+        public static bool EditAddress(Address address, IRepository<Street> _StreetsRepo)
         {
-            var address_editor_model = new AddressEditorViewModel(address);
+            var address_editor_model = new AddressEditorViewModel(address, _StreetsRepo);
 
             var address_editor_window = new AddressEditorWindow
             {

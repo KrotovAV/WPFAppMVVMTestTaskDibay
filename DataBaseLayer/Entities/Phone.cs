@@ -16,7 +16,7 @@ namespace DataBaseLayer.Entities
         public int? AbonentId { get; set; } //внешний ключ
         public virtual Abonent? Abonent { get; set; }//навигацинное свойство
 
-        public override string ToString() => $"Тел. {Number} {TypePhone}";
+        public override string ToString() => $"{Number} {TypePhone}";
     }
     
 

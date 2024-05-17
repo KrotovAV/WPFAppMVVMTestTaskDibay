@@ -15,6 +15,6 @@ namespace DataBaseLayer.Entities
         public int House { get; set; }
         public int ApartNum { get; set; }
 
-        public override string ToString() => $"Адрес: ул. {Street}, дом. {House}, кв. {ApartNum}.";
+        public override string ToString() => $"ул. {Street}, дом. {House}, кв. {ApartNum}.";
     }
 }

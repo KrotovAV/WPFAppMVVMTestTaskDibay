@@ -80,7 +80,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление адресов</summary>
         private void OnShowAddressesViewCommandExecuted()
         {
-            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog);
+            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog, _Abonents);
         }
 
         #endregion
@@ -123,7 +123,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление абонентов</summary>
         private void OnShowAbonentsViewCommandExecuted()
         {
-            CurrentModel = new AbonentsViewModel(_Abonents, _UserDialog);
+            CurrentModel = new AbonentsViewModel(_Abonents, _UserDialog, _Phones, _Streets);
         }
 
         #endregion

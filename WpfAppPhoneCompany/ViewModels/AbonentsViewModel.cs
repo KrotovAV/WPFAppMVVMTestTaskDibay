@@ -22,7 +22,8 @@ namespace WpfAppPhoneCompany.ViewModels
     {
         private readonly IRepository<Abonent> _AbonentsRepository;
         private readonly IUserDialog _UserDialog;
-
+        private readonly IRepository<Phone> _PhonesRepository;
+        private readonly IRepository<Street> _StreetsRepository;
 
 
         #region Abonents : ObservableCollection<Abonent> - Коллекция абонентов
@@ -186,7 +187,19 @@ namespace WpfAppPhoneCompany.ViewModels
                 return;
             if (!_UserDialog.ConfirmWarning($"Сохранить изменения в\n {abonent_to_edit.SurName}\n {abonent_to_edit.Name}\n {abonent_to_edit.SecondName} ?", "Сохранение изменений"))
                 return;
+            if (abonent_to_edit.Phones != null)
+            {
+                foreach(var phone in abonent_to_edit.Phones)
+                {
+                    _PhonesRepository.Update(phone);
+                }
+            }
 
+            if(abonent_to_edit.Street != null)
+            {
+                _StreetsRepository.Update(abonent_to_edit.Street);
+            }
+            
             _AbonentsRepository.Update(abonent_to_edit);
             AbonentsView.Refresh();
             SelectedAbonent = abonent_to_edit;
@@ -199,10 +212,14 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         public AbonentsViewModel(IRepository<Abonent> AbonentsRepository, 
-            IUserDialog UserDialog)
+            IUserDialog UserDialog,
+            IRepository<Phone> PhonesRepository,
+            IRepository<Street> StreetsRepository)
         {
             _AbonentsRepository = AbonentsRepository;
             _UserDialog = UserDialog;
+            _PhonesRepository = PhonesRepository;
+            _StreetsRepository = StreetsRepository;
         }
 
         private void OnAbonentsFilter(object Sender, FilterEventArgs E)

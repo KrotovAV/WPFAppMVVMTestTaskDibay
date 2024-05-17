@@ -3,45 +3,128 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfAppPhoneCompany.Views.Windows"
         xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels" 
         mc:Ignorable="d"
         Title="AddressEditorWindow" 
-        Height="250" Width="350"
+        Height="250" Width="650"
         d:DataContext="{d:DesignInstance vm:AddressEditorViewModel, IsDesignTimeCreatable=True}">
 
-    <DockPanel Margin="3">
-        <TextBlock DockPanel.Dock="Top" 
-               HorizontalAlignment="Center" 
-               Margin="0,15,0,10"
-               Text="{Binding AddressId, StringFormat=Адрес ID: {0}}" 
-               />
-        <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right">
-            <Button Content="Ok" Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
-                Command="{StaticResource ResourceKey=DialogResultCommand}"
-                CommandParameter="True"/>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
 
-            <Button Content="Cansel" Margin="3" Padding="20,3" IsCancel="True"
-                Command="{StaticResource ResourceKey=DialogResultCommand}"
-                CommandParameter="False"/>
-        </UniformGrid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Улица:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Дом:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Квартира:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-            
-            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StreetId}"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding House}"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding ApartNum}"/>
-        </Grid>
-    </DockPanel>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+            <GroupBox.Header>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding  StringFormat="{}Адрес Id: {0}">
+                            <Binding Path="AddressId"/>
+      
+                        </MultiBinding> 
+                    </TextBlock.Text>
+                    
+                </TextBlock>
+            </GroupBox.Header>
+            <DockPanel Margin="3,25,3,3">
+                
+                <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right">
+                    <Button Content="Ok" Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
+                            Command="{StaticResource ResourceKey=DialogResultCommand}"
+                            CommandParameter="True"/>
+
+                    <Button Content="Cansel" Margin="3" Padding="20,3" IsCancel="True"
+                            Command="{StaticResource ResourceKey=DialogResultCommand}"
+                        CommandParameter="False"/>
+                </UniformGrid>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Улица:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Дом:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Квартира:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StreetId}"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding House}"/>
+                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding ApartNum}"/>
+                </Grid>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Улицы">
+            <DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="55"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="85"></ColumnDefinition>
+                        
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition  Height="42"></RowDefinition>
+                       
+                    </Grid.RowDefinitions>
+                
+                    <TextBlock Grid.Row="0" Grid.Column="0"  
+                               Text="Поиск"  
+                               Width="45"
+                               Margin="7,3,3,3"
+                               HorizontalAlignment="Left"/>
+
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                             Text="{Binding StreetFilter, UpdateSourceTrigger=PropertyChanged}" 
+                             HorizontalAlignment="Right"
+                             Margin="3,3,7,3"
+                             Width="230"/>
+                    
+                    <DataGrid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="5,5,5,13"
+                            ItemsSource="{Binding StreetsView}" 
+                                    SelectedIndex="-1"
+                                    SelectedItem="{Binding SelectedStreet, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Улица" Binding="{Binding Name}" Width="*"/>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
+                             Text="{Binding SelectedStreet, Mode=OneWay}" IsReadOnly="True"
+                             Margin="5,5,7,10"
+                             HorizontalAlignment="Left"
+                             Width="210"/>
+                    <Button Grid.Row="2" Grid.Column="3"
+                            Content="Выбрать" Width="70" Margin="5,6,10,10" Padding="3,3"
+                            HorizontalAlignment="Right"
+                            Command="{Binding ChooseSelectedStreetCommand}"
+                            CommandParameter="{Binding SelectedStreet}"/>
+                </Grid>
+
+            </DockPanel>
+        </GroupBox>
+
+    </Grid>
+
 </Window>

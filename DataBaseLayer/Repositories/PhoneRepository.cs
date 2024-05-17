@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DataBaseLayer.Repositories
 {
     
-    class PhoneRepository : DbRepository<Phone>
+    public class PhoneRepository : DbRepository<Phone>
     {
         public override IQueryable<Phone> Items => base.Items.Include(item => item.Abonent);
 

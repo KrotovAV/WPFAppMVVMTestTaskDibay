@@ -63,7 +63,7 @@ namespace WpfAppPhoneCompany.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfAppPhoneCompany;V1.0.0.0;component/views/phonesview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfAppPhoneCompany;component/views/phonesview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\PhonesView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -46,11 +46,12 @@
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding AddressesView}" 
-                      SelectedItem="{Binding SelectedAddress}">
+                          SelectedIndex="-1"
+                          SelectedItem="{Binding SelectedAddress}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Улица" Binding="{Binding Street}" Width="Auto"/>
-                        <DataGridTextColumn Header="Дом" Binding="{Binding House}" Width="Auto"/>
-                        <DataGridTextColumn Header="Квартира" Binding="{Binding ApartNum}" Width="*"/>
+                        <DataGridTextColumn Header="Улица" Binding="{Binding Address.Street}" Width="Auto"/>
+                        <DataGridTextColumn Header="Дом" Binding="{Binding Address.House}" Width="Auto"/>
+                        <DataGridTextColumn Header="Квартира" Binding="{Binding Address.ApartNum}" Width="*"/>
 
                     </DataGrid.Columns>
                 </DataGrid>
@@ -64,10 +65,10 @@
             <GroupBox.Header>
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding  StringFormat="{}Абонент: {0} {1} {2}">
-                            <Binding Path="SelectedAddress.Street"/>
-                            <Binding Path="SelectedAddress.House"/>
-                            <Binding Path="SelectedAddress.ApartNum"/>
+                        <MultiBinding  StringFormat="{} По адресу: {0} {1} {2}">
+                            <Binding Path="SelectedAddress.Address.Street"/>
+                            <Binding Path="SelectedAddress.Address.House"/>
+                            <Binding Path="SelectedAddress.Address.ApartNum"/>
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -88,7 +89,7 @@
                         <RowDefinition Height="200"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Адрес по адресу:" Margin="3" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Абонент:" Margin="3" Grid.Column="0" Grid.Row="0"/>
 
                     <StackPanel Grid.Column="1" Grid.Row="0" Margin="3" MinWidth="100">
                         <TextBlock Text="Фамилия:"/>
@@ -96,15 +97,15 @@
                         <TextBlock Text="Отчество:"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Grid.Row="0" Margin="3" >
-                        <TextBlock Text="{Binding Abonent.SurName}"/>
-                        <TextBlock Text="{Binding Abonent.Name}"/>
-                        <TextBlock Text="{Binding Abonent.Second}"/>
+                        <TextBlock Text="{Binding SelectedAddress.Abonent.SurName}"/>
+                        <TextBlock Text="{Binding SelectedAddress.Abonent.Name}"/>
+                        <TextBlock Text="{Binding SelectedAddress.Abonent.SecondName}"/>
                     </StackPanel>
 
                     <TextBlock Text="Телефоны:" Margin="3" Grid.Column="0" Grid.Row="1"/>
 
                     <DataGrid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"  
-                          ItemsSource="{Binding Abonent.Phones}"
+                          ItemsSource="{Binding SelectedAddress.Abonent.Phones}"
                           GridLinesVisibility="None"
                           Margin="3"
                           BorderThickness="0">
