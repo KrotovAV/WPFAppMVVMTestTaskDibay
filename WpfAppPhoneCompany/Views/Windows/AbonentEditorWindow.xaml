@@ -9,16 +9,20 @@
         mc:Ignorable="d"
         Title="AbonentEditorWindow" 
         Height="500" Width="650"
-        d:DataContext="{d:DesignInstance vm:AbonentEditorViewModel, IsDesignTimeCreatable=True}">
+         
+        d:DataContext="{d:DesignInstance vm:AbonentEditorViewModel}"
+        >
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
@@ -27,6 +31,8 @@
             <RowDefinition />
             <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="3"
+      VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
 
         <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
             <GroupBox.Header>
@@ -42,15 +48,17 @@
             </GroupBox.Header>
 
             <DockPanel Margin="3,25,3,3">
-                
-                <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right">
-                    <Button Content="Ok" Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
+
+                <UniformGrid Rows="1" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                    <Button Content="Ok" 
+                            Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
                             Command="{StaticResource ResourceKey=DialogResultCommand}"
                             CommandParameter="True"/>
 
-                    <Button Content="Cansel" Margin="3" Padding="20,3" IsCancel="True"
+                    <Button Content="Cansel" 
+                            Margin="3" Padding="20,3" IsCancel="True"
                             Command="{StaticResource ResourceKey=DialogResultCommand}"
-                            CommandParameter="False"/>          
+                            CommandParameter="False"/>
                 </UniformGrid>
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
@@ -73,11 +81,20 @@
                     <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SurName}"/>
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Name}"/>
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SecondName}"/>
-                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding FullAddressOfAbonent}"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" >
+                        <TextBox.Text>
+                            <MultiBinding  StringFormat="{}ул.{0}, д.{1}, кв.{2}">
+                                <Binding Path="Address.Street.Name"/>
+                                <Binding Path="Address.House"/>
+                                <Binding Path="Address.ApartNum"/>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
                     <DataGrid  Grid.Column="1" Grid.Row="4" Margin="0,3,0,5"
-                               ItemsSource="{Binding PhonesOfAbonent}" 
-                               SelectedItem="{Binding SelectedPhone, UpdateSourceTrigger=PropertyChanged}">
+                               ItemsSource="{Binding Phones}" 
+                               SelectedIndex="-1"
+                               SelectedItem="{Binding SelectedPhone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Номер" Binding="{Binding Number}" Width="Auto"/>
                             <DataGridTextColumn Header="Тип" Binding="{Binding TypePhone}" Width="*"/>
@@ -88,7 +105,7 @@
                 </Grid>
             </DockPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="0" Header="Адреса">
+        <GroupBox Grid.Column="2" Grid.Row="0" Header="Адреса">
             <DockPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -100,7 +117,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition  Height="42"></RowDefinition>
+                        <RowDefinition  Height="35"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"  
@@ -129,19 +146,21 @@
 
                     <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
                              Text="{Binding SelectedAddress, Mode=OneWay}" IsReadOnly="True"
-                             Margin="5,5,7,10"
+                             Margin="5,5,7,5"
                              HorizontalAlignment="Left"
                              Width="210"/>
+                    
                     <Button Grid.Row="2" Grid.Column="3"
-                            Content="Выбрать" Width="70" Margin="5,6,10,10" Padding="3,3"
+                            Content="Выбрать" 
+                            Width="70" Margin="5,5,10,5" Padding="3,3"
                             HorizontalAlignment="Right"
                             Command="{Binding ChooseSelectedAddressCommand}"
-                            CommandParameter="{Binding SelectedAddress}"/>   
+                            CommandParameter="{Binding SelectedAddress}"/>
                 </Grid>
 
             </DockPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="1" Header="Телефоны">
+        <GroupBox Grid.Column="2" Grid.Row="1" Header="Телефоны">
             <DockPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -153,7 +172,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition  Height="42"></RowDefinition>
+                        <RowDefinition  Height="35"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"  
@@ -169,7 +188,7 @@
                              Width="230"/>
 
                     <DataGrid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="5,5,5,13"
-                               ItemsSource="{Binding PhonesView}" 
+                               ItemsSource="{Binding PhonesWithoutAbonentView}" 
                                SelectedIndex="-1"
                                SelectedItem="{Binding SelectedPhone, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
@@ -181,26 +200,22 @@
 
                     <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
                              Text="{Binding SelectedPhone, Mode=OneWay}" IsReadOnly="True"
-                             Margin="5,5,7,10"
+                             Margin="3,3,7,3"
                              HorizontalAlignment="Left"
-                             Width="135"/> 
+                             Width="135"/>
                     <Button Grid.Row="2" Grid.Column="2"
-                            Content="Удалить" Width="70" Margin="3,6,1,10" Padding="3,3"
+                            Content="Удалить" Width="70" Margin="3,6,1,5" Padding="3,3"
                             HorizontalAlignment="Right"
                             Command="{Binding RemoveSelectedPhoneFromAbonentCommand}"
                             CommandParameter="{Binding SelectedPhone}"/>
                     <Button Grid.Row="2" Grid.Column="3"
-                            Content="Добавить" Width="70" Margin="1,6,5,10" Padding="3,3"
+                            Content="Добавить" Width="70" Margin="1,6,5,5" Padding="3,3"
                             HorizontalAlignment="Right"
                             Command="{Binding AddSelectedPhoneToAbonentCommand}"
                             CommandParameter="{Binding SelectedPhone}"/>
-                   
-                </Grid>
 
+                </Grid>
             </DockPanel>
         </GroupBox>
-
-
     </Grid>
-    
 </Window>

@@ -4,6 +4,7 @@ using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF;
 using MathCore.WPF.Commands;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,9 +32,15 @@ namespace WpfAppPhoneCompany.ViewModels
 
         public List<TypePhone> TypePhoneList { get; } = new List<TypePhone> { TypePhone.home, TypePhone.work, TypePhone.mobile };
 
+        private string _StatusOfPhone;
+        public string StatusOfPhone { get => _StatusOfPhone; set => Set(ref _StatusOfPhone, value); }
 
-        //private int? _AbonentId;
-        //public int? AbonentId { get => _AbonentId; set => Set(ref _AbonentId, value); }
+        private int? _AbonentId;
+        public int? AbonentId { get => _AbonentId; set => Set(ref _AbonentId, value); }
+
+        private readonly IRepository<Abonent>_AbonentsRepository;
+
+
 
         #region SelectedTypePhone : TypePhone - Выбранный тип номера телефона
 
@@ -69,19 +76,51 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
 
-        public PhoneEditorViewModel()
-            : this(new Phone { Id = 1, Number = 123, TypePhone = TypePhone.home, AbonentId = 0 })
-        {
-            if (!App.IsDesignTime)
-                throw new InvalidOperationException("Не для рантайма");
-        }
+        #region Command LoadDataCommand - Команда загрузки данных из репозитория
 
-        public PhoneEditorViewModel(Phone phone)
+        /// <summary>Команда загрузки данных из репозитория</summary>
+        private ICommand _LoadDataCommand;
+
+        /// <summary>Команда загрузки данных из репозитория</summary>
+        public ICommand LoadDataCommand => _LoadDataCommand
+            ??= new LambdaCommandAsync(OnLoadDataCommandExecuted, CanLoadDataCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Команда загрузки данных из репозитория</summary>
+        private bool CanLoadDataCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Команда загрузки данных из репозитория</summary>
+        private async Task OnLoadDataCommandExecuted()
         {
+            StatusOfPhone = "Телефон не закреплён за абонентом."; 
+
+            if (AbonentId != null)
+            {
+                //var abonent = _AbonentsRepository.Items.FirstOrDefault(x => x.Id == AbonentId);
+
+                var abonent = await _AbonentsRepository.GetAsync((int)AbonentId);
+                if (abonent != null)
+                {
+                    StatusOfPhone = "Телефон закреплён за абонентом: " + abonent.ToString();
+                }
+            }
+        }
+        #endregion
+
+        //public PhoneEditorViewModel()
+        //    : this(new Phone { Id = 1, Number = 123, TypePhone = TypePhone.home, AbonentId = 0 })
+        //{
+        //    if (!App.IsDesignTime)
+        //        throw new InvalidOperationException("Не для рантайма");
+        //}
+
+        public PhoneEditorViewModel(Phone phone, IRepository<Abonent> AbonentsRepository)
+        {
+            _AbonentsRepository = AbonentsRepository;
+
             StreetId = phone.Id;
             Number = phone.Number;
             TypeOfPhone = phone.TypePhone;
-            //AbonentId = phone.AbonentId;
+            AbonentId = phone.AbonentId;
         }
 
     }

@@ -25,11 +25,9 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IUserDialog _UserDialog;
 
         private readonly IRepository<Abonent> _AbonentsRepository;
-
-        //public IEnumerable<Address> Addresses => _AddressesRepository.Items.ToArray();
+        private readonly IRepository<Street> _StreetsRepository;
 
         #region Abonents : ObservableCollection<AddressAbonent> - Коллекция адресов
-
         /// <summary>Коллекция адресов</summary>
         private ObservableCollection<AddressAbonent> _Addresses;
 
@@ -80,7 +78,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region SelectedAddress : Address - Выбранный адрес
-
         /// <summary>Выбранный адрес</summary>
         private AddressAbonent _SelectedAddress;
 
@@ -93,7 +90,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -119,13 +115,11 @@ namespace WpfAppPhoneCompany.ViewModels
                     (address, abonent) => new AddressAbonent { Address = address, Abonent = abonent }) // желаемый результат
                 ;
 
-            //Addresses = new ObservableCollection<Address>(await _AddressesRepository.Items.ToArrayAsync());
             Addresses = new ObservableCollection<AddressAbonent>(Streets_Abonents_Join_query.ToArray());
         }
         #endregion
 
         #region Command AddNewAddressCommand - Добавление нового абонента
-
         /// <summary>Добавление нового адреса</summary>
         private ICommand _AddNewAddressCommand;
 
@@ -141,7 +135,7 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             var new_address = new AddressAbonent { Address = new Address() };
 
-            if (!_UserDialog.Edit(new_address.Address))
+            if (!_UserDialog.Edit(new_address))
                 return;
 
             //_Addresses.Add(_AddressesRepository.Add(new_address));
@@ -153,7 +147,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command RemoveAddressCommand : Удаление указанного абонента
-
         /// <summary>Удаление указанного абонента</summary>
         private ICommand _RemoveAddressCommand;
 
@@ -172,6 +165,7 @@ namespace WpfAppPhoneCompany.ViewModels
                 return;
 
             _AddressesRepository.Remove(address_to_remove.Address.Id);
+            _StreetsRepository.Update(address_to_remove.Address.Street);
 
             _Addresses.Remove(address_to_remove);
             if (ReferenceEquals(SelectedAddress, address_to_remove))
@@ -180,7 +174,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command EditAddressCommand : Редактирование указанного адреса
-
         /// <summary>Редактирование указанного адреса</summary>
         private ICommand _EditAddressCommand;
 
@@ -198,42 +191,42 @@ namespace WpfAppPhoneCompany.ViewModels
 
             if (!_UserDialog.Edit(address_to_edit))
                 return;
-            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {address_to_edit.Address.Street} Д.{address_to_edit.Address.House} Кв.{address_to_edit.Address.ApartNum}?", "Сохранение изменений"))
+            if (!_UserDialog.ConfirmWarning($"Сохранить изменения в {address_to_edit.Address.Street} д.{address_to_edit.Address.House} кв.{address_to_edit.Address.ApartNum}?", "Сохранение изменений"))
                 return;
 
             _AddressesRepository.Update(address_to_edit.Address);
+            if(address_to_edit.Address.Street != null) _StreetsRepository.Update(address_to_edit.Address.Street);
             AddressesView.Refresh();
             SelectedAddress = address_to_edit;
 
             _AddressesViewSource.View.Refresh();
-            //OnPropertyChanged(nameof(AddressesView));
-            
         }
         #endregion
-
-
-
 
         public AddressesViewModel(
             IRepository<Address> AddressesRepository, 
             IUserDialog UserDialog,
-            IRepository<Abonent> abonentsRepository
-            )
+            IRepository<Abonent> AbonentsRepository,
+            IRepository<Street> StreetsRepository)
         {
             _AddressesRepository = AddressesRepository;
             _UserDialog = UserDialog;
-            _AbonentsRepository = abonentsRepository;
+            _AbonentsRepository = AbonentsRepository;
+            _StreetsRepository = StreetsRepository;
         }
 
         private void OnAddressesFilter(object Sender, FilterEventArgs E)
         {
             if (!(E.Item is AddressAbonent address) || string.IsNullOrEmpty(AddressFilter)) return;
 
-            //if (!address.Address.Street.Name.Contains(AddressFilter))
-            //    E.Accepted = false;
-
             if (!string.Concat(address.Address.Street.Name, address.Address.House, address.Address.ApartNum).Contains(AddressFilter))
                 E.Accepted = false;
+            //if (!address.Address.Street.Name.Contains(AddressFilter))
+            //    E.Accepted = false;
+            //if (!address.Address.House.ToString().Contains(AddressFilter))
+            //    E.Accepted = false;
+            //if (!address.Address.ApartNum.ToString().Contains(AddressFilter))
+            //    E.Accepted = false;
         }
     }
 }

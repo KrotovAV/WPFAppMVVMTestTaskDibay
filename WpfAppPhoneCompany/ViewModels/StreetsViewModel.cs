@@ -2,26 +2,16 @@
 using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using static System.Reflection.Metadata.BlobBuilder;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
-using MathCore.WPF;
-using WpfAppPhoneCompany.Services;
 using WpfAppPhoneCompany.Services.Interfaces;
-using DataBaseLayer.Repositories;
-using WpfAppPhoneCompany.Views;
 using WpfAppPhoneCompany.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static MathCore.Values.CSV;
-using MathCore.CSV;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -33,10 +23,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Abonent> _AbonentsRepository;
         private readonly IRepository<Address> _AddressesRepository;
 
-      
-
         #region Streets : ObservableCollection<StreetAbonents> - Коллекция улиц
-
         /// <summary>Коллекция улиц</summary>
         private ObservableCollection<StreetAbonents> _Streets;
 
@@ -84,8 +71,6 @@ namespace WpfAppPhoneCompany.ViewModels
         private CollectionViewSource _StreetsViewSource;
         public ICollectionView StreetsView => _StreetsViewSource?.View;
 
-
-
         #region Поиск
         /// <summary> Искомое слово абонент</summary>
         private string _AbonentFilter;
@@ -100,7 +85,6 @@ namespace WpfAppPhoneCompany.ViewModels
             }
         }
         #endregion
-
         public ICollectionView AbonentsView => _AbonentsViewSource?.View;
 
         private CollectionViewSource _AbonentsViewSource;
@@ -113,7 +97,6 @@ namespace WpfAppPhoneCompany.ViewModels
         public StreetAbonents SelectedStreet
         {
             get => _SelectedStreet;
-            //set => Set(ref _SelectedStreet, value);
             set
             {
                 if (Set(ref _SelectedStreet, value))
@@ -138,7 +121,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region SelectedAbonent: SelectedAbonent - Выбранный абонент
-
         /// <summary>Выбранный абонент</summary>
         private Abonent _SelectedAbonent;
 
@@ -150,10 +132,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
-
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -182,13 +161,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
-
-
-
-
         #region Command AddNewStreetCommand - Добавление новой книги
-
         /// <summary>Добавление новой улицы</summary>
         private ICommand _AddNewStreetCommand;
 
@@ -202,30 +175,19 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Добавление новой улицы</summary>
         private void OnAddNewStreetCommandExecuted()
         {
-            
             var new_street = new StreetAbonents { Street = new Street(), AbonentsOfStreet = new List<Abonent>() };
 
             if (!_UserDialog.Edit(new_street))
                 return;
 
-            //_Streets.Add(_StreetsRepository.Add(new_street));
             _StreetsRepository.Add(new_street.Street);
-            //if (new_street.AbonentsOfStreet != null)
-            //{
-            //    foreach (var abonent in new_street.AbonentsOfStreet)
-            //    {
-            //        _AbonentsRepository.Update(abonent);
-            //    }
-            //}
+
             _Streets.Add(new_street);
             SelectedStreet = new_street;
         }
-
         #endregion
 
-
         #region Command RemoveStreetCommand : Удаление указанной улицы
-
         /// <summary>Удаление указанной улицы</summary>
         private ICommand _RemoveStreetCommand;
 
@@ -260,7 +222,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command EditStreetCommand : Редактирование указанной улицы
-
         /// <summary>Редактирование указанной улицы</summary>
         private ICommand _EditStreetCommand;
 
@@ -292,6 +253,7 @@ namespace WpfAppPhoneCompany.ViewModels
 
             StreetsView.Refresh();
             SelectedStreet = street_to_edit;
+            OnPropertyChanged(nameof(SelectedStreet));
         }
         #endregion
 
@@ -305,7 +267,6 @@ namespace WpfAppPhoneCompany.ViewModels
             _UserDialog = UserDialog;
             _AbonentsRepository = abonentsRepository;
             _AddressesRepository = addressesRepository;
-
         }
         private void OnStreetsFilter(object Sender, FilterEventArgs E)
         {
@@ -318,8 +279,14 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             if (!(E.Item is Abonent abonent) || string.IsNullOrEmpty(AbonentFilter)) return;
 
-            if (!abonent.Name.Contains(AbonentFilter) || !abonent.SurName.Contains(AbonentFilter) || !abonent.SecondName.Contains(AbonentFilter))
+            if (!(string.Concat(abonent.SurName, abonent.Name, abonent.SecondName).Contains(AbonentFilter)))
                 E.Accepted = false;
+            //if (!abonent.Name.Contains(AbonentFilter))
+            //    E.Accepted = false;
+            //if (!abonent.SurName.Contains(AbonentFilter))
+            //    E.Accepted = false;
+            //if (!abonent.SecondName.Contains(AbonentFilter))
+            //    E.Accepted = false;
         }
     }
 }

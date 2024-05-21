@@ -23,6 +23,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private string _SurName;
         public string SurName { get => _SurName; set => Set(ref _SurName, value); }
 
+        
         private string _Name;
         public string Name { get => _Name; set => Set(ref _Name, value); }
 
@@ -32,11 +33,14 @@ namespace WpfAppPhoneCompany.ViewModels
         private int? _AddressId;
         public int? AddressId { get => _AddressId; set => Set(ref _AddressId, value); }
 
-        private List<Phone>? _PhonesOfAbonent;
-        public List<Phone>? PhonesOfAbonent { get => _PhonesOfAbonent; set => Set(ref _PhonesOfAbonent, value); }
+        private int? _StreetId;
+        public int? StreetId { get => _StreetId; set => Set(ref _StreetId, value); }
 
-        private string _FullAddressOfAbonent;
-        public string FullAddressOfAbonent { get => _FullAddressOfAbonent; set => Set(ref _FullAddressOfAbonent, value); }
+        private Address? _Address;
+        public Address? Address { get => _Address; set => Set(ref _Address, value); }
+
+        private ObservableCollection<Phone>? _Phones; //ICollection
+        public ObservableCollection<Phone>? Phones { get => _Phones; set => Set(ref _Phones, value); }
 
 
         private readonly IRepository<Address> _AddressesRepository;
@@ -44,7 +48,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
         
         #region Addresses : ObservableCollection<Addresses> - Коллекция адресов
-
         /// <summary>Коллекция адресов</summary>
         private ObservableCollection<Address> _Addresses;
 
@@ -74,20 +77,19 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-        #region Phones : ObservableCollection<Phones> - Коллекция телефонов
+        #region PhonesWithoutAbonent : ObservableCollection<Phones> - Коллекция телефонов
+        /// <summary>Коллекция телефонов</summary>
+        private ObservableCollection<Phone> _PhonesWithoutAbonent;
 
         /// <summary>Коллекция телефонов</summary>
-        private ObservableCollection<Phone> _Phones;
-
-        /// <summary>Коллекция телефонов</summary>
-        public ObservableCollection<Phone> Phones
+        public ObservableCollection<Phone> PhonesWithoutAbonent
         {
-            get => _Phones;
+            get => _PhonesWithoutAbonent;
             set
             {
-                if (Set(ref _Phones, value))
+                if (Set(ref _PhonesWithoutAbonent, value))
                 {
-                    _PhonesViewSource = new CollectionViewSource
+                    _PhonesWithoutAbonentViewSource = new CollectionViewSource
                     {
                         Source = value,
                         SortDescriptions =
@@ -96,17 +98,16 @@ namespace WpfAppPhoneCompany.ViewModels
                         }
                     };
 
-                    _PhonesViewSource.Filter += OnPhonesFilter;
-                    _PhonesViewSource.View.Refresh();
+                    _PhonesWithoutAbonentViewSource.Filter += OnPhonesFilter;
+                    _PhonesWithoutAbonentViewSource.View.Refresh();
 
-                    OnPropertyChanged(nameof(PhonesView));
+                    OnPropertyChanged(nameof(PhonesWithoutAbonentView));
                 }
             }
         }
         #endregion
 
         #region SelectedAddress : Address - Выбранный адрес
-
         /// <summary>Выбранный адрес</summary>
         private Address _SelectedAddress;
 
@@ -119,7 +120,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region SelectedPhone : Phone - Выбранный телефон
-
         /// <summary>Выбранный телефон</summary>
         private Phone _SelectedPhone;
 
@@ -131,7 +131,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-        #region Поиск
+        #region Поиск адрес
         /// <summary> Искомое слово телефон</summary>
         private string _AddressFilter;
         /// <summary> Искомое слово телефон</summary>
@@ -146,7 +146,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-        #region Поиск
+        #region Поиск телефон
         /// <summary> Искомое слово телефон</summary>
         private string _PhoneFilter;
         /// <summary> Искомое слово телефон</summary>
@@ -156,7 +156,7 @@ namespace WpfAppPhoneCompany.ViewModels
             set
             {
                 if (Set(ref _PhoneFilter, value))
-                    _PhonesViewSource.View.Refresh();
+                    _PhonesWithoutAbonentViewSource.View.Refresh();
             }
         }
         #endregion
@@ -164,12 +164,11 @@ namespace WpfAppPhoneCompany.ViewModels
         private CollectionViewSource _AddressesViewSource;
         public ICollectionView AddressesView => _AddressesViewSource?.View;
 
-        private CollectionViewSource _PhonesViewSource;
-        public ICollectionView PhonesView => _PhonesViewSource?.View;
+        private CollectionViewSource _PhonesWithoutAbonentViewSource;
+        public ICollectionView PhonesWithoutAbonentView => _PhonesWithoutAbonentViewSource?.View;
 
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -184,16 +183,11 @@ namespace WpfAppPhoneCompany.ViewModels
         private async Task OnLoadDataCommandExecuted()
         {    
             Addresses = new ObservableCollection<Address>(await _AddressesRepository.Items.ToArrayAsync());
-            Phones = new ObservableCollection<Phone>(await _PhonesRepository.Items.ToArrayAsync());
-
-            FullAddressOfAbonent = _Addresses.FirstOrDefault(x => x.Id == AddressId).ToString();
-            PhonesOfAbonent = _Phones.Where(x => x.AbonentId == AbonentId).ToList();
+            PhonesWithoutAbonent = new ObservableCollection<Phone>(await _PhonesRepository.Items.Where(x => x.AbonentId == null).ToArrayAsync());
         }
         #endregion
 
-
-        #region RemoveSelectedPhoneCommand команда добавления абоненту выбранного телефона
-
+        #region RemoveSelectedPhoneCommand команда удаления абоненту выбранного телефона
         /// <summary>Команда удаления абоненту выбранного телефона</summary>
         private ICommand _RemoveSelectedPhoneFromAbonentCommand;
 
@@ -202,23 +196,17 @@ namespace WpfAppPhoneCompany.ViewModels
             ??= new LambdaCommandAsync<Phone>(OnRemoveSelectedPhoneFromAbonentCommandExecuted, CanRemoveSelectedPhoneFromAbonentCommandExecute);
 
         /// <summary>Проверка возможности выполнения - Команда удаления абоненту выбранного телефона</summary>
-        private bool CanRemoveSelectedPhoneFromAbonentCommandExecute(Phone p) => p != null || SelectedPhone != null || PhonesOfAbonent != null;
+        private bool CanRemoveSelectedPhoneFromAbonentCommandExecute(Phone p) => p != null || SelectedPhone != null || Phones != null;
 
         /// <summary>Логика выполнения - Команда удаления абоненту выбранного телефона</summary>
         private async Task OnRemoveSelectedPhoneFromAbonentCommandExecuted(Phone p)
         {
-            //var abonent_to_edit = p ?? SelectedAddress;
-            if (PhonesOfAbonent != null)
-            {
-                PhonesOfAbonent.Remove(p);
-            }
-            //Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
+            _Phones?.Remove(p);
+            _PhonesWithoutAbonent.Add(p);
         }
         #endregion
 
-
         #region AddSelectedPhoneCommand команда добавления абоненту выбранного телефона
-
         /// <summary>Команда добавления абоненту выбранного телефона</summary>
         private ICommand _AddSelectedPhoneToAbonentCommand;
 
@@ -232,21 +220,16 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команда добавления абоненту выбранного телефона</summary>
         private async Task OnAddSelectedPhoneToAbonentCommandExecuted(Phone p)
         {
-            //var address_to_edit = p ?? SelectedAddress;
-            if (PhonesOfAbonent is null)
+            if(_Phones == null)
             {
-                PhonesOfAbonent = new List<Phone> { };
-
+                _Phones = new ObservableCollection<Phone> { };
             }
-            PhonesOfAbonent.Add(p);
-
-            //Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
+            _Phones.Add(p);
+            _PhonesWithoutAbonent.Remove(p);
         }
         #endregion
 
-
         #region ChooseSelectedAddressCommand Команда присвоения абоненту выбранного адреса
-
         /// <summary>Команда присвоения абоненту выбранного адреса</summary>
         private ICommand _ChooseSelectedAddressCommand;
 
@@ -260,10 +243,10 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команды присвоения абоненту выбранного адреса</summary>
         private async Task OnChooseSelectedAddressCommandExecuted(Address p)
         {
-            //var address_to_edit = p ?? SelectedAddress;
             AddressId = p.Id;
-
-            //Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
+            Address = p;
+            OnPropertyChanged(nameof(Address));
+            StreetId = p.StreetId;
         }
         #endregion
 
@@ -283,24 +266,29 @@ namespace WpfAppPhoneCompany.ViewModels
             _AddressesRepository = AddressesRepository;
             _PhonesRepository = PhonesRepository;
             
-
             AbonentId = abonent.Id;
             Name = abonent.Name;
             SurName = abonent.SurName;
             SecondName = abonent.SecondName;
             AddressId = abonent.AddressId;
-
-            
+            StreetId = abonent.StreetId;
+            Address = abonent.Address;
+            Phones = new ObservableCollection<Phone>(abonent.Phones ?? new List<Phone>());
         }
 
         private void OnAddressesFilter(object Sender, FilterEventArgs E)
         {
             if (!(E.Item is Address address) || string.IsNullOrEmpty(AddressFilter)) return;
 
-            //if (!address.Street.Name.Contains(AddressFilter))
+            //if (!string.Concat(address.Street.Name, address.House, address.ApartNum).Contains(AddressFilter))
             //    E.Accepted = false;
-            if (!string.Concat(address.Street.Name, address.House, address.ApartNum).Contains(AddressFilter))
+            if (!address.Street.Name.Contains(AddressFilter))
                 E.Accepted = false;
+            if (!address.House.ToString().Contains(AddressFilter))
+                E.Accepted = false;
+            if (!address.ApartNum.ToString().Contains(AddressFilter))
+                E.Accepted = false;
+
         }
         private void OnPhonesFilter(object Sender, FilterEventArgs E)
         {

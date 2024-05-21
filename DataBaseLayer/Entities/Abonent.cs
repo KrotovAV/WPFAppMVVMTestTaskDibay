@@ -20,7 +20,7 @@ namespace DataBaseLayer.Entities
         public virtual Street? Street { get; set; }//навигационное свойство
         public virtual ICollection<Phone>? Phones { get; set; } = new HashSet<Phone>();
 
-        public override string ToString() => $"Абонент {SurName} {Name} {SecondName}";
+        public override string ToString() => $"{SurName} {Name} {SecondName}";
 
     }
 }

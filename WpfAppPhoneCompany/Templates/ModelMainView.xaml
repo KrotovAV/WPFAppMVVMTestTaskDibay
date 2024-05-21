@@ -3,7 +3,10 @@
                     
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
                     xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
-                    xmlns:view="clr-namespace:WpfAppPhoneCompany.Views">
+                    xmlns:view="clr-namespace:WpfAppPhoneCompany.Views"
+                    xmlns:window="clr-namespace:WpfAppPhoneCompany.Views.Windows"
+                    >
+    
 
     <DataTemplate DataType="{x:Type system:Int32}">
         <TextBlock Text="{Binding StringFormat=int:{0}}"/>

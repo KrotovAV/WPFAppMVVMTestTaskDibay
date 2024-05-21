@@ -8,7 +8,7 @@
              xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
              d:DataContext="{d:DesignInstance {x:Type vm:StreetsViewModel}}" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="650">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
@@ -18,9 +18,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="285"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="3"
+      VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        
 
         <GroupBox Grid.Column="0" Header="Улицы" >
 
@@ -55,20 +59,24 @@
                 </DataGrid>
             </DockPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1">
+        <GroupBox Grid.Column="2">
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Right"  Rows="1">
                     <Button Content="Выгрузить CSV" Margin="3" 
                             Command=""/>
                 </UniformGrid>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="400"/>
-                        <ColumnDefinition Width="*"/>
 
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
 
-                    <GroupBox Grid.Column="0">
+                    </Grid.RowDefinitions>
+                    <GridSplitter Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="3"
+                                    VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    
+                        <GroupBox Grid.Row="0" Grid.Column="0" >
                         <GroupBox.Header>
                             <TextBlock>
                                 <TextBlock.Text>
@@ -95,16 +103,16 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding SurName}" Width="Auto"/>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto"/>
-                                    <DataGridTextColumn Header="Отчество" Binding="{Binding SecondName}" Width="*"/>
-                                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address.Street.Name}" Width="*"/>
-                                    <DataGridTextColumn Header="Дом" Binding="{Binding Address.House}" Width="*"/>
+                                    <DataGridTextColumn Header="Отчество" Binding="{Binding SecondName}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address.Street.Name}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Дом" Binding="{Binding Address.House}" Width="Auto"/>
                                     <DataGridTextColumn Header="Кв." Binding="{Binding Address.ApartNum}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
                     </GroupBox>
 
-                    <GroupBox Grid.Column="1" >
+                    <GroupBox Grid.Row="2" Grid.Column="0" >
                         <GroupBox.Header>
                             <TextBlock Height="40" Width="180" MinWidth="150" TextWrapping="Wrap">
                                 <TextBlock.Text>

@@ -1,20 +1,14 @@
 ﻿using DataBaseLayer.Entities;
-using DataBaseLayer.Repositories;
 using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using WpfAppPhoneCompany.Services.Interfaces;
-using WpfAppPhoneCompany.Views;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -24,7 +18,6 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IUserDialog _UserDialog;
 
         #region Phones : ObservableCollection<Phone> - Коллекция телефонов
-
         /// <summary>Коллекция телефонов</summary>
         private ObservableCollection<Phone> _Phones;
 
@@ -73,9 +66,7 @@ namespace WpfAppPhoneCompany.ViewModels
 
         public ICollectionView PhonesView => _PhonesViewSource?.View;
 
-
         #region SelectedPhone : SelectedPhone - Выбранный телефон
-
         /// <summary>Выбранный телефон</summary>
         private Phone _SelectedPhone;
 
@@ -85,11 +76,9 @@ namespace WpfAppPhoneCompany.ViewModels
             get => _SelectedPhone;
             set => Set(ref _SelectedPhone, value);
         }
-
         #endregion
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -107,9 +96,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
         #region Command AddNewPhoneCommand - Добавление нового телефона
-
         /// <summary>Добавление нового телефона</summary>
         private ICommand _AddNewPhoneCommand;
 
@@ -135,7 +122,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command RemovePhoneCommand : Удаление указанного телефона
-
         /// <summary>Удаление указанного телефона</summary>
         private ICommand _RemovePhoneCommand;
 
@@ -163,7 +149,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command EditPhoneCommand : Редактирование указанного номера
-
         /// <summary>Редактирование указанного номера</summary>
         private ICommand _EditPhoneCommand;
 
@@ -185,14 +170,16 @@ namespace WpfAppPhoneCompany.ViewModels
                 return;
 
             _PhonesRepository.Update(phone_to_edit);
+            //----------
+            int index = _Phones.IndexOf(p);
+            _Phones.Remove(p);
+            _Phones.Insert(index, phone_to_edit);
+            //-------------
             PhonesView.Refresh();
             SelectedPhone = phone_to_edit;
+            OnPropertyChanged(nameof(SelectedPhone));
         }
         #endregion
-
-
-
-
 
         public PhonesViewModel(IRepository<Phone> PhonesRepository, 
             IUserDialog UserDialog)

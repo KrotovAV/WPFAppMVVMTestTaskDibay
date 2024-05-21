@@ -5,7 +5,6 @@ using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -17,8 +16,9 @@ namespace WpfAppPhoneCompany.ViewModels
     {
 
         public int AddressId { get; }
-        private int _StreetId;
-        public int StreetId { get => _StreetId; set => Set(ref _StreetId, value); }
+
+        private int? _StreetId;
+        public int? StreetId { get => _StreetId; set => Set(ref _StreetId, value); }
 
         private int _House;
         public int House { get => _House; set => Set(ref _House, value); }
@@ -26,14 +26,13 @@ namespace WpfAppPhoneCompany.ViewModels
         private int _ApartNum;
         public int ApartNum { get => _ApartNum; set => Set(ref _ApartNum, value); }
 
+        private Street? _Street;
+        public Street? Street { get => _Street; set => Set(ref _Street, value); }
 
 
         private readonly IRepository<Street> _StreetsRepository;
 
-
-
         #region Streets : ObservableCollection<StreetAbonents> - Коллекция улиц
-
         /// <summary>Коллекция улиц</summary>
         private ObservableCollection<Street> _Streets;
 
@@ -64,7 +63,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region SelectedStreet : Street - Выбранная улица
-
         /// <summary>Выбранная улица</summary>
         private Street _SelectedStreet;
 
@@ -96,7 +94,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -115,7 +112,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region ChooseSelectedStreetCommand комманда присвоения адресу выбранной улицы
-
         /// <summary>Команда присвоения адресу выбранной улицы</summary>
         private ICommand _ChooseSelectedStreetCommand;
 
@@ -129,10 +125,8 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Команды присвоения адресу выбранной улицы</summary>
         private async Task OnChooseSelectedStreetCommandExecuted(Street p)
         {
-            //var address_to_edit = p ?? SelectedAddress;
             StreetId = p.Id;
-           
-            //Streets = new ObservableCollection<Street>(await _StreetsRepository.Items.ToArrayAsync());
+            Street = p;
         }
         #endregion
 
@@ -143,14 +137,15 @@ namespace WpfAppPhoneCompany.ViewModels
         //        throw new InvalidOperationException("Не для рантайма");
         //}
 
-        public AddressEditorViewModel(Address address,
+        public AddressEditorViewModel(AddressAbonent address,
             IRepository<Street> StreetsRepository)
         {
             _StreetsRepository = StreetsRepository;
 
-            StreetId = address.StreetId ?? 1;// исправить костыль
-            House = address.House;
-            ApartNum = address.ApartNum;
+            StreetId = address.Address.StreetId;
+            House = address.Address.House;
+            ApartNum = address.Address.ApartNum;
+            Street = address.Address.Street;
         }
 
         private void OnStreetsFilter(object Sender, FilterEventArgs E)

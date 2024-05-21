@@ -20,7 +20,6 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IRepository<Address> _Addresses;
         private readonly IRepository<Street> _Streets;
         private readonly IRepository<Phone> _Phones;
-        private readonly IConnectAbonentService _ConnectAbonentService;
         private readonly IUserDialog _UserDialog;
 
         #region Title : string - Заголовок
@@ -80,7 +79,7 @@ namespace WpfAppPhoneCompany.ViewModels
         /// <summary>Логика выполнения - Отобразить представление адресов</summary>
         private void OnShowAddressesViewCommandExecuted()
         {
-            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog, _Abonents);
+            CurrentModel = new AddressesViewModel(_Addresses , _UserDialog, _Abonents, _Streets);
         }
 
         #endregion
@@ -162,7 +161,6 @@ namespace WpfAppPhoneCompany.ViewModels
             _Addresses = Addresses;
             _Phones = Phones;
             _Streets = Streets;
-            _ConnectAbonentService = ConnectAbonentService;
 
             _UserDialog = UserDialog;
 

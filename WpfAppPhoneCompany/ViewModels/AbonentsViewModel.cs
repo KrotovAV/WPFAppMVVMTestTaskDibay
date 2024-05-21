@@ -4,6 +4,8 @@ using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using WpfAppPhoneCompany.Services.Interfaces;
 using WpfAppPhoneCompany.Views;
+using static MathCore.Values.CSV;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -176,20 +179,28 @@ namespace WpfAppPhoneCompany.ViewModels
             ??= new LambdaCommand<Abonent>(OnEditAbonentCommandExecuted, CanEditAbonentCommandExecute);
 
         /// <summary>Проверка возможности выполнения - Редактирование указанного абонента</summary>
-        private bool CanEditAbonentCommandExecute(Abonent p) => p != null || SelectedAbonent != null;
+        private bool CanEditAbonentCommandExecute(Abonent p) => p != null;
 
         /// <summary>Логика выполнения - Редактирование указанного абонента</summary>
-        private void OnEditAbonentCommandExecuted(Abonent p)
+        private async void OnEditAbonentCommandExecuted(Abonent p)
         {
-            var abonent_to_edit = p ?? SelectedAbonent;
+            var abonent_to_edit = p;
+
+            var phonesToUpdate = new HashSet<Phone> ();
+            if (p.Phones != null) phonesToUpdate.UnionWith(p.Phones);
+   
 
             if (!_UserDialog.Edit(abonent_to_edit))
                 return;
             if (!_UserDialog.ConfirmWarning($"Сохранить изменения в\n {abonent_to_edit.SurName}\n {abonent_to_edit.Name}\n {abonent_to_edit.SecondName} ?", "Сохранение изменений"))
                 return;
-            if (abonent_to_edit.Phones != null)
+
+            _AbonentsRepository.Update(abonent_to_edit);
+
+            if (abonent_to_edit.Phones != null) phonesToUpdate.UnionWith(abonent_to_edit.Phones);
+            if (phonesToUpdate != null)
             {
-                foreach(var phone in abonent_to_edit.Phones)
+                foreach(var phone in phonesToUpdate)
                 {
                     _PhonesRepository.Update(phone);
                 }
@@ -199,17 +210,18 @@ namespace WpfAppPhoneCompany.ViewModels
             {
                 _StreetsRepository.Update(abonent_to_edit.Street);
             }
-            
-            _AbonentsRepository.Update(abonent_to_edit);
-            AbonentsView.Refresh();
-            SelectedAbonent = abonent_to_edit;
 
+            int index = _Abonents.IndexOf(p);
+            _Abonents.Remove(p);
+            _Abonents.Insert(index, abonent_to_edit);
+
+            AbonentsView.Refresh();
+
+            SelectedAbonent = abonent_to_edit; 
+            
+            OnPropertyChanged(nameof(SelectedAbonent));
         }
         #endregion
-
-
-
-
 
         public AbonentsViewModel(IRepository<Abonent> AbonentsRepository, 
             IUserDialog UserDialog,
@@ -226,8 +238,14 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             if (!(E.Item is Abonent abonent) || string.IsNullOrEmpty(AbonentFilter)) return;
 
-            if (!abonent.Name.Contains(AbonentFilter))
+            if (!(string.Concat(abonent.SurName, abonent.Name, abonent.SecondName).Contains(AbonentFilter)))
                 E.Accepted = false;
+            //if (!abonent.SurName.Contains(AbonentFilter))
+            //    E.Accepted = false;
+            //if (!abonent.Name.Contains(AbonentFilter))
+            //    E.Accepted = false;
+            //if (!abonent.SecondName.Contains(AbonentFilter))
+            //    E.Accepted = false;
         }
 
 

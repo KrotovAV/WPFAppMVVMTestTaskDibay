@@ -8,7 +8,7 @@
              xmlns:vm="clr-namespace:WpfAppPhoneCompany.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type vm:AbonentsViewModel}}" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="650">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -20,9 +20,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="285"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            
         </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="3"
+              VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        
         <GroupBox Grid.Column="0" Header="Абоненты" >
 
             <DockPanel>
@@ -58,7 +61,7 @@
             </DockPanel>
         </GroupBox>
 
-        <GroupBox Grid.Column="1" >
+        <GroupBox Grid.Column="2" >
             <GroupBox.Header>
                 <TextBlock>
                     <TextBlock.Text>
