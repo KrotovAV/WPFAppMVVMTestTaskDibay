@@ -8,10 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using WpfAppPhoneCompany.Models;
 using WpfAppPhoneCompany.Services.Interfaces;
@@ -200,6 +202,63 @@ namespace WpfAppPhoneCompany.ViewModels
             SelectedAddress = address_to_edit;
 
             _AddressesViewSource.View.Refresh();
+        }
+        #endregion
+
+        #region Command ExportDataToCSVFileCommand : Сохранение данных в CSV файл
+        /// <summary>Сохранение данных в CSV файл</summary>
+        private ICommand _ExportDataToCSVFileCommand;
+
+        /// <summary>Сохранение данных в CSV файл</summary>
+        public ICommand ExportDataToCSVFileCommand => _ExportDataToCSVFileCommand
+            ??= new LambdaCommand(OnExportDataToCSVFileCommandExecuted, CanExportDataToCSVFileCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Сохранение данных в CSV файл</summary>
+        private bool CanExportDataToCSVFileCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Сохранение данных в CSV файл</summary>
+        private async void OnExportDataToCSVFileCommandExecuted()
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.InitialDirectory = "D:";
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folder = dialog.SelectedPath;
+                if (!_UserDialog.ConfirmWarning($"Сохранить в папку {folder}?", "Сохранение"))
+                    return;
+
+                string CSVPath = folder + $"/report_AddressesModel_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.csv";
+
+                using (var sw = new StreamWriter(CSVPath, true, Encoding.UTF8))
+                {
+
+                    string headerLine = String.Join(",", "Фамилия", "Имя", "Отчество", "Улица", "Дом", "Квартира", "тел.домашний", "тел.рабочий", "тел.мобильный");
+
+                    sw.Write($"{headerLine}{Environment.NewLine}");
+
+                    List<AddressAbonent> AddressesList = AddressesView.OfType<AddressAbonent>().ToList();
+
+                    foreach (var abonent in AddressesList)
+                    {
+                        if (abonent.Abonent == null) continue;
+                        string csv = string.Join(",",
+                            abonent.Abonent.SurName,
+                            abonent.Abonent.Name,
+                            abonent.Abonent.SecondName,
+                            abonent?.Abonent?.Address?.Street?.Name,
+                            abonent?.Abonent?.Address?.House,
+                            abonent?.Abonent?.Address?.ApartNum,
+                            abonent?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.home)?.Number,
+                            abonent?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.work)?.Number,
+                            abonent?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.mobile)?.Number
+                            );
+                        sw.Write($"{csv}{Environment.NewLine}");
+                    }
+                }
+            }
+            else return;
         }
         #endregion
 

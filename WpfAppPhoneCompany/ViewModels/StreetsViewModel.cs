@@ -12,6 +12,10 @@ using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using WpfAppPhoneCompany.Services.Interfaces;
 using WpfAppPhoneCompany.Models;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using System;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -257,6 +261,67 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
+        #region Command ExportDataToCSVFileCommand : Сохранение данных в CSV файл
+        /// <summary>Сохранение данных в CSV файл</summary>
+        private ICommand _ExportDataToCSVFileCommand;
+
+        /// <summary>Сохранение данных в CSV файл</summary>
+        public ICommand ExportDataToCSVFileCommand => _ExportDataToCSVFileCommand
+            ??= new LambdaCommand(OnExportDataToCSVFileCommandExecuted, CanExportDataToCSVFileCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Сохранение данных в CSV файл</summary>
+        private bool CanExportDataToCSVFileCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Сохранение данных в CSV файл</summary>
+        private async void OnExportDataToCSVFileCommandExecuted()
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.InitialDirectory = "D:";
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folder = dialog.SelectedPath;
+                if (!_UserDialog.ConfirmWarning($"Сохранить в папку {folder}?", "Сохранение"))
+                    return;
+
+                string CSVPath = folder + $"/report_StreetsModel_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.csv";
+
+                using (var sw = new StreamWriter(CSVPath, true, Encoding.UTF8))
+                {
+
+                    string headerLine = String.Join(",", "Фамилия", "Имя", "Отчество", "Улица", "Дом", "Квартира", "тел.домашний", "тел.рабочий", "тел.мобильный");
+
+                    sw.Write($"{headerLine}{Environment.NewLine}");
+
+                    List<StreetAbonents> streetsList = StreetsView.OfType<StreetAbonents>().ToList();
+
+                    foreach (var street in streetsList)
+                    {
+                        if (street.AbonentsOfStreet != null)
+                        {
+                            foreach (var abonent in street.AbonentsOfStreet)
+                            {
+                                string csv = string.Join(",",
+                                    abonent.SurName,
+                                    abonent.Name,
+                                    abonent.SecondName,
+                                    abonent?.Address?.Street?.Name,
+                                    abonent?.Address?.House,
+                                    abonent?.Address?.ApartNum,
+                                    abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.home)?.Number,
+                                    abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.work)?.Number,
+                                    abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.mobile)?.Number
+                                    );
+                                sw.Write($"{csv}{Environment.NewLine}");
+                            }
+                        }
+                    }
+                }
+            }
+            else return;
+        }
+        #endregion
         public StreetsViewModel(
             IRepository<Street> StreetsRepository, 
             IUserDialog UserDialog,

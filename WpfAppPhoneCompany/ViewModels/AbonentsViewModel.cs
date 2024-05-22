@@ -1,23 +1,23 @@
 ﻿using DataBaseLayer.Entities;
-using DataBaseLayer.Repositories;
 using DataInterfacesLayer.Interfaces;
+using MathCore.PE.Headers;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using WpfAppPhoneCompany.Services.Interfaces;
-using WpfAppPhoneCompany.Views;
-using static MathCore.Values.CSV;
+using System.Windows.Forms;
+
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -30,7 +30,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region Abonents : ObservableCollection<Abonent> - Коллекция абонентов
-
         /// <summary>Коллекция абонентов</summary>
         private ObservableCollection<Abonent> _Abonents;
 
@@ -75,14 +74,11 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
         private CollectionViewSource _AbonentsViewSource;
 
         public ICollectionView AbonentsView => _AbonentsViewSource?.View;
 
-
         #region SelectedAbonent : SelectedAbonent - Выбранный абонент
-
         /// <summary>Выбранный абонент</summary>
         private Abonent _SelectedAbonent;
 
@@ -96,7 +92,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -115,7 +110,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command AddNewAbonentCommand - Добавление нового абонента
-
         /// <summary>Добавление нового абонента</summary>
         private ICommand _AddNewAbonentCommand;
 
@@ -140,9 +134,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
         #region Command RemoveAbonentCommand : Удаление указанного абонента
-
         /// <summary>Удаление указанного абонента</summary>
         private ICommand _RemoveAbonentCommand;
 
@@ -170,7 +162,6 @@ namespace WpfAppPhoneCompany.ViewModels
         #endregion
 
         #region Command EditAbonentCommand : Редактирование указанного абонента
-
         /// <summary>Редактирование указанного абонента</summary>
         private ICommand _EditAbonentCommand;
 
@@ -223,6 +214,63 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
+        #region Command ExportDataToCSVFileCommand : Сохранение данных в CSV файл
+        /// <summary>Сохранение данных в CSV файл</summary>
+        private ICommand _ExportDataToCSVFileCommand;
+
+        /// <summary>Сохранение данных в CSV файл</summary>
+        public ICommand ExportDataToCSVFileCommand => _ExportDataToCSVFileCommand
+            ??= new LambdaCommand(OnExportDataToCSVFileCommandExecuted, CanExportDataToCSVFileCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Сохранение данных в CSV файл</summary>
+        private bool CanExportDataToCSVFileCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Сохранение данных в CSV файл</summary>
+        private async void OnExportDataToCSVFileCommandExecuted()
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.InitialDirectory = "D:";
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folder = dialog.SelectedPath;
+                if (!_UserDialog.ConfirmWarning($"Сохранить в папку {folder}?", "Сохранение"))
+                    return;
+
+                string CSVPath = folder + $"/report_AbonentsModel_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.csv";
+
+                using (var sw = new StreamWriter(CSVPath, true, Encoding.UTF8))
+                {
+                
+                    string headerLine = String.Join(",", "Фамилия", "Имя", "Отчество", "Улица", "Дом", "Квартира", "тел.домашний", "тел.рабочий", "тел.мобильный");
+
+                    sw.Write($"{headerLine}{Environment.NewLine}");
+
+                    List<Abonent> abonentsList = AbonentsView.OfType<Abonent>().ToList();
+
+                    foreach (var abonent in abonentsList)
+                    {
+                        string csv = string.Join(",",
+                            abonent.SurName,
+                            abonent.Name,
+                            abonent.SecondName,
+                            abonent?.Address?.Street?.Name,
+                            abonent?.Address?.House,
+                            abonent?.Address?.ApartNum,
+                            abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.home)?.Number,
+                            abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.work)?.Number,
+                            abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.mobile)?.Number
+                            ); 
+                        sw.Write($"{csv}{Environment.NewLine}");
+                    }
+                }
+            }
+            else return;
+        }
+        #endregion
+
+
         public AbonentsViewModel(IRepository<Abonent> AbonentsRepository, 
             IUserDialog UserDialog,
             IRepository<Phone> PhonesRepository,
@@ -247,8 +295,5 @@ namespace WpfAppPhoneCompany.ViewModels
             //if (!abonent.SecondName.Contains(AbonentFilter))
             //    E.Accepted = false;
         }
-
-
     }
-
 }

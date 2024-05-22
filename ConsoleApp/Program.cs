@@ -53,6 +53,28 @@ namespace ConsoleApp
             PhoneRepository phosRepo = new PhoneRepository(db);
             var phosR = phosRepo.Items.ToList();
 
+            //var q = lp.GroupBy(p => p.B).Select(ps => ps.First().Name);
+
+            var phosR2 = phosR.GroupBy(x => x.AbonentId).Select(x => x.First());
+
+            foreach (var phone in phosR2)
+            {
+                if (phone.Abonent == null) continue;
+                string csv = string.Join(",",
+                    phone.Abonent.SurName,
+                    phone.Abonent.Name,
+                    phone.Abonent.SecondName,
+                    phone?.Abonent?.Address?.Street?.Name,
+                    phone?.Abonent?.Address?.House,
+                    phone?.Abonent?.Address?.ApartNum,
+                    phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.home)?.Number,
+                    phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.work)?.Number,
+                    phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.mobile)?.Number
+                    );
+                Console.WriteLine(csv);
+            }
+
+
             List<Phone> phones = phosR.Where(x => x.AbonentId == 1).ToList();
             foreach (var pho in phones)
             {

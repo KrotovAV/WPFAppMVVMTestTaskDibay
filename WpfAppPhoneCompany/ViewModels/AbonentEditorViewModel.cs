@@ -280,14 +280,14 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             if (!(E.Item is Address address) || string.IsNullOrEmpty(AddressFilter)) return;
 
-            //if (!string.Concat(address.Street.Name, address.House, address.ApartNum).Contains(AddressFilter))
+            if (!string.Concat(address.Street.Name, address.House, address.ApartNum).Contains(AddressFilter))
+                E.Accepted = false;
+            //if (!address.Street.Name.Contains(AddressFilter))
             //    E.Accepted = false;
-            if (!address.Street.Name.Contains(AddressFilter))
-                E.Accepted = false;
-            if (!address.House.ToString().Contains(AddressFilter))
-                E.Accepted = false;
-            if (!address.ApartNum.ToString().Contains(AddressFilter))
-                E.Accepted = false;
+            //if (!address.House.ToString().Contains(AddressFilter))
+            //    E.Accepted = false;
+            //if (!address.ApartNum.ToString().Contains(AddressFilter))
+            //    E.Accepted = false;
 
         }
         private void OnPhonesFilter(object Sender, FilterEventArgs E)

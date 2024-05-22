@@ -3,12 +3,20 @@ using DataInterfacesLayer.Interfaces;
 using MathCore.ViewModels;
 using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
+using WpfAppPhoneCompany.Models;
 using WpfAppPhoneCompany.Services.Interfaces;
+using WpfAppPhoneCompany.Views;
+using System.Linq;
 
 namespace WpfAppPhoneCompany.ViewModels
 {
@@ -181,6 +189,65 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
+        #region Command ExportDataToCSVFileCommand : Сохранение данных в CSV файл
+        /// <summary>Сохранение данных в CSV файл</summary>
+        private ICommand _ExportDataToCSVFileCommand;
+
+        /// <summary>Сохранение данных в CSV файл</summary>
+        public ICommand ExportDataToCSVFileCommand => _ExportDataToCSVFileCommand
+            ??= new LambdaCommand(OnExportDataToCSVFileCommandExecuted, CanExportDataToCSVFileCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Сохранение данных в CSV файл</summary>
+        private bool CanExportDataToCSVFileCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Сохранение данных в CSV файл</summary>
+        private async void OnExportDataToCSVFileCommandExecuted()
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.InitialDirectory = "D:";
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folder = dialog.SelectedPath;
+                if (!_UserDialog.ConfirmWarning($"Сохранить в папку {folder}?", "Сохранение"))
+                    return;
+
+                string CSVPath = folder + $"/report_PhonesModel_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.csv";
+
+                using (var sw = new StreamWriter(CSVPath, true, Encoding.UTF8))
+                {
+
+                    string headerLine = String.Join(",", "Фамилия", "Имя", "Отчество", "Улица", "Дом", "Квартира", "тел.домашний", "тел.рабочий", "тел.мобильный");
+
+                    sw.Write($"{headerLine}{Environment.NewLine}");
+
+                    
+                    List<Phone> phonesList = PhonesView.OfType<Phone>().ToList();
+
+                    var phonesListUniqAbonents = phonesList.GroupBy(x => x.AbonentId).Select(x => x.First());
+
+                    foreach (var phone in phonesListUniqAbonents)
+                    {
+                        if(phone.Abonent == null) continue;
+                        string csv = string.Join(",",
+                            phone.Abonent.SurName,
+                            phone.Abonent.Name,
+                            phone.Abonent.SecondName,
+                            phone?.Abonent?.Address?.Street?.Name,
+                            phone?.Abonent?.Address?.House,
+                            phone?.Abonent?.Address?.ApartNum,
+                            phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.home)?.Number,
+                            phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.work)?.Number,
+                            phone?.Abonent?.Phones?.FirstOrDefault(x => x.TypePhone == TypePhone.mobile)?.Number
+                            );
+                        sw.Write($"{csv}{Environment.NewLine}");
+                    }
+                }
+            }
+            else return;
+        }
+        #endregion
         public PhonesViewModel(IRepository<Phone> PhonesRepository, 
             IUserDialog UserDialog)
         {

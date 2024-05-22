@@ -76,7 +76,7 @@
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Right"  Rows="1">
                     <Button Content="Выгрузить CSV" Margin="3" 
-                            Command=""/>
+                            Command="{Binding ExportDataToCSVFileCommand}"/>
                 </UniformGrid>
                 <Grid>
                     <Grid.ColumnDefinitions>
