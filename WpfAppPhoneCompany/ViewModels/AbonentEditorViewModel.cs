@@ -39,7 +39,7 @@ namespace WpfAppPhoneCompany.ViewModels
         private Address? _Address;
         public Address? Address { get => _Address; set => Set(ref _Address, value); }
 
-        private ObservableCollection<Phone>? _Phones; //ICollection
+        private ObservableCollection<Phone>? _Phones; 
         public ObservableCollection<Phone>? Phones { get => _Phones; set => Set(ref _Phones, value); }
 
 

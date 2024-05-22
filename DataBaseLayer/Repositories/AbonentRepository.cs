@@ -15,8 +15,6 @@ namespace DataBaseLayer.Repositories
                                                         .Include(item => item.Address)
                                                         .Include(item => item.Street)
                                                         .Include("Phones");
-
-        //public override IQueryable<Abonent> Items => base.Items.Include(item => item.Address);
         public AbonentRepository(ApplicationContext db) : base(db) { }
     }
 }

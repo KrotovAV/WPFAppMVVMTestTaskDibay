@@ -36,7 +36,7 @@
             <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>
         </Menu>
         <StatusBar>
-            <StatusBarItem>В разработке!!!</StatusBarItem>
+            <StatusBarItem>Программа - На экспертизе!!!</StatusBarItem>
         </StatusBar>
         <Grid>
             

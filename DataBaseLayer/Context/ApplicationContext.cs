@@ -25,6 +25,7 @@ namespace DataBaseLayer.Context
         public ApplicationContext(DbContextOptions dbc) : base(dbc)
         {
         }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    var config = new ConfigurationBuilder()

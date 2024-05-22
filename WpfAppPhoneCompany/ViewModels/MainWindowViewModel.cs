@@ -23,7 +23,6 @@ namespace WpfAppPhoneCompany.ViewModels
         private readonly IUserDialog _UserDialog;
 
         #region Title : string - Заголовок
-
         /// <summary>Заголовок</summary>
         private string _Title = "Главное окно программы - PhoneCompany";
 
@@ -31,21 +30,15 @@ namespace WpfAppPhoneCompany.ViewModels
         public string Title { get => _Title; set => Set(ref _Title, value); }
         #endregion
        
-        
-        
         #region CurrentModel : BaseViewModel - Текущая дочерняя модель-представления
-
         /// <summary>Текущая дочерняя модель-представления</summary>
         private ViewModel _CurrentModel;
 
         /// <summary>Текущая дочерняя модель-представления</summary>
         public ViewModel CurrentModel { get => _CurrentModel; private set => Set(ref _CurrentModel, value); }
-
         #endregion
 
-
         #region Command ShowStreesViewCommand - Отобразить представление улиц
-
         /// <summary>Отобразить представление улиц</summary>
         private ICommand _ShowStreetsViewCommand;
 
@@ -61,7 +54,6 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             CurrentModel = new StreetsViewModel(_Streets, _UserDialog, _Abonents, _Addresses);
         }
-
         #endregion
 
         #region Command ShowAddressesViewCommand - Отобразить представление адресов
@@ -81,13 +73,9 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             CurrentModel = new AddressesViewModel(_Addresses , _UserDialog, _Abonents, _Streets);
         }
-
         #endregion
 
-
-
         #region Command ShowPhonesViewCommand - Отобразить представление номеров телефонов
-
         /// <summary>Отобразить представление номеров телефонов</summary>
         private ICommand _ShowPhonesViewCommand;
 
@@ -103,12 +91,9 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             CurrentModel = new PhonesViewModel(_Phones, _UserDialog);
         }
-
         #endregion
 
-
         #region Command ShowAbonentsViewCommand - Отобразить представление номеров телефонов
-
         /// <summary>Отобразить представление абонентов</summary>
         private ICommand _ShowAbonentsViewCommand;
 
@@ -124,7 +109,6 @@ namespace WpfAppPhoneCompany.ViewModels
         {
             CurrentModel = new AbonentsViewModel(_Abonents, _UserDialog, _Phones, _Streets);
         }
-
         #endregion
 
 
@@ -161,12 +145,9 @@ namespace WpfAppPhoneCompany.ViewModels
             _Addresses = Addresses;
             _Phones = Phones;
             _Streets = Streets;
-
             _UserDialog = UserDialog;
 
-
-            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
-           
+            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute); 
         }
     }
 }

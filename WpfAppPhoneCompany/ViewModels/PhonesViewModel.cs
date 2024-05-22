@@ -263,5 +263,4 @@ namespace WpfAppPhoneCompany.ViewModels
                 E.Accepted = false;
         }
     }
-
 }

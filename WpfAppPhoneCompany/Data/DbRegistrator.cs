@@ -26,7 +26,7 @@ namespace WpfAppPhoneCompany.Data
                        opt.UseSqlServer(Configuration.GetConnectionString(type));
                        break;
                    case "InMemory":
-                       opt.UseInMemoryDatabase("PhoneCompanyDB.db");
+                       opt.UseInMemoryDatabase("PhoneCompanyINMemoryDB.db");
                        break;
                }
            })

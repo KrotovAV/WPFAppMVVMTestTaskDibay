@@ -28,7 +28,6 @@ namespace WpfAppPhoneCompany.Services
             _Addresses = Addresses;
             _Phones = Phones;
             _Streets = Streets;
-            
         }
 
         public async Task<Abonent> ConnectAbonentAsync(string SurName, string Name, string SecondName, Address Address, params Phone[] Phones)

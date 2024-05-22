@@ -43,7 +43,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region SelectedTypePhone : TypePhone - Выбранный тип номера телефона
-
         /// <summary>Выбранный тип номера телефона</summary>
         private TypePhone _SelectedTypePhone;
 
@@ -57,7 +56,6 @@ namespace WpfAppPhoneCompany.ViewModels
 
 
         #region ChooseSelectedTypePhoneCommand Команда присвоения телефону выбранного типа номера
-
         /// <summary>Команда присвоения телефону выбранного типа номера</summary>
         private ICommand _ChooseSelectedTypePhoneCommand;
 
@@ -75,9 +73,7 @@ namespace WpfAppPhoneCompany.ViewModels
         }
         #endregion
 
-
         #region Command LoadDataCommand - Команда загрузки данных из репозитория
-
         /// <summary>Команда загрузки данных из репозитория</summary>
         private ICommand _LoadDataCommand;
 
@@ -122,7 +118,5 @@ namespace WpfAppPhoneCompany.ViewModels
             TypeOfPhone = phone.TypePhone;
             AbonentId = phone.AbonentId;
         }
-
     }
-
 }

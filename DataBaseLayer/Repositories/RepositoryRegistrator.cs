@@ -16,7 +16,6 @@ namespace DataBaseLayer.Repositories
            .AddTransient<IRepository<Address>, AddressRepository>()
            .AddTransient<IRepository<Phone>, PhoneRepository>()
            .AddTransient<IRepository<Street>, StreetRepository>()
-           //.AddTransient<IRepository<Street>, DbRepository<Street>>()
         ;
     }
 }

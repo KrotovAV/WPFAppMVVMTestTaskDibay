@@ -68,7 +68,7 @@
             <GroupBox.Header>
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding  StringFormat="{} По адресу: {0} {1} {2}">
+                        <MultiBinding  StringFormat="{} По адресу: ул.{0} д.{1} кв.{2}">
                             <Binding Path="SelectedAddress.Address.Street"/>
                             <Binding Path="SelectedAddress.Address.House"/>
                             <Binding Path="SelectedAddress.Address.ApartNum"/>

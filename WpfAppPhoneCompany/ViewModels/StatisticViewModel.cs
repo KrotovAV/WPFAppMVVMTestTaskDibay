@@ -51,16 +51,6 @@ namespace WpfAppPhoneCompany.ViewModels
                .Take(5)
             ;
 
-            //var bestStreet_query = _Abonents.Items
-            //    .GroupBy(e => e.Street)
-            //    .Select(group => new {StreetName = group.Key.Name, AbonentsCount = group.Count() })
-            //    .OrderBy(dc => dc.StreetName);
-
-            //var bestStreet = await bestStreet_query.ToDictionaryAsync(group => group.Street, group => group.Count);
-            //var bestStreet = await bestStreet_query.ToArrayAsync();
-
-            //var AbonentCount = await _Abonents.Items.CountAsync();
-
             StatStreetAbonents.Clear();
             foreach(var bestStreet in await bestStreet_query.ToArrayAsync())
             {

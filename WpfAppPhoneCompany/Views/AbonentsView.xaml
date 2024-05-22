@@ -63,7 +63,7 @@
 
         <GroupBox Grid.Column="2" >
             <GroupBox.Header>
-                <TextBlock>
+                <TextBlock Height="40" Width="180" MinWidth="150" TextWrapping="Wrap">
                     <TextBlock.Text>
                         <MultiBinding  StringFormat="{}Абонент: {0} {1} {2}">
                             <Binding Path="SelectedAbonent.SurName"/>
